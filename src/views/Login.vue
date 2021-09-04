@@ -10,7 +10,7 @@
                                 v-model="name"
                                 label="Benutzername"
                                 dense
-                                clearable
+                                
                                 
                             ></v-text-field>
                         </v-col>
@@ -22,7 +22,7 @@
                                 label="Passwort"
                                 dense
                                 type="password"
-                                clearable
+                                
                                 
                             ></v-text-field>
                         </v-col>
