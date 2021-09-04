@@ -1,32 +1,47 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+    <v-app id="inspire">
+        <v-navigation-drawer class="secondary" v-model="drawer" app>
+            <div class="pa-2">
+                <v-img alt="Escobar Logo" src="/site-logo.jpg" contain></v-img>
+            </div>
+
+            <v-divider class="grey lighten-1"></v-divider>
+
+            <v-list dense nav>
+                <v-list-item v-for="item in items" :key="item.title" link dark>
+                    <v-list-item-icon class="mr-2">
+                        <v-icon>{{ item.icon }}</v-icon>
+                    </v-list-item-icon>
+
+                    <v-list-item-content>
+                        <v-list-item-title>{{ item.title }}</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+            </v-list>
+        </v-navigation-drawer>
+
+        <v-app-bar app>
+            <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+
+            <v-toolbar-title>Escobar Anhängercenter</v-toolbar-title>
+        </v-app-bar>
+
+        <v-main class="grey lighten-4">
+            <router-view></router-view>
+        </v-main>
+    </v-app>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
-</style>
+<script>
+export default {
+    data: () => ({
+        drawer: null,
+        items: [
+            { title: "Dashboard", icon: "fas fa-tachometer-alt" },
+            { title: "Benutzerverwaltung", icon: "fas fa-users" },
+            { title: "About", icon: "mdi-help-box" },
+        ],
+        right: null,
+    }),
+};
+</script>
