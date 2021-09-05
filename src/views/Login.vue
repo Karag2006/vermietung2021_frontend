@@ -35,6 +35,7 @@
             <v-btn
                 outlined
                 class="text-h5 font-weight-bold primary white--text ml-auto pa-4"
+                @click="$store.dispatch('getTestData')"
             >
                 Login
             </v-btn>

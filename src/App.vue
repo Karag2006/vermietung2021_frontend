@@ -1,10 +1,8 @@
 <template>
     <v-app id="inspire">
-        <nav-drawer 
-          :drawer='drawer'
-        />
+        <nav-drawer />
         <v-app-bar app>
-            <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+            <v-app-bar-nav-icon @click="$store.commit('toggleNavDrawer')"></v-app-bar-nav-icon>
 
             <v-toolbar-title>Escobar Anhängercenter</v-toolbar-title>
         </v-app-bar>
@@ -17,11 +15,6 @@
 
 <script>
 export default {
-  data() {
-    return {
-      drawer: null
-    }
-  },
   components: {
     'nav-drawer': require('@/components/layout/Drawer.vue').default
   }

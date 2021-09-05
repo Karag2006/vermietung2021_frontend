@@ -1,5 +1,5 @@
 <template>
-    <v-navigation-drawer class="secondary" v-model="drawer" app>
+    <v-navigation-drawer class="secondary" v-model="$store.state.navigation.drawer" app>
         <div class="pa-2">
             <v-img alt="Escobar Logo" src="/site-logo.jpg" contain></v-img>
         </div>
@@ -62,7 +62,6 @@ export default {
             right: null,
         };
     },
-    props: ["drawer"],
 };
 </script>
 
