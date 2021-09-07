@@ -7,7 +7,7 @@
                     <v-row>
                         <v-col cols="12">
                             <v-text-field
-                                v-model="name"
+                                v-model="username"
                                 label="Benutzername"
                                 dense
                                 
@@ -22,7 +22,7 @@
                                 label="Passwort"
                                 dense
                                 type="password"
-                                
+                                @keyup.enter="login"
                                 
                             ></v-text-field>
                         </v-col>
@@ -35,7 +35,7 @@
             <v-btn
                 outlined
                 class="text-h5 font-weight-bold primary white--text ml-auto pa-4"
-                @click="$store.dispatch('getTestData')"
+                @click="login"
             >
                 Login
             </v-btn>
@@ -47,9 +47,14 @@
 export default {
     data() {
         return {
-            name: "",
+            username: "",
             password: "",
         };
+    },
+    methods: {
+        login(){
+            this.$store.dispatch('userLogin', {'username': this.username, 'password': this.password})
+        }
     },
 };
 </script>
