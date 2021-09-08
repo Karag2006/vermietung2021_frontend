@@ -30,7 +30,7 @@
                     </template>
                     <v-list dense>
                         <v-list-item
-                            v-for="(item, i) in items"
+                            v-for="(item, i) in userMenuItems"
                             :key="i"
                             @click="itemClicked(item)"
                             link
@@ -60,7 +60,7 @@ export default {
     },
     data() {
         return {
-            items: [
+            userMenuItems: [
                 { name: "Passwort ändern", icon: "fas fa-key" },
                 {
                     name: "Logout",
@@ -87,6 +87,6 @@ export default {
 
 <style lang="css">
 .v-btn {
-    text-transform: unset !important;
+    text-transform: capitalize !important;
 }
 </style>

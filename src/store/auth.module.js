@@ -2,12 +2,18 @@ import axios from 'axios'
 import VueJwtDecode from 'vue-jwt-decode'
 import router from '@/router'
 
-const user = JSON.parse(localStorage.getItem("user"));
+let user = JSON.parse(localStorage.getItem("user"));
 
 if (user) {
     let decode = VueJwtDecode.decode(user.token);
     user.decode = decode;
     user.username = decode.username;
+    const expire = new Date(decode.exp * 1000)
+    const now = new Date()
+    if (expire < now) {
+        localStorage.removeItem("user");
+        user = null
+    }
 }
 
 const initialState = user
