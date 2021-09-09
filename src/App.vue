@@ -3,11 +3,12 @@
         <nav-drawer />
         <v-app-bar app>
             <v-app-bar-nav-icon
+                v-if="$store.state.auth.status.loggedIn"
                 @click="$store.commit('toggleNavDrawer')"
             ></v-app-bar-nav-icon>
 
             <v-toolbar-title>Escobar Anhängercenter</v-toolbar-title>
-            <div class="mr-5 ml-auto">
+            <div class="mr-0 ml-auto mr-md-5">
                 <v-menu
                     transition="slide-y-transition"
                     bottom

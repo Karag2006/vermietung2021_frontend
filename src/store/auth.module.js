@@ -45,7 +45,7 @@ export default {
     },
 
     actions: {
-        userLogin({ commit, state, rootState }, user) {
+        userLogin({ dispatch, commit, state, rootState }, user) {
             axios
                 .post(rootState.baseApiUrl + "login", {
                     username: user.username,
@@ -60,6 +60,7 @@ export default {
                         user.token = response.data.token;
                         delete user.password
                         commit("loginSuccess", user);
+                        dispatch("getNavMenu");
                         setTimeout(
                             () => router.push({ path: "/dashboard" }),
                             100
@@ -73,6 +74,7 @@ export default {
         },
         userLogout({ commit }) {
             localStorage.removeItem("user");
+            commit("clearNavMenu")
             commit("logout");
         },
     },

@@ -6,57 +6,20 @@
 
         <v-divider class="grey lighten-1"></v-divider>
 
-        <v-treeview
-            v-model="tree"
-            :active="active"
-            activatable
-            return-object
-            :items="items"
-            item-key="name"
-            open-on-click
-            dark
-            dense
-            @update:active="useMenuEntry"
-        >
-            <template v-slot:prepend="{ item }">
-                <v-icon class="mr-2">
-                    {{ item.icon }}
-                </v-icon>
-            </template>
-        </v-treeview>
+        <NavMenu />
+        
     </v-navigation-drawer>
 </template>
 
 <script>
 export default {
+    components: {
+        "NavMenu": require("@/components/layout/NavMenu.vue").default,
+    },
     data() {
         return {
             active: [],
             tree: [],
-            items: [
-                { name: "Dashboard", icon: "fas fa-tachometer-alt", link:"/dashboard" },
-                { name: "Kunden", icon: "fas fa-users" },
-                { name: "Angebote", icon: "fas fa-id-card-alt" },
-                { name: "Reservierungen", icon: "fas fa-address-card" },
-                { name: "Mietverträge", icon: "fas fa-file-signature" },
-                {
-                    name: "Benutzerverwaltung",
-                    icon: "fas fa-users",
-                    children: [
-                        { name: "Rollen", icon: "fas fa-user-tag" },
-                        { name: "Benutzer", icon: "fas fa-users-cog" },
-                    ],
-                },
-                {
-                    name: "Anhängerverwaltung",
-                    icon: "fas fa-trailer",
-                    children: [
-                        { name: "Anhänger", icon: "fas fa-trailer" },
-                        { name: "Zubehör", icon: "fas fa-sitemap" },
-                    ],
-                },
-                { name: "Einstellungen", icon: "fas fa-cogs" },
-            ],
             right: null,
         };
     },
@@ -72,6 +35,11 @@ export default {
                     }
                 }
             }
+        }
+    },
+    mounted() {
+        if (this.$store.state.auth.status.loggedIn) {
+            this.$store.dispatch('getNavMenu')
         }
     },
 };
