@@ -1,21 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import auth from '@/store/auth.module.js'
+import routes from './routes'
 
 Vue.use(VueRouter)
 
-const routes = [
-  {
-    path: '/dashboard',
-    name: 'Dashboard',
-    component: () => import(/* webpackChunkName: "dashboard" */ '../views/Dashboard.vue')
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue')
-  }
-]
 
 const router = new VueRouter({
   mode: 'history',
