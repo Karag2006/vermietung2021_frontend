@@ -5,6 +5,7 @@ import axios from "axios";
 export default {
     namespaced: true,
     state: {
+        date: "",
         listHeaders: [
             {
                 text: "Name 1",
@@ -54,37 +55,6 @@ export default {
             driving_license_no: "",
             driving_license_class: "",
         },
-        form: [
-            {
-                fieldname: "pass_number",
-                label: "Personalausweis Nr.",
-                type: "text",
-            },
-            { fieldname: "name1", label: "Name / Firma", type: "text" },
-            { fieldname: "name2", label: "Name 2", type: "text" },
-            { fieldname: "street", label: "Strasse", type: "text" },
-            { fieldname: "plz", label: "Postleitzahl", type: "text" },
-            { fieldname: "city", label: "Ort", type: "text" },
-            { fieldname: "birth_date", label: "Geburtsdatum", type: "date" },
-            { fieldname: "birth_city", label: "Geburtsort", type: "text" },
-            { fieldname: "phone", label: "Telefonnummer", type: "text" },
-            {
-                fieldname: "car_number",
-                label: "Kennzeichen vom Zugfahrzeug",
-                type: "text",
-            },
-            { fieldname: "email", label: "E-Mail Adresse", type: "text" },
-            {
-                fieldname: "driving_license_no",
-                label: "Führerschein Nr.",
-                type: "text",
-            },
-            {
-                fieldname: "driving_license_class",
-                label: "Führerschein Klasse",
-                type: "text",
-            },
-        ],
     },
     actions: {
         storeNewItem({ commit, state, rootState }, item) {
@@ -112,6 +82,7 @@ export default {
                 })
                 .then((response) => {
                     commit("setEditedItem", response.data);
+                    commit("parseDate", response.data.birth_date);
                 });
         },
 
@@ -122,7 +93,7 @@ export default {
                 })
                 .then((response) => {
                     commit("updateItemInList", response.data);
-                })
+                });
         },
 
         deleteItemById({ commit, state, rootState }, id) {
@@ -160,5 +131,17 @@ export default {
             });
             state.items.splice(index, 1);
         },
+        parseDate(state, date) {
+            const [day, month, year] = date.split(".");
+            state.date = `${year}-${month.padStart(2, "0")}-${day.padStart(
+                    2,
+                    "0"
+                )}`;
+        },
+        formatDate(state, date) {
+            if (!date) state.editedItem.birth_date = null
+            const [year, month, day] = date.split("-");
+            state.editedItem.birth_date = `${day}.${month}.${year}`;
+        }
     },
 };

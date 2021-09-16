@@ -66,22 +66,44 @@
                                                     dense
                                                     class="mb-4"
                                                 ></v-text-field>
-                                                <v-menu
-                                                    v-model="menu2"
-                                                    :close-on-content-click="
-                                                        false
-                                                    "
-                                                    :nudge-right="40"
-                                                    transition="scale-transition"
-                                                    offset-y
-                                                    min-width="auto"
-                                                >
-                                                    <template
-                                                        v-slot:activator="{
-                                                            on,
-                                                            attrs,
-                                                        }"
-                                                    >
+                                                <v-row>
+                                                    <v-col cols="1">
+                                                        <v-menu
+                                                            v-model="datePicker"
+                                                            :close-on-content-click="
+                                                                false
+                                                            "
+                                                            :nudge-right="40"
+                                                            transition="scale-transition"
+                                                            offset-y
+                                                            min-width="auto"
+                                                        >
+                                                            <template
+                                                                v-slot:activator="{
+                                                                    on,
+                                                                    attrs,
+                                                                }"
+                                                            >
+                                                                <v-icon
+                                                                    v-bind="
+                                                                        attrs
+                                                                    "
+                                                                    v-on="on"
+                                                                >
+                                                                    far fa-calendar-alt
+                                                                </v-icon>
+                                                            </template>
+                                                            <v-date-picker
+                                                                :first-day-of-week="
+                                                                    1
+                                                                "
+                                                                locale="de-de"
+                                                                :value="date"
+                                                                @input="datePickerInput($event)"
+                                                            ></v-date-picker>
+                                                        </v-menu>
+                                                    </v-col>
+                                                    <v-col cols="11">
                                                         <v-text-field
                                                             v-model="
                                                                 editedItem[
@@ -89,22 +111,13 @@
                                                                 ]
                                                             "
                                                             label="Geburtsdatum"
-                                                            prepend-icon="mdi-calendar"
-                                                            v-bind="attrs"
-                                                            v-on="on"
                                                             dense
                                                             class="mb-4"
+                                                            @blur="parseDate(editedItem['birth_date'])"
                                                         ></v-text-field>
-                                                    </template>
-                                                    <v-date-picker
-                                                        v-model="
-                                                            editedItem[
-                                                                'birth_date'
-                                                            ]
-                                                        "
-                                                        @input="menu2 = false"
-                                                    ></v-date-picker>
-                                                </v-menu>
+                                                    </v-col>
+                                                </v-row>
+
                                                 <v-text-field
                                                     v-model="
                                                         editedItem['birth_city']
@@ -281,7 +294,7 @@ export default {
         dialog: false,
         dialogDelete: false,
         editedIndex: -1,
-        menu2: false,
+        datePicker: false,
     }),
 
     computed: {
@@ -290,6 +303,7 @@ export default {
             headers: (state) => state.listHeaders,
             editedItem: (state) => state.editedItem,
             defaultItem: (state) => state.defaultItem,
+            date: (state) => state.date,
         }),
         // both titles need to be provided as variables
         formTitle() {
@@ -314,14 +328,14 @@ export default {
 
     methods: {
         ...mapActions("customer", [
-            "getItemsList", 
-            "getItemById", 
+            "getItemsList",
+            "getItemById",
             "storeNewItem",
             "deleteItemById",
             "updateItem",
-            ]),
+        ]),
 
-        ...mapMutations("customer", ["resetForm"]),
+        ...mapMutations("customer", ["resetForm", "parseDate", "formatDate"]),
 
         editItem(item) {
             this.editedIndex = item.id;
@@ -336,9 +350,7 @@ export default {
         },
 
         deleteItemConfirm() {
-            // Remove the item identifeid by editedIndex from the Array.
-            // this.items.splice(this.editedIndex, 1);
-            this.deleteItemById(this.editedIndex)
+            this.deleteItemById(this.editedIndex);
             this.closeDelete();
         },
 
@@ -360,19 +372,18 @@ export default {
 
         save() {
             if (this.editedIndex > -1) {
-                // save the element identifeid by editedIndex with the new data
-                this.updateItem(this.editedItem)
-                // Object.assign(
-                //     this.items[this.editedIndex],
-                //     this.localEditedItem
-                // );
+                this.updateItem(this.editedItem);
             } else {
-                // save as new element
-                this.storeNewItem(this.editedItem)
-                // this.items.push(this.editedItem);
+                this.storeNewItem(this.editedItem);
+                
             }
             this.close();
         },
+        datePickerInput(date){
+            this.datePicker = false
+            this.formatDate(date)
+            this.parseDate(this.editedItem.birth_date)
+        }
     },
 };
 </script>
