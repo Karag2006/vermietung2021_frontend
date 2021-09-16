@@ -87,6 +87,15 @@ export default {
         ],
     },
     actions: {
+        storeNewItem({ commit, state, rootState }, item) {
+            axios
+                .post(rootState.baseApiUrl + "customer", item, {
+                    headers: authHeader(),
+                })
+                .then((response) => {
+                    commit("pushItemToList", response.data);
+                });
+        },
         getItemsList({ commit, state, rootState }) {
             axios
                 .get(rootState.baseApiUrl + "customer", {
@@ -105,15 +114,17 @@ export default {
                     commit("setEditedItem", response.data);
                 });
         },
-        storeNewItem({ commit, state, rootState }, item) {
+
+        updateItem({ commit, state, rootState }, data) {
             axios
-                .post(rootState.baseApiUrl + "customer", item, {
+                .patch(rootState.baseApiUrl + "customer/" + data.id, data, {
                     headers: authHeader(),
                 })
                 .then((response) => {
-                    commit("pushItemToList", response.data);
-                });
+                    commit("updateItemInList", response.data);
+                })
         },
+
         deleteItemById({ commit, state, rootState }, id) {
             axios
                 .delete(rootState.baseApiUrl + "customer/" + id, {
@@ -137,10 +148,16 @@ export default {
         pushItemToList(state, data) {
             state.items.push(data);
         },
+        updateItemInList(state, data) {
+            const index = state.items.findIndex((item) => {
+                return item.id === data.id;
+            });
+            Object.assign(state.items[index], data);
+        },
         deleteItemFromList(state, id) {
-            let index = state.items.findIndex(item => {
-                return item.id === id
-            })
+            const index = state.items.findIndex((item) => {
+                return item.id === id;
+            });
             state.items.splice(index, 1);
         },
     },

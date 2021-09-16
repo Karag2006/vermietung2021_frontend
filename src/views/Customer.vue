@@ -318,6 +318,7 @@ export default {
             "getItemById", 
             "storeNewItem",
             "deleteItemById",
+            "updateItem",
             ]),
 
         ...mapMutations("customer", ["resetForm"]),
@@ -360,10 +361,11 @@ export default {
         save() {
             if (this.editedIndex > -1) {
                 // save the element identifeid by editedIndex with the new data
-                Object.assign(
-                    this.items[this.editedIndex],
-                    this.localEditedItem
-                );
+                this.updateItem(this.editedItem)
+                // Object.assign(
+                //     this.items[this.editedIndex],
+                //     this.localEditedItem
+                // );
             } else {
                 // save as new element
                 this.storeNewItem(this.editedItem)
