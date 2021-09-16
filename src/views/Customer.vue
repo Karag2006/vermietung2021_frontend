@@ -313,7 +313,7 @@ export default {
     },
 
     methods: {
-        ...mapActions("customer", ["getItemsList", "getItemById"]),
+        ...mapActions("customer", ["getItemsList", "getItemById", "storeNewItem"]),
 
         ...mapMutations("customer", ["resetForm"]),
 
@@ -360,7 +360,8 @@ export default {
                 );
             } else {
                 // save as new element
-                this.items.push(this.localEditedItem);
+                this.storeNewItem(this.editedItem)
+                // this.items.push(this.editedItem);
             }
             this.close();
         },
