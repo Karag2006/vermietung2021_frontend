@@ -1,14 +1,26 @@
 <template>
     <v-card class="card mx-4 mt-10" elevation="3">
         <v-card-text>
-            <v-data-table :headers="headers" :items="items">
+            <v-data-table :headers="headers" :items="items" :search="search">
                 <template v-slot:top>
                     <v-toolbar flat>
-                        <v-toolbar-title
-                            ><h4 class="component-title">
+                        <v-toolbar-title>
+                            <h4 
+                                class="component-title mb-4"
+                            >
                                 Kundenliste
-                            </h4></v-toolbar-title
-                        >
+                            </h4>
+                            <div>
+                                <v-text-field
+                                    v-model="search"
+                                    append-icon="mdi-magnify"
+                                    label="Search"
+                                    single-line
+                                    hide-details
+                                    clearable
+                                ></v-text-field>
+                            </div>
+                        </v-toolbar-title>
 
                         <v-spacer></v-spacer>
                         <v-dialog v-model="dialog" max-width="1200px">
@@ -90,7 +102,8 @@
                                                                     "
                                                                     v-on="on"
                                                                 >
-                                                                    far fa-calendar-alt
+                                                                    far
+                                                                    fa-calendar-alt
                                                                 </v-icon>
                                                             </template>
                                                             <v-date-picker
@@ -98,8 +111,15 @@
                                                                     1
                                                                 "
                                                                 locale="de-de"
+                                                                :picker-date="
+                                                                    date
+                                                                "
                                                                 :value="date"
-                                                                @input="datePickerInput($event)"
+                                                                @input="
+                                                                    datePickerInput(
+                                                                        $event
+                                                                    )
+                                                                "
                                                             ></v-date-picker>
                                                         </v-menu>
                                                     </v-col>
@@ -113,7 +133,13 @@
                                                             label="Geburtsdatum"
                                                             dense
                                                             class="mb-4"
-                                                            @blur="parseDate(editedItem['birth_date'])"
+                                                            @blur="
+                                                                parseDate(
+                                                                    editedItem[
+                                                                        'birth_date'
+                                                                    ]
+                                                                )
+                                                            "
                                                         ></v-text-field>
                                                     </v-col>
                                                 </v-row>
@@ -295,6 +321,7 @@ export default {
         dialogDelete: false,
         editedIndex: -1,
         datePicker: false,
+        search: "",
     }),
 
     computed: {
@@ -375,15 +402,14 @@ export default {
                 this.updateItem(this.editedItem);
             } else {
                 this.storeNewItem(this.editedItem);
-                
             }
             this.close();
         },
-        datePickerInput(date){
-            this.datePicker = false
-            this.formatDate(date)
-            this.parseDate(this.editedItem.birth_date)
-        }
+        datePickerInput(date) {
+            this.datePicker = false;
+            this.formatDate(date);
+            this.parseDate(this.editedItem.birth_date);
+        },
     },
 };
 </script>

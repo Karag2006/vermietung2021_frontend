@@ -20,6 +20,7 @@ export default {
                 text: "",
                 value: "actions",
                 sortable: false,
+                filterable: false,
                 align: "end",
             },
         ],
@@ -132,16 +133,21 @@ export default {
             state.items.splice(index, 1);
         },
         parseDate(state, date) {
-            const [day, month, year] = date.split(".");
-            state.date = `${year}-${month.padStart(2, "0")}-${day.padStart(
-                    2,
-                    "0"
-                )}`;
+            if (date) {
+                 const [day, month, year] = date.split(".");
+                 state.date = `${year}-${month.padStart(2, "0")}-${day.padStart(
+                     2,
+                     "0"
+                 )}`;
+            }
+           
         },
         formatDate(state, date) {
-            if (!date) state.editedItem.birth_date = null
-            const [year, month, day] = date.split("-");
-            state.editedItem.birth_date = `${day}.${month}.${year}`;
+            if (date) {
+                const [year, month, day] = date.split("-");
+                state.editedItem.birth_date = `${day}.${month}.${year}`;
+            }
+            
         }
     },
 };
