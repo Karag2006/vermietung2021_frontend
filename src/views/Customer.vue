@@ -313,7 +313,12 @@ export default {
     },
 
     methods: {
-        ...mapActions("customer", ["getItemsList", "getItemById", "storeNewItem"]),
+        ...mapActions("customer", [
+            "getItemsList", 
+            "getItemById", 
+            "storeNewItem",
+            "deleteItemById",
+            ]),
 
         ...mapMutations("customer", ["resetForm"]),
 
@@ -331,7 +336,8 @@ export default {
 
         deleteItemConfirm() {
             // Remove the item identifeid by editedIndex from the Array.
-            this.items.splice(this.editedIndex, 1);
+            // this.items.splice(this.editedIndex, 1);
+            this.deleteItemById(this.editedIndex)
             this.closeDelete();
         },
 

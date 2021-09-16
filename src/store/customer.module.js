@@ -114,6 +114,15 @@ export default {
                     commit("pushItemToList", response.data);
                 });
         },
+        deleteItemById({ commit, state, rootState }, id) {
+            axios
+                .delete(rootState.baseApiUrl + "customer/" + id, {
+                    headers: authHeader(),
+                })
+                .then((response) => {
+                    commit("deleteItemFromList", response.data);
+                });
+        },
     },
     mutations: {
         setItemsList(state, data) {
@@ -126,7 +135,13 @@ export default {
             state.editedItem = Object.assign({}, state.defaultItem);
         },
         pushItemToList(state, data) {
-            state.items.push(data)
+            state.items.push(data);
+        },
+        deleteItemFromList(state, id) {
+            let index = state.items.findIndex(item => {
+                return item.id === id
+            })
+            state.items.splice(index, 1);
         },
     },
 };
