@@ -323,18 +323,20 @@
                                 <v-card-actions>
                                     <v-spacer></v-spacer>
                                     <v-btn
-                                        color="blue darken-1"
+                                        color="red darken-2"
                                         text
+                                        
                                         @click="close"
                                     >
-                                        Cancel
+                                        Abbrechen
                                     </v-btn>
                                     <v-btn
-                                        color="blue darken-1"
+                                        color="success darken-2"
                                         text
+                                        
                                         @click="save"
                                     >
-                                        Save
+                                        Speichern
                                     </v-btn>
                                 </v-card-actions>
                             </v-card>
