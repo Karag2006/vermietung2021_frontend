@@ -5,9 +5,7 @@
                 <template v-slot:top>
                     <v-toolbar flat>
                         <v-toolbar-title>
-                            <h4 
-                                class="component-title mb-4"
-                            >
+                            <h4 class="component-title mb-4">
                                 Kundenliste
                             </h4>
                             <div>
@@ -237,6 +235,21 @@
                                                     dense
                                                     class="mb-4"
                                                 ></v-text-field>
+                                            </v-col>
+                                        </v-row>
+                                        <v-row  justify="space-around" dense>
+                                            <v-col cols="12" md="11">
+                                                <v-textarea
+                                                    v-model="
+                                                        editedItem[
+                                                            'comment'
+                                                        ]
+                                                    "
+                                                    clearable
+                                                    label="Kommentar"
+                                                    value="test"
+                                                    rows="3"
+                                                ></v-textarea>
                                             </v-col>
                                         </v-row>
                                     </v-container>
