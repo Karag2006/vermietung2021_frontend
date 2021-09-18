@@ -3,12 +3,16 @@ export default {
         required: (value) => !!value || "Darf nicht leer sein",
         min(minNum, value) {
             if (!value) return true;
+            // Database saves some integer values as int.
+            // Converting to string in order to find out the number of Digits.
             value = String(value);
             if (value.length >= minNum) return true;
             return "Mindestens " + minNum + " Zeichen";
         },
         max(maxNum, value) {
             if (!value) return true;
+            // Database saves some integer values as int.
+            // Converting to string in order to find out the number of Digits.
             value = String(value);
             if (value.length <= maxNum) return true;
             return "Maximal " + maxNum + " Zeichen";

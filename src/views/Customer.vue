@@ -103,9 +103,6 @@ export default {
     },
 
     watch: {
-        dialog(val) {
-            val || this.close();
-        },
         dialogDelete(val) {
             val || this.closeDelete();
         },
@@ -119,58 +116,27 @@ export default {
         ...mapActions("customer", [
             "getItemsList",
             "getItemById",
-            "storeNewItem",
             "deleteItemById",
-            "updateItem",
         ]),
-
-        ...mapMutations("customer", ["resetForm", "parseDate", "formatDate"]),
-
         editItem(item) {
             this.editedIndex = item.id;
             this.getItemById(this.editedIndex);
             this.dialog = true;
         },
-
         deleteItem(item) {
             this.editedIndex = item.id;
-
             this.dialogDelete = true;
         },
-
         deleteItemConfirm() {
             this.deleteItemById(this.editedIndex);
             this.closeDelete();
         },
-
-        close() {
-            // reset Dialog
-            this.dialog = false;
-            this.$nextTick(() => {
-                this.editedIndex = -1;
-            });
-        },
-
         closeDelete() {
             // reset Delete Dialog
             this.dialogDelete = false;
             this.$nextTick(() => {
                 this.editedIndex = -1;
             });
-        },
-
-        save() {
-            if (this.editedIndex > -1) {
-                this.updateItem(this.editedItem);
-            } else {
-                this.storeNewItem(this.editedItem);
-            }
-            this.close();
-        },
-        datePickerInput(date) {
-            this.datePicker = false;
-            this.formatDate(date);
-            this.parseDate(this.editedItem.birth_date);
         },
     },
 };
