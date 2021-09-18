@@ -116,6 +116,7 @@ export default {
         },
         resetForm(state) {
             state.editedItem = Object.assign({}, state.defaultItem);
+            state.date = "";
         },
         pushItemToList(state, data) {
             state.items.push(data);

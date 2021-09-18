@@ -56,6 +56,11 @@
                                                             'pass_number'
                                                         ]
                                                     "
+                                                    :rules="[
+                                                        rules.min(8, editedItem['pass_number']), 
+                                                        rules.max(30, editedItem['pass_number'])
+                                                    ]"
+                                                    validate-on-blur
                                                     label="Personalausweis Nr."
                                                     dense
                                                     class="mb-4"
@@ -67,6 +72,11 @@
                                                     label="Name / Firma"
                                                     dense
                                                     class="mb-4"
+                                                    :rules="[
+                                                        rules.required, 
+                                                        rules.max(50, editedItem['name1'])
+                                                    ]"
+                                                    validate-on-blur
                                                 ></v-text-field>
                                                 <v-text-field
                                                     v-model="
@@ -75,6 +85,10 @@
                                                     label="Name 2"
                                                     dense
                                                     class="mb-4"
+                                                    :rules="[
+                                                        rules.max(50, editedItem['name2'])
+                                                    ]"
+                                                    validate-on-blur
                                                 ></v-text-field>
                                                 <v-row>
                                                     <v-col cols="1">
@@ -138,6 +152,10 @@
                                                                     ]
                                                                 )
                                                             "
+                                                            :rules="[
+                                                                rules.isDate(editedItem['birth_date'])
+                                                            ]"
+                                                            validate-on-blur
                                                         ></v-text-field>
                                                     </v-col>
                                                 </v-row>
@@ -149,6 +167,11 @@
                                                     label="Geburtsort"
                                                     dense
                                                     class="mb-4"
+                                                    :rules="[
+                                                        rules.min(3, editedItem['birth_city']), 
+                                                        rules.max(50, editedItem['birth_city'])
+                                                    ]"
+                                                    validate-on-blur
                                                 ></v-text-field>
                                             </v-col>
                                             <v-col cols="12" md="5" class="">
@@ -162,6 +185,12 @@
                                                             "
                                                             label="Postleitzahl"
                                                             dense
+                                                            :rules="[
+                                                                rules.isNumeric(editedItem['plz']), 
+                                                                rules.min(4, editedItem['plz']), 
+                                                                rules.max(5, editedItem['plz'])
+                                                            ]"
+                                                            validate-on-blur
                                                         ></v-text-field>
                                                     </v-col>
                                                     <v-col cols="12" lg="9">
@@ -174,6 +203,11 @@
                                                             label="Ort"
                                                             dense
                                                             class="mb-4"
+                                                            :rules="[
+                                                                rules.min(3, editedItem['city']), 
+                                                                rules.max(50, editedItem['city'])
+                                                            ]"
+                                                            validate-on-blur
                                                         ></v-text-field>
                                                     </v-col>
                                                 </v-row>
@@ -184,6 +218,11 @@
                                                     label="Strasse"
                                                     dense
                                                     class="mb-10"
+                                                    :rules="[
+                                                        rules.min(3, editedItem['street']), 
+                                                        rules.max(50, editedItem['street'])
+                                                    ]"
+                                                    validate-on-blur
                                                 ></v-text-field>
                                                 <v-text-field
                                                     v-model="
@@ -192,6 +231,11 @@
                                                     label="Telefonnummer"
                                                     dense
                                                     class="mb-4"
+                                                    :rules="[
+                                                        rules.min(6, editedItem['phone']), 
+                                                        rules.max(15, editedItem['phone'])
+                                                    ]"
+                                                    validate-on-blur
                                                 ></v-text-field>
                                                 <v-text-field
                                                     v-model="
@@ -200,6 +244,11 @@
                                                     label="Kennzeichen vom Zugfahrzeug"
                                                     dense
                                                     class="mb-4"
+                                                    :rules="[
+                                                        rules.min(5, editedItem['car_number']), 
+                                                        rules.max(20, editedItem['car_number'])
+                                                    ]"
+                                                    validate-on-blur
                                                 ></v-text-field>
                                                 <v-text-field
                                                     v-model="
@@ -208,6 +257,10 @@
                                                     label="E-Mail Adresse"
                                                     dense
                                                     class="mb-4"
+                                                    :rules="[
+                                                        rules.isEmail(editedItem['email'])
+                                                    ]"
+                                                    validate-on-blur
                                                 ></v-text-field>
                                             </v-col>
                                         </v-row>
@@ -222,6 +275,11 @@
                                                     label="Führerschein Nr."
                                                     dense
                                                     class="mb-4"
+                                                    :rules="[
+                                                        rules.min(6, editedItem['driving_license_no']), 
+                                                        rules.max(15, editedItem['driving_license_no'])
+                                                    ]"
+                                                    validate-on-blur
                                                 ></v-text-field>
                                             </v-col>
                                             <v-col cols="12" md="5">
@@ -234,6 +292,10 @@
                                                     label="Führerschein Klasse"
                                                     dense
                                                     class="mb-4"
+                                                    :rules="[ 
+                                                        rules.max(9, editedItem['driving_license_class'])
+                                                    ]"
+                                                    validate-on-blur
                                                 ></v-text-field>
                                             </v-col>
                                         </v-row>
@@ -247,8 +309,11 @@
                                                     "
                                                     clearable
                                                     label="Kommentar"
-                                                    value="test"
                                                     rows="3"
+                                                    :rules="[ 
+                                                        rules.max(1000, editedItem['comment'])
+                                                    ]"
+                                                    validate-on-blur
                                                 ></v-textarea>
                                             </v-col>
                                         </v-row>
@@ -335,6 +400,38 @@ export default {
         editedIndex: -1,
         datePicker: false,
         search: "",
+        rules: {
+            required: value => !!value || 'Darf nicht leer sein',
+            min(minNum, value) {
+                if (!value) return true;
+                value = String(value)
+                if (value.length >= minNum) return true;
+                return 'Mindestens ' + minNum + ' Zeichen';
+            },
+            max(maxNum, value) {
+                if (!value) return true;
+                value = String(value)
+                if (value.length <= maxNum) return true;
+                return 'Maximal ' + maxNum + ' Zeichen';
+            },
+            isNumeric(value) {
+                if (!value) return true;
+                if (!isNaN(value)) return true;
+                return 'Nur Zahlen sind erlaubt'
+            },
+            isEmail(value) {
+                const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                if (!value) return true;
+                if (pattern.test(value)) return true;
+                return 'Muss eine gültige E-Mail Adresse sein.'
+            },
+            isDate(value) {
+                const pattern = /^(?:[0-9]{2})\.(?:[0-9]{2})\.(?:[0-9]{4})$/
+                if (!value) return true;
+                if (pattern.test(value)) return true;
+                return 'Das Datum Muss im Format dd.mm.YYYY vorliegen'
+            }
+        },
     }),
 
     computed: {
