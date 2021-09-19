@@ -9,9 +9,22 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    snackbar: {
+      show: false,
+      text: "",
+      color: ""
+    },
     baseApiUrl: "http://localhost/api/",
   },
   mutations: {
+    showSnackbar(state, payload) {
+      state.snackbar.text = payload.text
+      state.snackbar.color = payload.color
+      state.snackbar.show = true
+    },
+    closeSnackbar(state) {
+      state.snackbar.show = false
+    }
   },
   actions: {
   },

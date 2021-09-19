@@ -65,6 +65,21 @@ export default {
                 })
                 .then((response) => {
                     commit("pushItemToList", response.data);
+                    commit(
+                        "showSnackbar", {
+                            text: "Kunde erfolgreich angelegt!",
+                            color: "success darken-3",
+                        }, { root: true })
+                })
+                .catch((error) => {
+                    commit(
+                        "showSnackbar",
+                        {
+                            text: "Fehler beim Anlegen eines Kunden",
+                            color: "error",
+                        },
+                        { root: true }
+                    );
                 });
         },
         getItemsList({ commit, state, rootState }) {
@@ -94,6 +109,24 @@ export default {
                 })
                 .then((response) => {
                     commit("updateItemInList", response.data);
+                    commit(
+                        "showSnackbar",
+                        {
+                            text: "Kunde erfolgreich aktualisiert!",
+                            color: "success darken-3",
+                        },
+                        { root: true }
+                    );
+                })
+                .catch((error) => {
+                    commit(
+                        "showSnackbar",
+                        {
+                            text: "Fehler beim Aktualisieren eines Kunden",
+                            color: "error",
+                        },
+                        { root: true }
+                    );
                 });
         },
 
@@ -104,6 +137,24 @@ export default {
                 })
                 .then((response) => {
                     commit("deleteItemFromList", response.data);
+                    commit(
+                        "showSnackbar",
+                        {
+                            text: "Kunde erfolgreich gelöscht!",
+                            color: "success darken-3",
+                        },
+                        { root: true }
+                    );
+                })
+                .catch((error) => {
+                    commit(
+                        "showSnackbar",
+                        {
+                            text: "Fehler beim Löschen eines Kunden",
+                            color: "error",
+                        },
+                        { root: true }
+                    );
                 });
         },
     },

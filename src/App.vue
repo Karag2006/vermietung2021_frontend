@@ -50,6 +50,7 @@
 
         <v-main class="grey lighten-4">
             <router-view></router-view>
+            <snackbar/>
         </v-main>
     </v-app>
 </template>
@@ -58,6 +59,7 @@
 export default {
     components: {
         "nav-drawer": require("@/components/layout/Drawer.vue").default,
+        "snackbar": require("@/components/layout/Snackbar.vue").default
     },
     data() {
         return {

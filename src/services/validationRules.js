@@ -1,9 +1,9 @@
 export default {
-    rules: {
         required: (value) => !!value || "Darf nicht leer sein",
         min(minNum, value) {
             if (!value) return true;
             // Database saves some integer values as int.
+            // so to have only one function regardless if its a string or an int, we are
             // Converting to string in order to find out the number of Digits.
             value = String(value);
             if (value.length >= minNum) return true;
@@ -12,6 +12,7 @@ export default {
         max(maxNum, value) {
             if (!value) return true;
             // Database saves some integer values as int.
+            // so to have only one function regardless if its a string or an int, we are
             // Converting to string in order to find out the number of Digits.
             value = String(value);
             if (value.length <= maxNum) return true;
@@ -34,5 +35,4 @@ export default {
             if (pattern.test(value)) return true;
             return "Das Datum Muss im Format dd.mm.YYYY vorliegen";
         },
-    },
 };

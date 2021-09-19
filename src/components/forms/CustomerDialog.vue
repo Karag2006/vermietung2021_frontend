@@ -52,7 +52,9 @@
                                 label="Name 2"
                                 dense
                                 class="mb-4"
-                                :rules="[rules.max(50, editedItem['name2'])]"
+                                :rules="[
+                                    rules.max(50, editedItem['name2'])
+                                ]"
                                 validate-on-blur
                             ></v-text-field>
                             <v-row>
@@ -94,9 +96,7 @@
                                             parseDate(editedItem['birth_date'])
                                         "
                                         :rules="[
-                                            rules.isDate(
-                                                editedItem['birth_date']
-                                            ),
+                                            rules.isDate(editedItem['birth_date']),
                                         ]"
                                         validate-on-blur
                                     ></v-text-field>
@@ -182,7 +182,9 @@
                                 label="E-Mail Adresse"
                                 dense
                                 class="mb-4"
-                                :rules="[rules.isEmail(editedItem['email'])]"
+                                :rules="[
+                                    rules.isEmail(editedItem['email'])
+                                ]"
                                 validate-on-blur
                             ></v-text-field>
                         </v-col>
@@ -195,14 +197,8 @@
                                 dense
                                 class="mb-4"
                                 :rules="[
-                                    rules.min(
-                                        6,
-                                        editedItem['driving_license_no']
-                                    ),
-                                    rules.max(
-                                        15,
-                                        editedItem['driving_license_no']
-                                    ),
+                                    rules.min(6, editedItem['driving_license_no']),
+                                    rules.max(15, editedItem['driving_license_no']),
                                 ]"
                                 validate-on-blur
                             ></v-text-field>
@@ -214,10 +210,7 @@
                                 dense
                                 class="mb-4"
                                 :rules="[
-                                    rules.max(
-                                        9,
-                                        editedItem['driving_license_class']
-                                    ),
+                                    rules.max(9, editedItem['driving_license_class']),
                                 ]"
                                 validate-on-blur
                             ></v-text-field>
@@ -263,7 +256,7 @@ export default {
         return {
             dialog: false,
             datePicker: false,
-            rules: validationRules.rules
+            rules: validationRules
         };
     },
     computed: {
