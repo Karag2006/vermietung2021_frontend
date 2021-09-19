@@ -35,4 +35,9 @@ export default {
             if (pattern.test(value)) return true;
             return "Das Datum Muss im Format dd.mm.YYYY vorliegen";
         },
+        isMatch(value1, value2) {
+            if (value1 === value2) return true;
+            return "Stimmt nicht mit Original überein."
+        }
+        
 };

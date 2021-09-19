@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import navigation from './navigation'
 import auth from './auth.module.js'
 import customer from './customer.module'
+import user from './user.module'
 
 
 Vue.use(Vuex)
@@ -31,6 +32,7 @@ export default new Vuex.Store({
   modules: {
     auth,
     navigation,
-    customer
+    customer,
+    user
   }
 })

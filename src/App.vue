@@ -49,6 +49,7 @@
         </v-app-bar>
 
         <v-main class="grey lighten-4">
+            <password-change/>
             <router-view></router-view>
             <snackbar/>
         </v-main>
@@ -59,12 +60,13 @@
 export default {
     components: {
         "nav-drawer": require("@/components/layout/Drawer.vue").default,
-        "snackbar": require("@/components/layout/Snackbar.vue").default
+        "snackbar": require("@/components/layout/Snackbar.vue").default,
+        "password-change": require("@/components/forms/PasswordChangeDialog.vue").default
     },
     data() {
         return {
             userMenuItems: [
-                { name: "Passwort ändern", icon: "fas fa-key" },
+                { name: "Passwort ändern", icon: "fas fa-key", mutation: "user/openChangePw" },
                 {
                     name: "Logout",
                     icon: "fas fa-power-off",
@@ -77,6 +79,9 @@ export default {
         itemClicked(item) {
             if (item.action) {
                 this.$store.dispatch(item.action);
+            }
+            if (item.mutation) {
+                this.$store.commit(item.mutation)
             }
             if (item.link) {
                 if (this.$router.currentRoute.path != item.link) {
