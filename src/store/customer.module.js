@@ -183,7 +183,7 @@ export default {
                 return item.id === id;
             });
             state.items.splice(index, 1);
-        },
+        }, 
         parseDate(state, date) {
             if (date) {
                  const [day, month, year] = date.split(".");

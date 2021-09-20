@@ -15,7 +15,7 @@ export default new Vuex.Store({
       text: "",
       color: ""
     },
-    baseApiUrl: "http://localhost/api/",
+    baseApiUrl: "http://192.168.1.21/api/",
   },
   mutations: {
     showSnackbar(state, payload) {
