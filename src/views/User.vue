@@ -108,17 +108,15 @@ export default {
     },
 
     created() {
-        this.getItemsList();
+        this.getItemsList("user/");
     },
 
     methods: {
-        ...mapActions("user", [
+        ...mapActions([
             "getItemsList",
-            //"getItemById",
-            "deleteItemById",
+            "getItemById",
+            "deleteItemById"
         ]),
-
-        ...mapActions(["getItemById"]),
 
         editItem(item) {
             this.editedIndex = item.id;
@@ -133,11 +131,15 @@ export default {
             this.dialogDelete = true;
         },
         deleteItemConfirm() {
-            this.deleteItemById(this.editedIndex);
+            this.deleteItemById({
+                    id: this.editedIndex,
+                    module: 'user/',
+                    successMsg: "Benutzer erfolgreich gelöscht!",
+                    errorMsg: "Fehler beim Löschen des Benutzers"
+                });
             this.closeDelete();
         },
         closeDelete() {
-            // reset Delete Dialog
             this.dialogDelete = false;
             this.$nextTick(() => {
                 this.editedIndex = -1;

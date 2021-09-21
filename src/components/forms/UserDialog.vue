@@ -126,15 +126,16 @@ export default {
         },
     },
     methods: {
-        ...mapActions("user", [
-            // "storeNewItem",
-            "updateItem",
-        ]),
-        ...mapActions(["storeNewItem"]),
+        ...mapActions(["updateItem","storeNewItem"]),
         ...mapMutations("user", ["resetForm"]),
         save() {
             if (this.editedIndex > -1) {
-                this.updateItem(this.editedItem);
+                this.updateItem({
+                    item: this.editedItem,
+                    module: 'user/',
+                    successMsg: "Benutzer erfolgreich geändert!",
+                    errorMsg: "Fehler beim Ändern des Benutzers"
+                });
             } else {
                 this.storeNewItem({
                     item: this.editedItem,

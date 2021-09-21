@@ -271,21 +271,22 @@ export default {
         },
     },
     methods: {
-        ...mapActions("customer", [
-            // "storeNewItem",
-            "updateItem",
-        ]),
-        ...mapActions(["storeNewItem"]),
+        ...mapActions(["updateItem","storeNewItem"]),
         ...mapMutations("customer", ["resetForm", "parseDate", "formatDate"]),
         save() {
             if (this.editedIndex > -1) {
-                this.updateItem(this.editedItem);
+                this.updateItem({
+                    item: this.editedItem,
+                    module: 'customer/',
+                    successMsg: "Kunden erfolgreich geändert!",
+                    errorMsg: "Fehler beim Ändern des Kunden"
+                });
             } else {
                 this.storeNewItem({
                     item: this.editedItem,
                     module: 'customer/',
                     successMsg: "Kunden erfolgreich angelegt!",
-                    errorMsg: "Fehler beim Anlegen des Kundens"
+                    errorMsg: "Fehler beim Anlegen des Kunden"
                 });
             }
             this.close();

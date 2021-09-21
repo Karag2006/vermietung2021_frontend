@@ -109,16 +109,15 @@ export default {
     },
 
     created() {
-        this.getItemsList();
+        this.getItemsList("customer/");
     },
 
     methods: {
-        ...mapActions("customer", [
+        ...mapActions([
             "getItemsList",
-            //"getItemById",
-            "deleteItemById",
+            "getItemById",
+            "deleteItemById"
         ]),
-        ...mapActions(["getItemById"]),
         editItem(item) {
             this.editedIndex = item.id;
             this.getItemById({
@@ -132,7 +131,12 @@ export default {
             this.dialogDelete = true;
         },
         deleteItemConfirm() {
-            this.deleteItemById(this.editedIndex);
+            this.deleteItemById({
+                    id: this.editedIndex,
+                    module: 'customer/',
+                    successMsg: "Kunden erfolgreich gelöscht!",
+                    errorMsg: "Fehler beim Löschen des Kunden"
+                });
             this.closeDelete();
         },
         closeDelete() {
