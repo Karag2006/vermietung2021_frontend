@@ -21,7 +21,7 @@
                         </v-toolbar-title>
 
                         <v-spacer></v-spacer>
-                        <CustomerDialog 
+                        <UserDialog 
                             :trigger="dialog"
                             :editedIndex="editedIndex" 
                             v-on:close="dialog = false"
@@ -83,7 +83,7 @@ import { mapState, mapActions, mapMutations } from "vuex";
 
 export default {
     components: {
-        "CustomerDialog": require("@/components/forms/CustomerDialog.vue").default,
+        "UserDialog": require("@/components/forms/UserDialog.vue").default,
     },
     data: () => ({
         dialog: false,

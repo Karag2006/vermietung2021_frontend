@@ -99,10 +99,11 @@ export default {
                 })
                 .then((response) => {
                     commit("pushItemToList", response.data);
+                    commit("resetForm")
                     commit(
                         "showSnackbar",
                         {
-                            text: "Kunde erfolgreich angelegt!",
+                            text: "Benutzer erfolgreich angelegt!",
                             color: "success darken-3",
                         },
                         { root: true }
@@ -112,7 +113,7 @@ export default {
                     commit(
                         "showSnackbar",
                         {
-                            text: "Fehler beim Anlegen eines Kunden",
+                            text: "Fehler beim Anlegen eines Benutzers",
                             color: "error",
                         },
                         { root: true }
@@ -135,7 +136,6 @@ export default {
                 })
                 .then((response) => {
                     commit("setEditedItem", response.data);
-                    commit("parseDate", response.data.birth_date);
                 });
         },
 
@@ -146,10 +146,11 @@ export default {
                 })
                 .then((response) => {
                     commit("updateItemInList", response.data);
+                    commit("resetForm");
                     commit(
                         "showSnackbar",
                         {
-                            text: "Kunde erfolgreich aktualisiert!",
+                            text: "Benutzer erfolgreich aktualisiert!",
                             color: "success darken-3",
                         },
                         { root: true }
@@ -159,7 +160,7 @@ export default {
                     commit(
                         "showSnackbar",
                         {
-                            text: "Fehler beim Aktualisieren eines Kunden",
+                            text: "Fehler beim Aktualisieren eines Benutzers",
                             color: "error",
                         },
                         { root: true }
@@ -177,7 +178,7 @@ export default {
                     commit(
                         "showSnackbar",
                         {
-                            text: "Kunde erfolgreich gelöscht!",
+                            text: "Benutzer erfolgreich gelöscht!",
                             color: "success darken-3",
                         },
                         { root: true }
@@ -187,7 +188,7 @@ export default {
                     commit(
                         "showSnackbar",
                         {
-                            text: "Fehler beim Löschen eines Kunden",
+                            text: "Fehler beim Löschen eines Benutzers",
                             color: "error",
                         },
                         { root: true }
