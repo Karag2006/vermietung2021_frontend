@@ -127,15 +127,21 @@ export default {
     },
     methods: {
         ...mapActions("user", [
-            "storeNewItem",
+            // "storeNewItem",
             "updateItem",
         ]),
+        ...mapActions(["storeNewItem"]),
         ...mapMutations("user", ["resetForm"]),
         save() {
             if (this.editedIndex > -1) {
                 this.updateItem(this.editedItem);
             } else {
-                this.storeNewItem(this.editedItem);
+                this.storeNewItem({
+                    item: this.editedItem,
+                    module: 'user/',
+                    successMsg: "Benutzer erfolgreich angelegt!",
+                    errorMsg: "Fehler beim Anlegen des Benutzers"
+                });
             }
             this.close();
         },

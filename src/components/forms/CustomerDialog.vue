@@ -73,7 +73,7 @@
                                                 attrs,
                                             }"
                                         >
-                                            <v-icon v-bind="attrs" v-on="on">
+                                            <v-icon v-bind="attrs" v-on="on" @click="parseDate(editedItem.birth_date)">
                                                 far fa-calendar-alt
                                             </v-icon>
                                         </template>
@@ -272,15 +272,21 @@ export default {
     },
     methods: {
         ...mapActions("customer", [
-            "storeNewItem",
+            // "storeNewItem",
             "updateItem",
         ]),
+        ...mapActions(["storeNewItem"]),
         ...mapMutations("customer", ["resetForm", "parseDate", "formatDate"]),
         save() {
             if (this.editedIndex > -1) {
                 this.updateItem(this.editedItem);
             } else {
-                this.storeNewItem(this.editedItem);
+                this.storeNewItem({
+                    item: this.editedItem,
+                    module: 'customer/',
+                    successMsg: "Kunden erfolgreich angelegt!",
+                    errorMsg: "Fehler beim Anlegen des Kundens"
+                });
             }
             this.close();
         },

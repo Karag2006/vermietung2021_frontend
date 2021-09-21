@@ -1,5 +1,6 @@
 import authHeader from "@/services/auth-header";
 import axios from "axios";
+import { now } from "core-js";
 
 
 export default {
@@ -58,30 +59,30 @@ export default {
         },
     },
     actions: {
-        storeNewItem({ commit, state, rootState }, item) {
-            axios
-                .post(rootState.baseApiUrl + "customer", item, {
-                    headers: authHeader(),
-                })
-                .then((response) => {
-                    commit("pushItemToList", response.data);
-                    commit(
-                        "showSnackbar", {
-                            text: "Kunde erfolgreich angelegt!",
-                            color: "success darken-3",
-                        }, { root: true })
-                })
-                .catch((error) => {
-                    commit(
-                        "showSnackbar",
-                        {
-                            text: "Fehler beim Anlegen eines Kunden",
-                            color: "error",
-                        },
-                        { root: true }
-                    );
-                });
-        },
+        // storeNewItem({ commit, state, rootState }, item) {
+        //     axios
+        //         .post(rootState.baseApiUrl + "customer", item, {
+        //             headers: authHeader(),
+        //         })
+        //         .then((response) => {
+        //             commit("pushItemToList", response.data);
+        //             commit(
+        //                 "showSnackbar", {
+        //                     text: "Kunde erfolgreich angelegt!",
+        //                     color: "success darken-3",
+        //                 }, { root: true })
+        //         })
+        //         .catch((error) => {
+        //             commit(
+        //                 "showSnackbar",
+        //                 {
+        //                     text: "Fehler beim Anlegen eines Kunden",
+        //                     color: "error",
+        //                 },
+        //                 { root: true }
+        //             );
+        //         });
+        // },
         getItemsList({ commit, state, rootState }) {
             axios
                 .get(rootState.baseApiUrl + "customer", {
@@ -89,16 +90,6 @@ export default {
                 })
                 .then((response) => {
                     commit("setItemsList", response.data);
-                });
-        },
-        getItemById({ commit, state, rootState }, id) {
-            axios
-                .get(rootState.baseApiUrl + "customer/" + id, {
-                    headers: authHeader(),
-                })
-                .then((response) => {
-                    commit("setEditedItem", response.data);
-                    commit("parseDate", response.data.birth_date);
                 });
         },
 
@@ -191,6 +182,9 @@ export default {
                      2,
                      "0"
                  )}`;
+            }
+            else {
+                state.date = new Date().toISOString().substr(0,10);
             }
            
         },

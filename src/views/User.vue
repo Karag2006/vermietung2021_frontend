@@ -114,12 +114,18 @@ export default {
     methods: {
         ...mapActions("user", [
             "getItemsList",
-            "getItemById",
+            //"getItemById",
             "deleteItemById",
         ]),
+
+        ...mapActions(["getItemById"]),
+
         editItem(item) {
             this.editedIndex = item.id;
-            this.getItemById(this.editedIndex);
+            this.getItemById({
+                itemId: this.editedIndex,
+                module: "user/"
+            });
             this.dialog = true;
         },
         deleteItem(item) {
