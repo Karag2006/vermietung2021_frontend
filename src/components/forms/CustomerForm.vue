@@ -1,23 +1,7 @@
 <template>
-    <v-dialog v-model="dialog" max-width="1200px">
-        <template v-slot:activator="{ on, attrs }">
-            <v-btn
-                class="pa-5"
-                color="success"
-                dark
-                elevation="2"
-                v-bind="attrs"
-                v-on="on"
-                @click="resetForm"
-            >
-                <v-icon dark class="mr-2">
-                    fas fa-user-plus
-                </v-icon>
-                Kunden hinzufügen
-            </v-btn>
-        </template>
+    
         <v-card>
-            <v-card-title>
+            <v-card-title class="mb-4">
                 <span class="text-h5">{{ formTitle }}</span>
             </v-card-title>
 
@@ -243,7 +227,7 @@
                 </v-btn>
             </v-card-actions>
         </v-card>
-    </v-dialog>
+    
 </template>
 
 <script>
@@ -267,7 +251,7 @@ export default {
         formTitle() {
             return this.editedIndex === -1
                 ? "Neuer Kunde"
-                : "Kunden bearbeiten";
+                : this.editedItem.name1 + " bearbeiten";
         },
     },
     methods: {

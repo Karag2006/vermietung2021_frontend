@@ -21,12 +21,30 @@
                         </v-toolbar-title>
 
                         <v-spacer></v-spacer>
-                        <CustomerDialog 
-                            :trigger="dialog"
-                            :editedIndex="editedIndex" 
-                            v-on:close="dialog = false"
-                            v-on:resetIndex="editedIndex = -1"   
-                        />
+                        <v-dialog v-model="dialog" max-width="1200px">
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-btn
+                                    class="pa-5"
+                                    color="success"
+                                    dark
+                                    elevation="2"
+                                    v-bind="attrs"
+                                    v-on="on"
+                                    @click="resetForm"
+                                >
+                                    <v-icon dark class="mr-2">
+                                        fas fa-user-plus
+                                    </v-icon>
+                                    Kunden hinzufügen
+                                </v-btn>
+                            </template>
+                            <CustomerForm
+                                :trigger="dialog"
+                                :editedIndex="editedIndex"
+                                v-on:close="dialog = false"
+                                v-on:resetIndex="editedIndex = -1"
+                            />
+                        </v-dialog>
                         <v-dialog v-model="dialogDelete" max-width="500px">
                             <v-card>
                                 <v-card-title class="text-h5"
@@ -83,7 +101,8 @@ import { mapState, mapActions, mapMutations } from "vuex";
 
 export default {
     components: {
-        "CustomerDialog": require("@/components/forms/CustomerDialog.vue").default,
+        CustomerForm: require("@/components/forms/CustomerForm.vue")
+            .default,
     },
     data: () => ({
         dialog: false,
@@ -100,6 +119,7 @@ export default {
             defaultItem: (state) => state.defaultItem,
             date: (state) => state.date,
         }),
+        
     },
 
     watch: {
@@ -113,16 +133,12 @@ export default {
     },
 
     methods: {
-        ...mapActions([
-            "getItemsList",
-            "getItemById",
-            "deleteItemById"
-        ]),
+        ...mapActions(["getItemsList", "getItemById", "deleteItemById"]),
         editItem(item) {
             this.editedIndex = item.id;
             this.getItemById({
                 itemId: this.editedIndex,
-                module: "customer/"
+                module: "customer/",
             });
             this.dialog = true;
         },
@@ -132,11 +148,11 @@ export default {
         },
         deleteItemConfirm() {
             this.deleteItemById({
-                    id: this.editedIndex,
-                    module: 'customer/',
-                    successMsg: "Kunden erfolgreich gelöscht!",
-                    errorMsg: "Fehler beim Löschen des Kunden"
-                });
+                id: this.editedIndex,
+                module: "customer/",
+                successMsg: "Kunden erfolgreich gelöscht!",
+                errorMsg: "Fehler beim Löschen des Kunden",
+            });
             this.closeDelete();
         },
         closeDelete() {
@@ -146,6 +162,7 @@ export default {
                 this.editedIndex = -1;
             });
         },
+        
     },
 };
 </script>
