@@ -4,6 +4,7 @@ import navigation from './navigation'
 import auth from './auth.module.js'
 import customer from './customer.module'
 import user from './user.module'
+import trailer from './trailer.module'
 import authHeader from "@/services/auth-header";
 import axios from "axios";
 
@@ -115,5 +116,7 @@ export default new Vuex.Store({
         navigation,
         customer,
         user,
+        trailer,
+
     },
 });
