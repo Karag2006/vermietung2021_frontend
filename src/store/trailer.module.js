@@ -13,7 +13,7 @@ export default {
                 value: "title",
             },
             { text: "Kennzeichen", value: "plateNumber" },
-            { text: "zul. Gesamtgewicht", value: "totalWeight" },
+            { text: "zul. GG.", value: "totalWeight" },
             { text: "Lademaße", value: "loadingSize" },
             { text: "Tüv", value: "tuev" },
             {
