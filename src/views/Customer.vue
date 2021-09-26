@@ -134,6 +134,7 @@ export default {
 
     methods: {
         ...mapActions(["getItemsList", "getItemById", "deleteItemById"]),
+        ...mapMutations("customer/", ["resetForm"]),
         editItem(item) {
             this.editedIndex = item.id;
             this.getItemById({

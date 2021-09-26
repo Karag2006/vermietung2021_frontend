@@ -38,7 +38,7 @@
                                     Anhänger hinzufügen
                                 </v-btn>
                             </template>
-                            <CustomerForm
+                            <TrailerForm
                                 :trigger="dialog"
                                 :editedIndex="editedIndex"
                                 v-on:close="dialog = false"
@@ -101,7 +101,7 @@ import { mapState, mapActions, mapMutations } from "vuex";
 
 export default {
     components: {
-        CustomerForm: require("@/components/forms/TrailerForm.vue")
+        TrailerForm: require("@/components/forms/TrailerForm.vue")
             .default,
     },
     data: () => ({
@@ -134,6 +134,7 @@ export default {
 
     methods: {
         ...mapActions(["getItemsList", "getItemById", "deleteItemById"]),
+        ...mapMutations("trailer/", ["resetForm"]),
         editItem(item) {
             this.editedIndex = item.id;
             this.getItemById({

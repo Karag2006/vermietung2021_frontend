@@ -10,34 +10,34 @@
                     <v-row justify="space-around" class="mb-10">
                         <v-col cols="12" md="5" class="">
                             <v-text-field
-                                v-model="editedItem['pass_number']"
+                                v-model="editedItem['title']"
                                 :rules="[
-                                    rules.min(8, editedItem['pass_number']),
-                                    rules.max(30, editedItem['pass_number']),
+                                    rules.min(8, editedItem['title']),
+                                    rules.max(30, editedItem['title']),
                                 ]"
                                 validate-on-blur
-                                label="Personalausweis Nr."
+                                label="Anhängerbezeichnung"
                                 dense
                                 class="mb-4"
                             ></v-text-field>
                             <v-text-field
-                                v-model="editedItem['name1']"
-                                label="Name / Firma"
+                                v-model="editedItem['plateNumber']"
+                                label="Kennzeichen"
                                 dense
                                 class="mb-4"
                                 :rules="[
                                     rules.required,
-                                    rules.max(50, editedItem['name1']),
+                                    rules.max(13, editedItem['plateNumber']),
                                 ]"
                                 validate-on-blur
                             ></v-text-field>
                             <v-text-field
-                                v-model="editedItem['name2']"
-                                label="Name 2"
+                                v-model="editedItem['chassisNumber']"
+                                label="Fahrgestellnummer"
                                 dense
                                 class="mb-4"
                                 :rules="[
-                                    rules.max(50, editedItem['name2'])
+                                    rules.max(50, editedItem['chassisNumber'])
                                 ]"
                                 validate-on-blur
                             ></v-text-field>
@@ -57,7 +57,7 @@
                                                 attrs,
                                             }"
                                         >
-                                            <v-icon v-bind="attrs" v-on="on" @click="parseDate(editedItem.birth_date)">
+                                            <v-icon v-bind="attrs" v-on="on" @click="parseDate(editedItem.tuev)">
                                                 far fa-calendar-alt
                                             </v-icon>
                                         </template>
@@ -72,129 +72,57 @@
                                 </v-col>
                                 <v-col cols="11">
                                     <v-text-field
-                                        v-model="editedItem['birth_date']"
-                                        label="Geburtsdatum"
+                                        v-model="editedItem['tuev']"
+                                        label="Tüv Fälligkeit"
                                         dense
                                         class="mb-4"
                                         @blur="
-                                            parseDate(editedItem['birth_date'])
+                                            parseDate(editedItem['tuev'])
                                         "
                                         :rules="[
-                                            rules.isDate(editedItem['birth_date']),
+                                            rules.isDate(editedItem['tuev']),
                                         ]"
                                         validate-on-blur
                                     ></v-text-field>
                                 </v-col>
                             </v-row>
-
-                            <v-text-field
-                                v-model="editedItem['birth_city']"
-                                label="Geburtsort"
-                                dense
-                                class="mb-4"
-                                :rules="[
-                                    rules.min(3, editedItem['birth_city']),
-                                    rules.max(50, editedItem['birth_city']),
-                                ]"
-                                validate-on-blur
-                            ></v-text-field>
                         </v-col>
                         <v-col cols="12" md="5" class="">
                             <v-row dense>
-                                <v-col cols="12" lg="3">
+                                <v-col cols="12" lg="6">
                                     <v-text-field
-                                        v-model="editedItem['plz']"
-                                        label="Postleitzahl"
+                                        v-model="editedItem['totalWeight']"
+                                        label="zulässiges Gesamtgewicht"
                                         dense
                                         :rules="[
-                                            rules.isNumeric(editedItem['plz']),
-                                            rules.min(4, editedItem['plz']),
-                                            rules.max(5, editedItem['plz']),
+                                            rules.min(6, editedItem['totalWeight']),
+                                            rules.max(7, editedItem['totalWeight']),
                                         ]"
                                         validate-on-blur
                                     ></v-text-field>
                                 </v-col>
-                                <v-col cols="12" lg="9">
+                                <v-col cols="12" lg="6">
                                     <v-text-field
-                                        v-model="editedItem['city']"
-                                        label="Ort"
+                                        v-model="editedItem['usableWeight']"
+                                        label="Nutzlast"
                                         dense
                                         class="mb-4"
                                         :rules="[
-                                            rules.min(3, editedItem['city']),
-                                            rules.max(50, editedItem['city']),
+                                            rules.min(6, editedItem['usableWeight']),
+                                            rules.max(7, editedItem['usableWeight']),
                                         ]"
                                         validate-on-blur
                                     ></v-text-field>
                                 </v-col>
                             </v-row>
                             <v-text-field
-                                v-model="editedItem['street']"
-                                label="Strasse"
+                                v-model="editedItem['loadingSize']"
+                                label="Lademaße ( L x B x H cm )"
                                 dense
                                 class="mb-10"
                                 :rules="[
-                                    rules.min(3, editedItem['street']),
-                                    rules.max(50, editedItem['street']),
-                                ]"
-                                validate-on-blur
-                            ></v-text-field>
-                            <v-text-field
-                                v-model="editedItem['phone']"
-                                label="Telefonnummer"
-                                dense
-                                class="mb-4"
-                                :rules="[
-                                    rules.min(6, editedItem['phone']),
-                                    rules.max(15, editedItem['phone']),
-                                ]"
-                                validate-on-blur
-                            ></v-text-field>
-                            <v-text-field
-                                v-model="editedItem['car_number']"
-                                label="Kennzeichen vom Zugfahrzeug"
-                                dense
-                                class="mb-4"
-                                :rules="[
-                                    rules.min(5, editedItem['car_number']),
-                                    rules.max(20, editedItem['car_number']),
-                                ]"
-                                validate-on-blur
-                            ></v-text-field>
-                            <v-text-field
-                                v-model="editedItem['email']"
-                                label="E-Mail Adresse"
-                                dense
-                                class="mb-4"
-                                :rules="[
-                                    rules.isEmail(editedItem['email'])
-                                ]"
-                                validate-on-blur
-                            ></v-text-field>
-                        </v-col>
-                    </v-row>
-                    <v-row justify="space-around" dense>
-                        <v-col cols="12" md="5">
-                            <v-text-field
-                                v-model="editedItem['driving_license_no']"
-                                label="Führerschein Nr."
-                                dense
-                                class="mb-4"
-                                :rules="[
-                                    rules.min(6, editedItem['driving_license_no']),
-                                    rules.max(15, editedItem['driving_license_no']),
-                                ]"
-                                validate-on-blur
-                            ></v-text-field>
-                        </v-col>
-                        <v-col cols="12" md="5">
-                            <v-text-field
-                                v-model="editedItem['driving_license_class']"
-                                label="Führerschein Klasse"
-                                dense
-                                class="mb-4"
-                                :rules="[
-                                    rules.max(9, editedItem['driving_license_class']),
+                                    rules.min(6, editedItem['loadingSize']),
+                                    rules.max(20, editedItem['loadingSize']),
                                 ]"
                                 validate-on-blur
                             ></v-text-field>
@@ -244,31 +172,31 @@ export default {
         };
     },
     computed: {
-        ...mapState("customer", {
+        ...mapState("trailer", {
             editedItem: (state) => state.editedItem,
             date: (state) => state.date,
         }),
         formTitle() {
             return this.editedIndex === -1
-                ? "Neuer Kunde"
-                : this.editedItem.name1 + " bearbeiten";
+                ? "Neuer Anhänger"
+                : this.editedItem.plateNumber + " bearbeiten";
         },
     },
     methods: {
         ...mapActions(["updateItem","storeNewItem"]),
-        ...mapMutations("customer", ["resetForm", "parseDate", "formatDate"]),
+        ...mapMutations("trailer", ["resetForm", "parseDate", "formatDate"]),
         save() {
             if (this.editedIndex > -1) {
                 this.updateItem({
                     item: this.editedItem,
-                    module: 'customer/',
+                    module: 'trailer/',
                     successMsg: "Kunden erfolgreich geändert!",
                     errorMsg: "Fehler beim Ändern des Kunden"
                 });
             } else {
                 this.storeNewItem({
                     item: this.editedItem,
-                    module: 'customer/',
+                    module: 'trailer/',
                     successMsg: "Kunden erfolgreich angelegt!",
                     errorMsg: "Fehler beim Anlegen des Kunden"
                 });
