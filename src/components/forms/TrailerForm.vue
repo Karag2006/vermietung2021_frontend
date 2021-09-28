@@ -190,15 +190,15 @@ export default {
                 this.updateItem({
                     item: this.editedItem,
                     module: 'trailer/',
-                    successMsg: "Kunden erfolgreich geändert!",
-                    errorMsg: "Fehler beim Ändern des Kunden"
+                    successMsg: "Anhänger erfolgreich geändert!",
+                    errorMsg: "Fehler beim Ändern des Anhänger"
                 });
             } else {
                 this.storeNewItem({
                     item: this.editedItem,
                     module: 'trailer/',
-                    successMsg: "Kunden erfolgreich angelegt!",
-                    errorMsg: "Fehler beim Anlegen des Kunden"
+                    successMsg: "Anhänger erfolgreich angelegt!",
+                    errorMsg: "Fehler beim Anlegen des Anhänger"
                 });
             }
             this.close();

@@ -117,6 +117,7 @@ export default {
             editedItem: (state) => state.editedItem,
             defaultItem: (state) => state.defaultItem,
         }),
+        ...mapMutations("user/", ["resetForm"]),
     },
 
     watch: {
