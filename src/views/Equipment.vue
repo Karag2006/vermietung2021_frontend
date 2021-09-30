@@ -38,7 +38,7 @@
                                     Zubehör hinzufügen
                                 </v-btn>
                             </template>
-                            <AccessoriesForm
+                            <EquipmentForm
                                 :trigger="dialog"
                                 :editedIndex="editedIndex"
                                 v-on:close="dialog = false"
@@ -101,7 +101,7 @@ import { mapState, mapActions, mapMutations } from "vuex";
 
 export default {
     components: {
-        AccessoriesForm: require("@/components/forms/AccessoriesForm.vue")
+        EquipmentForm: require("@/components/forms/EquipmentForm.vue")
             .default,
     },
     data: () => ({
@@ -112,7 +112,7 @@ export default {
     }),
 
     computed: {
-        ...mapState("accessories", {
+        ...mapState("equipment", {
             items: (state) => state.items,
             headers: (state) => state.listHeaders,
             editedItem: (state) => state.editedItem,
@@ -129,17 +129,17 @@ export default {
     },
 
     created() {
-        this.getItemsList("accessories/");
+        this.getItemsList("equipment/");
     },
 
     methods: {
         ...mapActions(["getItemsList", "getItemById", "deleteItemById"]),
-        ...mapMutations("accessories/", ["resetForm"]),
+        ...mapMutations("equipment/", ["resetForm"]),
         editItem(item) {
             this.editedIndex = item.id;
             this.getItemById({
                 itemId: this.editedIndex,
-                module: "accessories/",
+                module: "equipment/",
             });
             this.dialog = true;
         },
@@ -150,7 +150,7 @@ export default {
         deleteItemConfirm() {
             this.deleteItemById({
                 id: this.editedIndex,
-                module: "accessories/",
+                module: "equipment/",
                 successMsg: "Zubehör erfolgreich gelöscht!",
                 errorMsg: "Fehler beim Löschen des Zubehör",
             });
