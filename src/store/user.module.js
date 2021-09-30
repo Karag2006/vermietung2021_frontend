@@ -92,34 +92,6 @@ export default {
         },
     },
     actions: {
-        // storeNewItem({ commit, state, rootState }, item) {
-        //     axios
-        //         .post(rootState.baseApiUrl + "user", item, {
-        //             headers: authHeader(),
-        //         })
-        //         .then((response) => {
-        //             commit("pushItemToList", response.data);
-        //             commit("resetForm")
-        //             commit(
-        //                 "showSnackbar",
-        //                 {
-        //                     text: "Benutzer erfolgreich angelegt!",
-        //                     color: "success darken-3",
-        //                 },
-        //                 { root: true }
-        //             );
-        //         })
-        //         .catch((error) => {
-        //             commit(
-        //                 "showSnackbar",
-        //                 {
-        //                     text: "Fehler beim Anlegen eines Benutzers",
-        //                     color: "error",
-        //                 },
-        //                 { root: true }
-        //             );
-        //         });
-        // },
         getItemsList({ commit, state, rootState }) {
             axios
                 .get(rootState.baseApiUrl + "user", {

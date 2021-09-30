@@ -6,7 +6,7 @@
                     <v-toolbar flat>
                         <v-toolbar-title>
                             <h4 class="component-title mb-4">
-                                Anhängerliste
+                                Zubehörliste
                             </h4>
                             <div>
                                 <v-text-field
@@ -35,10 +35,10 @@
                                     <v-icon dark class="mr-2">
                                         fas fa-plus
                                     </v-icon>
-                                    Anhänger hinzufügen
+                                    Zubehör hinzufügen
                                 </v-btn>
                             </template>
-                            <TrailerForm
+                            <AccessoriesForm
                                 :trigger="dialog"
                                 :editedIndex="editedIndex"
                                 v-on:close="dialog = false"
@@ -48,7 +48,7 @@
                         <v-dialog v-model="dialogDelete" max-width="500px">
                             <v-card>
                                 <v-card-title class="text-h5"
-                                    >Anhänger wirklich löschen? <br />
+                                    >Zubehör wirklich löschen? <br />
                                     <h6>
                                         Dies kann nicht rückgängig gemacht
                                         werden
@@ -101,7 +101,7 @@ import { mapState, mapActions, mapMutations } from "vuex";
 
 export default {
     components: {
-        TrailerForm: require("@/components/forms/TrailerForm.vue")
+        AccessoriesForm: require("@/components/forms/AccessoriesForm.vue")
             .default,
     },
     data: () => ({
@@ -112,7 +112,7 @@ export default {
     }),
 
     computed: {
-        ...mapState("trailer", {
+        ...mapState("accessories", {
             items: (state) => state.items,
             headers: (state) => state.listHeaders,
             editedItem: (state) => state.editedItem,
@@ -129,17 +129,17 @@ export default {
     },
 
     created() {
-        this.getItemsList("trailer/");
+        this.getItemsList("accessories/");
     },
 
     methods: {
         ...mapActions(["getItemsList", "getItemById", "deleteItemById"]),
-        ...mapMutations("trailer/", ["resetForm"]),
+        ...mapMutations("accessories/", ["resetForm"]),
         editItem(item) {
             this.editedIndex = item.id;
             this.getItemById({
                 itemId: this.editedIndex,
-                module: "trailer/",
+                module: "accessories/",
             });
             this.dialog = true;
         },
@@ -150,9 +150,9 @@ export default {
         deleteItemConfirm() {
             this.deleteItemById({
                 id: this.editedIndex,
-                module: "trailer/",
-                successMsg: "Anhänger erfolgreich gelöscht!",
-                errorMsg: "Fehler beim Löschen des Anhänger",
+                module: "accessories/",
+                successMsg: "Zubehör erfolgreich gelöscht!",
+                errorMsg: "Fehler beim Löschen des Zubehör",
             });
             this.closeDelete();
         },
