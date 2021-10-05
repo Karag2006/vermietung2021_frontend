@@ -6,6 +6,7 @@ import customer from './customer.module'
 import user from './user.module'
 import trailer from './trailer.module'
 import equipment from "./equipment.module";
+import options from './options.module'
 import authHeader from "@/services/auth-header";
 import axios from "axios";
 
@@ -119,5 +120,6 @@ export default new Vuex.Store({
         user,
         trailer,
         equipment,
+        options,
     },
 });
