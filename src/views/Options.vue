@@ -134,7 +134,7 @@ export default {
         rules: validationRules
     }),
     methods: {
-        ...mapActions(['getItemById', 'updateItem']),
+        ...mapActions(['getItemById', 'updateItem', 'storeNewItem', 'getItemsList', 'deleteItemById']),
         openEdit() {
             this.edit = true;
         },
@@ -162,7 +162,8 @@ export default {
         this.getItemById({
             module: "options/",
             itemId: 1
-        })
+        }),
+        this.getItemsList('collectAddress/')
     },
 
 };
