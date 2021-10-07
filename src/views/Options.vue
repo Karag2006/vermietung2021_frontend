@@ -23,6 +23,7 @@
                                     rules.isNumeric(editedItem.vat)
                                 ]"
                                 validate-on-blur
+                                class="vatField"
                             ></v-text-field>
                             
                         </div>
@@ -110,6 +111,116 @@
                 </v-btn>
             </v-card-actions>
         </v-card>
+        <v-card class="card mx-4 mt-10" elevation="3">
+            <v-card-text>
+                <v-data-table :headers="$store.state.collectAddress.listHeaders" :items="$store.state.collectAddress.items">
+                    <template v-slot:top>
+                        <v-toolbar flat>
+                            <v-toolbar-title>
+                                <h4 class="component-title mb-4">
+                                    Abholadressen
+                                </h4>
+                            </v-toolbar-title>
+                        </v-toolbar>
+                    </template>
+                    <template v-slot:item="{ item }">
+                        <tr v-if="editMode === item.id">
+                            <td>
+                                <v-text-field
+                                    v-model="$store.state.collectAddress.editedItem.name"
+                                    dense
+                                    :rules="[
+                                        rules.required,
+                                    ]"
+                                    validate-on-blur
+                                ></v-text-field>
+                            </td>
+                            <td>
+                                <v-text-field
+                                    v-model="$store.state.collectAddress.editedItem.address"
+                                    dense
+                                    :rules="[
+                                        rules.required,
+                                    ]"
+                                    validate-on-blur
+                                ></v-text-field>
+                            </td>
+                            <td>
+                                <v-icon
+                                    color="success"
+                                    small
+                                    class="mr-4"
+                                    @click="saveAddress"
+                                >
+                                    fas fa-save
+                                </v-icon>
+                                <v-icon
+                                    color="red darken-2"
+                                    small
+                                    @click="cancel"
+                                >
+                                    fas fa-window-close
+                                </v-icon>
+                            </td>
+                        </tr>
+                        <v-data-table-row v-else :headers="$store.state.collectAddress.listHeaders" :item="item" >
+                            <template v-slot:actions="{ item }">
+                                <v-icon
+                                    color="success"
+                                    small
+                                    class="mr-4"
+                                    @click="editAddress(item)"
+                                >
+                                    far fa-edit
+                                </v-icon>
+                                <v-icon
+                                    color="red darken-2"
+                                    small
+                                    @click="deleteItem(item)"
+                                >
+                                    fas fa-trash-alt
+                                </v-icon>
+                            </template>
+                        </v-data-table-row>
+                    </template>
+                    <template v-slot:body.append>
+                        <tr>
+                            <td>
+                                <v-text-field
+                                    v-model="newAddress.name"
+                                    dense
+                                    :rules="[
+                                        rules.required,
+                                    ]"
+                                    validate-on-blur
+                                ></v-text-field>
+                            </td>
+                            <td>
+                                <v-text-field
+                                    v-model="newAddress.address"
+                                    dense
+                                    :rules="[
+                                        rules.required,
+                                    ]"
+                                    validate-on-blur
+                                ></v-text-field>
+                            </td>
+                            <td>
+                                <v-icon
+                                    color="success"
+                                    small
+                                    class="mr-4"
+                                    @click="saveNewAddress"
+                                >
+                                    fas fa-plus
+                                </v-icon>
+                            </td>
+                        </tr>
+                    </template>
+                    
+                </v-data-table>
+            </v-card-text>
+        </v-card>
     </div>
 </template>
 
@@ -118,14 +229,22 @@
 import { mapActions, mapState } from 'vuex';
 import CKEditor from 'ckeditor4-vue';
 import validationRules from "../services/validationRules"
+import Row from 'vuetify/lib/components/VDataTable/Row.js';
 
 export default {
     name: "Options",
     components: { 
-        ckeditor: CKEditor.component
+        ckeditor: CKEditor.component,
+        'v-data-table-row': Row 
     },
     data: () => ({
         edit: false,
+        editMode: -1,
+        search: "",
+        newAddress: {
+            name: "",
+            address: ""
+        },
         
         editorConfig: {
             removePlugins: "elementspath,filebrowser,image,showborders,table,tableselection,tabletools,uploadimage"
@@ -151,6 +270,37 @@ export default {
            
             this.closeEdit();
         },
+        editAddress(address) { 
+            this.$store.state.collectAddress.editedIndex = address.id;
+            this.getItemById({
+                itemId: this.$store.state.collectAddress.editedIndex,
+                module: "collectAddress/",
+            });
+            this.editMode = address.id;
+        },
+        cancel(){
+            this.$store.state.collectAddress.editedIndex = -1
+            this.editMode = -1
+        },
+        saveAddress(){
+            this.updateItem({
+                item: this.$store.state.collectAddress.editedItem,
+                module: 'collectAddress/',
+                successMsg: "Abholadresse erfolgreich geändert!",
+                errorMsg: "Fehler beim Ändern der Adresse"
+            });
+            this.cancel();
+        },
+        saveNewAddress(){
+            this.storeNewItem({
+                item: this.newAddress,
+                module: 'collectAddress/',
+                successMsg: "Abholadresse erfolgreich hinzugefügt!",
+                errorMsg: "Fehler beim Hinzufügen der Adresse"
+            });
+            this.newAddress.name = "";
+            this.newAddress.address = ""
+        }
     },
     computed: {
         ...mapState('options', {
@@ -170,7 +320,7 @@ export default {
 </script>
 
 <style scoped>
-/deep/ .v-text-field{
-    width: 2.5rem;
-}
+    .vatField {
+        width: 2.5rem;
+    }
 </style>
