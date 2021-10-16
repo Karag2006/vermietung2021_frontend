@@ -221,6 +221,33 @@
                 </v-data-table>
             </v-card-text>
         </v-card>
+        <v-dialog v-model="dialogDelete" max-width="500px">
+            <v-card>
+                <v-card-title class="text-h5"
+                    >Abholadresse wirklich löschen? <br />
+                    <h6>
+                        Dies kann nicht rückgängig gemacht
+                        werden
+                    </h6></v-card-title
+                >
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                        color="blue darken-1"
+                        text
+                        @click="closeDelete"
+                        >Abbrechen</v-btn
+                    >
+                    <v-btn
+                        color="red darken-1"
+                        text
+                        @click="deleteItemConfirm"
+                        >Löschen</v-btn
+                    >
+                    <v-spacer></v-spacer>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </div>
 </template>
 
@@ -239,6 +266,7 @@ export default {
     },
     data: () => ({
         edit: false,
+        dialogDelete: false,
         editMode: -1,
         search: "",
         newAddress: {
@@ -300,7 +328,27 @@ export default {
             });
             this.newAddress.name = "";
             this.newAddress.address = ""
-        }
+        },
+        deleteItem(address) {
+            this.$store.state.collectAddress.editedIndex = address.id;
+            this.dialogDelete = true;
+        },
+        deleteItemConfirm() {
+            this.deleteItemById({
+                id: this.$store.state.collectAddress.editedIndex,
+                module: "collectAddress/",
+                successMsg: "Abholadresse erfolgreich gelöscht!",
+                errorMsg: "Fehler beim Löschen der Abholadresse",
+            });
+            this.closeDelete();
+        },
+        closeDelete() {
+            // reset Delete Dialog
+            this.dialogDelete = false;
+            this.$nextTick(() => {
+                this.$store.state.collectAddress.editedIndex = -1;
+            });
+        },
     },
     computed: {
         ...mapState('options', {
