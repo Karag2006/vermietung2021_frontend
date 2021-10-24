@@ -105,48 +105,11 @@
                         </v-row>
                     </v-container>
                 </v-tab-item>
-                 <v-tab-item>
-                    <v-container>
-                        <v-row justify="space-around" class="mb-10">
-                            <v-col cols="12" lg="5">
-                                <v-text-field
-                                    v-model="editedItem['name']"
-                                    label="Blub"
-                                    dense
-                                    :rules="[
-                                        rules.min(5, editedItem['name']),
-                                        rules.max(50, editedItem['name']),
-                                        rules.required,
-                                    ]"
-                                    validate-on-blur
-                                ></v-text-field>
-                                <v-text-field
-                                    v-model="editedItem['defaultNumber']"
-                                    label="Standard Anzahl"
-                                    dense
-                                    :rules="[
-                                        rules.min(1, editedItem['defaultNumber']),
-                                        rules.max(2, editedItem['defaultNumber']),
-                                        rules.isNumeric(editedItem['defaultNumber']),
-                                    ]"
-                                    validate-on-blur
-                                ></v-text-field>
-                            </v-col>
-                            <v-col cols="12" lg="5">
-                                <v-textarea
-                                    v-model="editedItem['details']"
-                                    clearable
-                                    label="Details"
-                                    rows="2"
-                                    :rules="[
-                                        rules.min(10, editedItem['details']),
-                                        rules.max(600, editedItem['details']),
-                                    ]"
-                                    validate-on-blur
-                                ></v-textarea>
-                            </v-col>
-                        </v-row>
-                    </v-container>
+                <v-tab-item>
+                    <DocumentTrailerForm />
+                </v-tab-item>
+                <v-tab-item>
+                    
                 </v-tab-item>
             </v-tabs>
         </v-card-text>
@@ -168,6 +131,10 @@ import { mapState, mapActions, mapMutations } from "vuex";
 import validationRules from "../../services/validationRules";
 
 export default {
+    components: {
+        DocumentTrailerForm: require("@/components/forms/DocumentTrailerForm.vue")
+            .default,
+    },
     props: ["trigger", "editedIndex"],
     data() {
         return {
