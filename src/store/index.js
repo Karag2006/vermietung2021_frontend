@@ -8,6 +8,7 @@ import trailer from './trailer.module'
 import equipment from "./equipment.module";
 import options from './options.module'
 import collectAddress from './collectAddress.module'
+import offer from './offer.module'
 import authHeader from "@/services/auth-header";
 import axios from "axios";
 
@@ -20,7 +21,7 @@ export default new Vuex.Store({
             text: "",
             color: "",
         },
-        baseApiUrl: "http://10.40.28.21/api/",
+        baseApiUrl: "http://10.40.28.22/api/",
     },
     mutations: {
         showSnackbar(state, payload) {
@@ -123,5 +124,6 @@ export default new Vuex.Store({
         equipment,
         options,
         collectAddress,
+        offer,
     },
 });
