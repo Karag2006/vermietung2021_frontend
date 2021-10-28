@@ -13,7 +13,7 @@ import trailer from './modules/trailer.module'
 import equipment from "./modules/equipment.module";
 import options from './modules/options.module'
 import collectAddress from './modules/collectAddress.module'
-import offer from './modules/offer.module'
+import offer from './modules/document.module'
 
 
 Vue.use(Vuex)

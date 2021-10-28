@@ -1,4 +1,5 @@
 import { now } from "core-js";
+import Vue from "vue";
 
 
 export default {
@@ -73,9 +74,12 @@ export default {
                 state.editedItem.tuev = `${day}.${month}.${year}`;
             }
         },
+
+        
         setTrailerInDocument(state, data) {
             Object.keys(data).forEach(element => {
-                state.editedItem["vehicle_" + element] = data[element];
+                const elementName = "vehicle_" + element
+                Vue.set(state.editedItem, elementName, data[element]);
             });   
         },
     },

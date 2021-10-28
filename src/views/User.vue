@@ -117,7 +117,6 @@ export default {
             editedItem: (state) => state.editedItem,
             defaultItem: (state) => state.defaultItem,
         }),
-        ...mapMutations("user/", ["resetForm"]),
     },
 
     watch: {
@@ -132,6 +131,7 @@ export default {
 
     methods: {
         ...mapActions(["getItemsList", "getItemById", "deleteItemById"]),
+        ...mapMutations("user/", ["resetForm"]),
 
         editItem(item) {
             this.editedIndex = item.id;
