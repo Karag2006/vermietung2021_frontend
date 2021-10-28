@@ -71,7 +71,7 @@ const actions = {
             .then((response) => {
                 commit(object.module + "setEditedItem", response.data);
                 commit(
-                    object.documentState + "/setTrailerInDocument",
+                    "document/setTrailerInDocument",
                     response.data
                 );
             });

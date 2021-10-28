@@ -7,6 +7,9 @@
         <v-card-text>
             <v-tabs>
                 <v-tabs-slider></v-tabs-slider>
+
+                <!-- Tab definitions -->
+
                 <v-tab>
                     Kunde
                 </v-tab>
@@ -19,98 +22,23 @@
                 <v-tab>
                     Angebot
                 </v-tab>
+
+                <!-- Tab Content  -->
+
                 <v-tab-item>
-                    <v-container>
-                        <v-row justify="space-around" class="mb-10">
-                            <v-col cols="12" lg="5">
-                                <v-text-field
-                                    v-model="editedItem['name']"
-                                    label="Bezeichnung"
-                                    dense
-                                    :rules="[
-                                        rules.min(5, editedItem['name']),
-                                        rules.max(50, editedItem['name']),
-                                        rules.required,
-                                    ]"
-                                    validate-on-blur
-                                ></v-text-field>
-                                <v-text-field
-                                    v-model="editedItem['defaultNumber']"
-                                    label="Standard Anzahl"
-                                    dense
-                                    :rules="[
-                                        rules.min(1, editedItem['defaultNumber']),
-                                        rules.max(2, editedItem['defaultNumber']),
-                                        rules.isNumeric(editedItem['defaultNumber']),
-                                    ]"
-                                    validate-on-blur
-                                ></v-text-field>
-                            </v-col>
-                            <v-col cols="12" lg="5">
-                                <v-textarea
-                                    v-model="editedItem['details']"
-                                    clearable
-                                    label="Details"
-                                    rows="2"
-                                    :rules="[
-                                        rules.min(10, editedItem['details']),
-                                        rules.max(600, editedItem['details']),
-                                    ]"
-                                    validate-on-blur
-                                ></v-textarea>
-                            </v-col>
-                        </v-row>
-                    </v-container>
-                </v-tab-item>
-                 <v-tab-item>
-                    <v-container>
-                        <v-row justify="space-around" class="mb-10">
-                            <v-col cols="12" lg="5">
-                                <v-text-field
-                                    v-model="editedItem['name']"
-                                    label="Bezeichnung"
-                                    dense
-                                    :rules="[
-                                        rules.min(5, editedItem['name']),
-                                        rules.max(50, editedItem['name']),
-                                        rules.required,
-                                    ]"
-                                    validate-on-blur
-                                ></v-text-field>
-                                <v-text-field
-                                    v-model="editedItem['defaultNumber']"
-                                    label="Standard Anzahl"
-                                    dense
-                                    :rules="[
-                                        rules.min(1, editedItem['defaultNumber']),
-                                        rules.max(2, editedItem['defaultNumber']),
-                                        rules.isNumeric(editedItem['defaultNumber']),
-                                    ]"
-                                    validate-on-blur
-                                ></v-text-field>
-                            </v-col>
-                            <v-col cols="12" lg="5">
-                                <v-textarea
-                                    v-model="editedItem['details']"
-                                    clearable
-                                    label="Details"
-                                    rows="2"
-                                    :rules="[
-                                        rules.min(10, editedItem['details']),
-                                        rules.max(600, editedItem['details']),
-                                    ]"
-                                    validate-on-blur
-                                ></v-textarea>
-                            </v-col>
-                        </v-row>
-                    </v-container>
+                    <!-- Tab1 -->
+                    <DocumentCustomerForm/>
                 </v-tab-item>
                 <v-tab-item>
-                    <DocumentTrailerForm 
-                        :documentState="'offer'"
-                    />
+                    <!-- Tab2 -->
+                    <DocumentDriverForm/>
                 </v-tab-item>
                 <v-tab-item>
+                    <!-- Tab3 -->
+                    <DocumentTrailerForm/>
+                </v-tab-item>
+                <v-tab-item>
+                    <!-- Tab4 -->
                     
                 </v-tab-item>
             </v-tabs>
@@ -134,8 +62,9 @@ import validationRules from "../../services/validationRules";
 
 export default {
     components: {
-        DocumentTrailerForm: require("@/components/forms/DocumentTrailerForm.vue")
-            .default,
+        DocumentTrailerForm: require("@/components/forms/DocumentTrailerForm.vue").default,
+        DocumentCustomerForm: require("@/components/forms/DocumentCustomerForm.vue").default,
+        DocumentDriverForm: require("@/components/forms/DocumentCustomerForm.vue").default,
     },
     props: ["trigger", "editedIndex"],
     data() {
@@ -158,19 +87,19 @@ export default {
     },
     methods: {
         ...mapActions(["updateItem", "storeNewItem"]),
-        ...mapMutations("offer", ["resetForm", "parseDate", "formatDate"]),
+        ...mapMutations("document", ["resetForm", "parseDate", "formatDate"]),
         save() {
             if (this.editedIndex > -1) {
                 this.updateItem({
                     item: this.editedItem,
-                    module: "offer/",
+                    module: "document/",
                     successMsg: "Angebot erfolgreich geändert!",
                     errorMsg: "Fehler beim Ändern des Angebot",
                 });
             } else {
                 this.storeNewItem({
                     item: this.editedItem,
-                    module: "offer/",
+                    module: "document/",
                     successMsg: "Angebot erfolgreich angelegt!",
                     errorMsg: "Fehler beim Anlegen des Angebot",
                 });
@@ -183,11 +112,6 @@ export default {
             this.$nextTick(() => {
                 this.$emit("resetIndex");
             });
-        },
-        datePickerInput(date) {
-            this.datePicker = false;
-            this.formatDate(date);
-            this.parseDate(this.editedItem.birth_date);
         },
     },
     watch: {

@@ -112,7 +112,7 @@ export default {
     }),
 
     computed: {
-        ...mapState("offer", {
+        ...mapState("document", {
             items: (state) => state.items,
             headers: (state) => state.listHeaders,
             editedItem: (state) => state.editedItem,
@@ -129,17 +129,17 @@ export default {
     },
 
     created() {
-        this.getItemsList("offer/");
+        this.getItemsList("document/");
     },
 
     methods: {
         ...mapActions(["getItemsList", "getItemById", "deleteItemById"]),
-        ...mapMutations("offer/", ["resetForm"]),
+        ...mapMutations("document/", ["resetForm"]),
         editItem(item) {
             this.editedIndex = item.id;
             this.getItemById({
                 itemId: this.editedIndex,
-                module: "offer/",
+                module: "document/",
             });
             this.dialog = true;
         },
@@ -150,7 +150,7 @@ export default {
         deleteItemConfirm() {
             this.deleteItemById({
                 id: this.editedIndex,
-                module: "offer/",
+                module: "document/",
                 successMsg: "Angebot erfolgreich gelöscht!",
                 errorMsg: "Fehler beim Löschen des Angebot",
             });

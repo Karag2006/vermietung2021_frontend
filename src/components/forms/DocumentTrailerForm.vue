@@ -13,12 +13,11 @@
                     @change="getDocumentValues({
                         module: 'trailer/',
                         itemId: pickedTrailer.id,
-                        documentState: documentState
                     })"
                 ></v-select>
             </v-col>
             <v-col cols="12" md="5">
-                &nbsp; {{documentState}}
+                &nbsp;
             </v-col>
         </v-row>
         <v-row justify="space-around" class="mb-10">
@@ -42,6 +41,16 @@
                     :rules="[
                         rules.required,
                         rules.max(13, editedItem.vehicle_plateNumber),
+                    ]"
+                    validate-on-blur
+                ></v-text-field>
+                <v-text-field
+                    v-model="editedItem.vehicle_chassisNumber"
+                    label="Fahrgestellnummer"
+                    dense
+                    class="mb-4"
+                    :rules="[
+                        rules.max(50, editedItem.vehicle_chassisNumber),
                     ]"
                     validate-on-blur
                 ></v-text-field>
@@ -95,7 +104,6 @@ import { mapState, mapActions, mapMutations } from "vuex";
 import validationRules from "../../services/validationRules"
 
 export default {
-    props: ['documentState'],
     data() {
         return {
             dialog: false,
@@ -109,7 +117,7 @@ export default {
             trailerList: (state) => state.items,
             date: (state) => state.date,
         }),
-        ...mapState("offer", {
+        ...mapState("document", {
             editedItem: (state) => state.editedItem,
         }),
         formTitle() {
@@ -145,11 +153,6 @@ export default {
             this.$nextTick(() => {
                 this.$emit("resetIndex")
             });
-        },
-        datePickerInput(date) {
-            this.datePicker = false;
-            this.formatDate(date);
-            this.parseDate(this.editedItem.birth_date);
         },
     },
     watch: {
