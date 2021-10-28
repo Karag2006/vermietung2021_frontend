@@ -95,6 +95,16 @@ export default new Vuex.Store({
                     commit(object.module + "setEditedItem", response.data);
                 });
         },
+        getDocumentValues({ commit, state, rootState }, object) {
+            axios
+                .get(rootState.baseApiUrl + object.module + object.itemId, {
+                    headers: authHeader(),
+                })
+                .then((response) => {
+                    commit(object.module + "setEditedItem", response.data);
+                    commit(object.documentState + "/setTrailerInDocument", response.data);
+                });
+        },
         deleteItemById({ commit, state, rootState }, object) {
             axios
                 .delete(rootState.baseApiUrl + object.module + object.id, {

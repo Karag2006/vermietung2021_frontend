@@ -3,22 +3,31 @@
         <v-row justify="space-around" class="my-5">
             <v-col cols="12" md="5">
                 <v-select
-                    :items="DocumentTrailerList"
+                    v-model="pickedTrailer"
+                    :items="trailerList"
                     label="Anhänger auswählen"
+                    item-text="selector"
+                    item-value="plateNumber"
+                    return-object
                     dense
+                    @change="getDocumentValues({
+                        module: 'trailer/',
+                        itemId: pickedTrailer.id,
+                        documentState: documentState
+                    })"
                 ></v-select>
             </v-col>
             <v-col cols="12" md="5">
-                &nbsp;
+                &nbsp; {{documentState}}
             </v-col>
         </v-row>
         <v-row justify="space-around" class="mb-10">
             <v-col cols="12" md="5" class="">
                 <v-text-field
-                    v-model="editedItem['title']"
+                    v-model="editedItem.vehicle_title"
                     :rules="[
-                        rules.min(8, editedItem['title']),
-                        rules.max(30, editedItem['title']),
+                        rules.min(8, editedItem.vehicle_title),
+                        rules.max(30, editedItem.vehicle_title),
                     ]"
                     validate-on-blur
                     label="Anhängerbezeichnung"
@@ -26,13 +35,13 @@
                     class="mb-4"
                 ></v-text-field>
                 <v-text-field
-                    v-model="editedItem['plateNumber']"
+                    v-model="editedItem.vehicle_plateNumber"
                     label="Kennzeichen"
                     dense
                     class="mb-4"
                     :rules="[
                         rules.required,
-                        rules.max(13, editedItem['plateNumber']),
+                        rules.max(13, editedItem.vehicle_plateNumber),
                     ]"
                     validate-on-blur
                 ></v-text-field>
@@ -41,38 +50,38 @@
                 <v-row dense>
                     <v-col cols="12" lg="6">
                         <v-text-field
-                            v-model="editedItem['totalWeight']"
+                            v-model="editedItem.vehicle_totalWeight"
                             label="zulässiges Gesamtgewicht"
                             dense
                             :rules="[
-                                rules.min(6, editedItem['totalWeight']),
-                                rules.max(7, editedItem['totalWeight']),
+                                rules.min(6, editedItem.vehicle_totalWeight),
+                                rules.max(7, editedItem.vehicle_totalWeight),
                             ]"
                             validate-on-blur
                         ></v-text-field>
                     </v-col>
                     <v-col cols="12" lg="6">
                         <v-text-field
-                            v-model="editedItem['usableWeight']"
+                            v-model="editedItem.vehicle_usableWeight"
                             label="Nutzlast"
                             dense
                             class="mb-4"
                             :rules="[
-                                rules.min(6, editedItem['usableWeight']),
-                                rules.max(7, editedItem['usableWeight']),
+                                rules.min(6, editedItem.vehicle_usableWeight),
+                                rules.max(7, editedItem.vehicle_usableWeight),
                             ]"
                             validate-on-blur
                         ></v-text-field>
                     </v-col>
                 </v-row>
                 <v-text-field
-                    v-model="editedItem['loadingSize']"
+                    v-model="editedItem.vehicle_loadingSize"
                     label="Lademaße ( L x B x H cm )"
                     dense
                     class="mb-10"
                     :rules="[
-                        rules.min(6, editedItem['loadingSize']),
-                        rules.max(20, editedItem['loadingSize']),
+                        rules.min(6, editedItem.vehicle_loadingSize),
+                        rules.max(20, editedItem.vehicle_loadingSize),
                     ]"
                     validate-on-blur
                 ></v-text-field>
@@ -86,18 +95,22 @@ import { mapState, mapActions, mapMutations } from "vuex";
 import validationRules from "../../services/validationRules"
 
 export default {
-    props: ['trigger', 'editedIndex'],
+    props: ['documentState'],
     data() {
         return {
             dialog: false,
             datePicker: false,
-            rules: validationRules
+            rules: validationRules,
+            pickedTrailer: {},
         };
     },
     computed: {
         ...mapState("trailer", {
-            editedItem: (state) => state.editedItem,
+            trailerList: (state) => state.items,
             date: (state) => state.date,
+        }),
+        ...mapState("offer", {
+            editedItem: (state) => state.editedItem,
         }),
         formTitle() {
             return this.editedIndex === -1
@@ -106,7 +119,7 @@ export default {
         },
     },
     methods: {
-        ...mapActions(["updateItem","storeNewItem"]),
+        ...mapActions(["updateItem","storeNewItem", "getItemsList", "getDocumentValues"]),
         ...mapMutations("trailer", ["resetForm", "parseDate", "formatDate"]),
         save() {
             if (this.editedIndex > -1) {
@@ -148,6 +161,9 @@ export default {
                 this.close()
             }
         }
+    },
+    mounted() {
+        this.getItemsList("trailer/");
     },
 };
 </script>

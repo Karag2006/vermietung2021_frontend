@@ -106,7 +106,9 @@
                     </v-container>
                 </v-tab-item>
                 <v-tab-item>
-                    <DocumentTrailerForm />
+                    <DocumentTrailerForm 
+                        :documentState="'offer'"
+                    />
                 </v-tab-item>
                 <v-tab-item>
                     
@@ -156,7 +158,7 @@ export default {
     },
     methods: {
         ...mapActions(["updateItem", "storeNewItem"]),
-        ...mapMutations("equipment", ["resetForm", "parseDate", "formatDate"]),
+        ...mapMutations("offer", ["resetForm", "parseDate", "formatDate"]),
         save() {
             if (this.editedIndex > -1) {
                 this.updateItem({

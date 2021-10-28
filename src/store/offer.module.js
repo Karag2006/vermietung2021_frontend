@@ -73,5 +73,10 @@ export default {
                 state.editedItem.tuev = `${day}.${month}.${year}`;
             }
         },
+        setTrailerInDocument(state, data) {
+            Object.keys(data).forEach(element => {
+                state.editedItem["vehicle_" + element] = data[element];
+            });   
+        },
     },
 };

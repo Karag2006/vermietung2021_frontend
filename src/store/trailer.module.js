@@ -48,6 +48,9 @@ export default {
     actions: {},
     mutations: {
         setItemsList(state, data) {
+            data.forEach(element => {
+                element.selector = element.plateNumber + " - " + element.title
+            });
             state.items = data;
         },
         setEditedItem(state, data) {
