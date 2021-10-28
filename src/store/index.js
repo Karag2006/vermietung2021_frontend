@@ -1,16 +1,20 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import navigation from './navigation'
-import auth from './auth.module.js'
-import customer from './customer.module'
-import user from './user.module'
-import trailer from './trailer.module'
-import equipment from "./equipment.module";
-import options from './options.module'
-import collectAddress from './collectAddress.module'
-import offer from './offer.module'
-import authHeader from "@/services/auth-header";
-import axios from "axios";
+
+import mutations from './mutations'
+import actions from './actions'
+import getters from './getters'
+
+import navigation from './modules/navigation'
+import auth from './modules/auth.module.js'
+import customer from './modules/customer.module'
+import user from './modules/user.module'
+import trailer from './modules/trailer.module'
+import equipment from "./modules/equipment.module";
+import options from './modules/options.module'
+import collectAddress from './modules/collectAddress.module'
+import offer from './modules/offer.module'
+
 
 Vue.use(Vuex)
 
@@ -22,109 +26,11 @@ export default new Vuex.Store({
             color: "",
         },
         baseApiUrl: "http://10.40.28.22/api/",
+        // TODO: change from hard coded API URL to using .env
     },
-    mutations: {
-        showSnackbar(state, payload) {
-            state.snackbar.text = payload.text;
-            state.snackbar.color = payload.color;
-            state.snackbar.show = true;
-        },
-        closeSnackbar(state) {
-            state.snackbar.show = false;
-        },
-    },
-    actions: {
-        storeNewItem({ commit, state, rootState }, object) {
-            axios
-                .post(rootState.baseApiUrl + object.module, object.item, {
-                    headers: authHeader(),
-                })
-                .then((response) => {
-                    commit(object.module + "pushItemToList", response.data);
-                    commit("showSnackbar", {
-                        text: object.successMsg,
-                        color: "success darken-3",
-                    });
-                })
-                .catch((error) => {
-                    commit("showSnackbar", {
-                        text: object.errorMsg,
-                        color: "error darken-2",
-                    });
-                });
-        },
-        getItemsList({ commit, state, rootState }, moduleName) {
-            axios
-                .get(rootState.baseApiUrl + moduleName, {
-                    headers: authHeader(),
-                })
-                .then((response) => {
-                    commit(moduleName + "setItemsList", response.data);
-                });
-        },
-
-        updateItem({ commit, state, rootState }, object) {
-            axios
-                .patch(
-                    rootState.baseApiUrl + object.module + object.item.id,
-                    object.item,
-                    {
-                        headers: authHeader(),
-                    }
-                )
-                .then((response) => {
-                    commit(object.module + "updateItemInList", response.data);
-                    commit("showSnackbar", {
-                        text: object.successMsg,
-                        color: "success darken-3",
-                    });
-                })
-                .catch((error) => {
-                    commit("showSnackbar", {
-                        text: object.errorMsg,
-                        color: "error darken-2",
-                    });
-                });
-        },
-        getItemById({ commit, state, rootState }, object) {
-            axios
-                .get(rootState.baseApiUrl + object.module + object.itemId, {
-                    headers: authHeader(),
-                })
-                .then((response) => {
-                    commit(object.module + "setEditedItem", response.data);
-                });
-        },
-        getDocumentValues({ commit, state, rootState }, object) {
-            axios
-                .get(rootState.baseApiUrl + object.module + object.itemId, {
-                    headers: authHeader(),
-                })
-                .then((response) => {
-                    commit(object.module + "setEditedItem", response.data);
-                    commit(object.documentState + "/setTrailerInDocument", response.data);
-                });
-        },
-        deleteItemById({ commit, state, rootState }, object) {
-            axios
-                .delete(rootState.baseApiUrl + object.module + object.id, {
-                    headers: authHeader(),
-                })
-                .then((response) => {
-                    commit(object.module + "deleteItemFromList", response.data);
-                    commit("showSnackbar", {
-                        text: object.successMsg,
-                        color: "success darken-3",
-                    });
-                })
-                .catch((error) => {
-                    commit("showSnackbar", {
-                        text: object.errorMsg,
-                        color: "error darken-2",
-                    });
-                });
-        },
-    },
+    mutations,
+    actions,
+    getters,
     modules: {
         auth,
         navigation,
