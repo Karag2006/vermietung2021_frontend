@@ -75,21 +75,6 @@ export default {
             }
         },
 
-        
-        setTrailerInDocument(state, data) {
-            Object.keys(data).forEach(element => {
-                const elementName = "vehicle_" + element
-                Vue.set(state.editedItem, elementName, data[element]);
-            });   
-        },
-
-        setCustomerInDocument(state, dataObject) {
-            Object.keys(dataObject).forEach((element) => {
-                const elementName = "customer_" + element;
-                Vue.set(state.editedItem, elementName, dataObject[element]);
-            });
-        },
-
         setItemInDocument(state, data) {
             Object.keys(data.object).forEach((element) => {
                 const elementName = data.itemIdentifier + "_" + element;
