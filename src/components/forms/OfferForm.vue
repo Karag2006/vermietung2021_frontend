@@ -27,11 +27,16 @@
 
                 <v-tab-item>
                     <!-- Tab1 -->
-                    <DocumentCustomerForm/>
+                    <DocumentCustomerForm
+                        :type="'customer'"
+                    />
                 </v-tab-item>
                 <v-tab-item>
                     <!-- Tab2 -->
-                    <DocumentDriverForm/>
+                    <DocumentDriverForm
+                        :type="'driver'"
+                    />
+
                 </v-tab-item>
                 <v-tab-item>
                     <!-- Tab3 -->

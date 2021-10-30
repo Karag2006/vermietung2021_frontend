@@ -61,6 +61,11 @@ export default {
     actions: {},
     mutations: {
         setItemsList(state, data) {
+            data.forEach((element) => {
+                element.selector = element.name2
+                    ? element.name1 + " - " + element.name2
+                    : element.name1;
+            });
             state.items = data;
         },
         setEditedItem(state, data) {

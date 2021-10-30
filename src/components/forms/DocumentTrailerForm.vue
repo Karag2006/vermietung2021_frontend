@@ -2,19 +2,21 @@
     <v-container>
         <v-row justify="space-around" class="my-5">
             <v-col cols="12" md="5">
-                <v-select
+                <v-autocomplete
                     v-model="pickedTrailer"
                     :items="trailerList"
                     label="Anhänger auswählen"
                     item-text="selector"
                     item-value="plateNumber"
                     return-object
+                    clearable
                     dense
                     @change="getDocumentValues({
                         module: 'trailer/',
                         itemId: pickedTrailer.id,
+                        itemIdentifier: 'vehicle'
                     })"
-                ></v-select>
+                ></v-autocomplete>
             </v-col>
             <v-col cols="12" md="5">
                 &nbsp;

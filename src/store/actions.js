@@ -71,8 +71,11 @@ const actions = {
             .then((response) => {
                 commit(object.module + "setEditedItem", response.data);
                 commit(
-                    "document/setTrailerInDocument",
-                    response.data
+                    "document/setItemInDocument",
+                    {
+                        itemIdentifier: object.itemIdentifier,
+                        object: response.data
+                    }
                 );
             });
     },
