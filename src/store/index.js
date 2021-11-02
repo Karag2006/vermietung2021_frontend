@@ -25,7 +25,7 @@ export default new Vuex.Store({
             text: "",
             color: "",
         },
-        baseApiUrl: "http://10.40.28.22/api/",
+        baseApiUrl: "http://10.40.28.21/api/",
         // TODO: change from hard coded API URL to using .env
     },
     mutations,
