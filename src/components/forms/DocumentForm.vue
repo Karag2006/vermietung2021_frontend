@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <v-row justify="space-around" class="mb-10">
+        <v-row justify="space-around" class="mb-1">
             <v-col cols="12" md="5" class="d-flex align-center">
                 <v-menu
                     v-model="picker.collectDate"
@@ -17,7 +17,7 @@
                         }"
                     >
                         <v-icon 
-                            class="mr-4 mb-7"
+                            class="mr-4 mb-3"
                             v-bind="attrs" 
                             v-on="on" 
                             @click="parseDate({
@@ -37,9 +37,10 @@
                 </v-menu>
                 <v-text-field
                     v-model="editedItem.collectDate"
-                    label="Abholdatum"
+                    label="Abholung - Datum"
                     dense
-                    class="mb-4"
+                    clearable
+                    class="mb-1"
                     @blur="parseDate({
                         date: editedItem.collectDate, 
                         dateVariable: 'collectDate'
@@ -51,9 +52,9 @@
                     validate-on-blur
                 ></v-text-field>
             </v-col>
-            <v-col cols="12" md="5" class="">
+            <v-col cols="12" md="5" class="d-flex align-center">
                 <v-menu
-                    v-model="picker.collectDate"
+                    v-model="picker.collectTime"
                     :close-on-content-click="false"
                     :nudge-right="40"
                     transition="scale-transition"
@@ -67,94 +68,25 @@
                         }"
                     >
                         <v-icon 
+                            class="mr-4 mb-5"
                             v-bind="attrs" 
-                            v-on="on" 
-                            @click="parseDate({date: editedItem.collectDate, dateVariable: 'collectDate'})"
+                            v-on="on"
                         >
-                            far fa-calendar-alt
+                            far fa-clock
                         </v-icon>
                     </template>
-                    <v-date-picker
-                        :first-day-of-week="1"
-                        locale="de-de"
-                        :value="collectDate"
-                        @input="datePickerInput($event, 'collectDate')"
-                    ></v-date-picker>
+                    <v-time-picker
+                        format="24hr"
+                        v-model="editedItem.collectTime"
+                        @click:minute="picker.collectTime = false"
+                    ></v-time-picker>
                 </v-menu>
                 <v-text-field
-                    v-model="editedItem.collectDate"
-                    label="Abholdatum"
+                    v-model="editedItem.collectTime"
+                    label="Abholung - Uhrzeit"
                     dense
-                    class="mb-4"
-                    @blur="
-                        parseDate({date: editedItem.collectDate, dateVariable: 'collectDate'})
-                    "
+                    class="mb-1"
                     :rules="[
-                        rules.required,
-                        rules.isDate(editedItem.collectDate),
-                    ]"
-                    validate-on-blur
-                ></v-text-field>
-            </v-col>
-        </v-row>
-        <v-row justify="space-around" class="mb-10">
-            <v-col cols="12" md="5" class="">
-                <v-text-field
-                    v-model="editedItem.vehicle_plateNumber"
-                    label="Kennzeichen"
-                    dense
-                    class="mb-4"
-                    :rules="[
-                        rules.required,
-                        rules.max(13, editedItem.vehicle_plateNumber),
-                    ]"
-                    validate-on-blur
-                ></v-text-field>
-                <v-text-field
-                    v-model="editedItem.vehicle_chassisNumber"
-                    label="Fahrgestellnummer"
-                    dense
-                    class="mb-4"
-                    :rules="[
-                        rules.max(50, editedItem.vehicle_chassisNumber),
-                    ]"
-                    validate-on-blur
-                ></v-text-field>
-                <v-row dense>
-                    <v-col cols="12" lg="6">
-                        <v-text-field
-                            v-model="editedItem.vehicle_totalWeight"
-                            label="zulässiges Gesamtgewicht"
-                            dense
-                            :rules="[
-                                rules.min(6, editedItem.vehicle_totalWeight),
-                                rules.max(7, editedItem.vehicle_totalWeight),
-                            ]"
-                            validate-on-blur
-                        ></v-text-field>
-                    </v-col>
-                    <v-col cols="12" lg="6">
-                        <v-text-field
-                            v-model="editedItem.vehicle_usableWeight"
-                            label="Nutzlast"
-                            dense
-                            class="mb-4"
-                            :rules="[
-                                rules.min(6, editedItem.vehicle_usableWeight),
-                                rules.max(7, editedItem.vehicle_usableWeight),
-                            ]"
-                            validate-on-blur
-                        ></v-text-field>
-                    </v-col>
-                </v-row>
-                <v-text-field
-                    v-model="editedItem.vehicle_loadingSize"
-                    label="Lademaße ( L x B x H cm )"
-                    dense
-                    class="mb-10"
-                    :rules="[
-                        rules.min(6, editedItem.vehicle_loadingSize),
-                        rules.max(20, editedItem.vehicle_loadingSize),
                     ]"
                     validate-on-blur
                 ></v-text-field>
@@ -172,7 +104,8 @@ export default {
         return {
             dialog: false,
             picker: {
-                collectDate: false
+                collectDate: false,
+                collectTime: false,
             },
             rules: validationRules,
             pickedTrailer: {},
@@ -185,6 +118,7 @@ export default {
         ...mapState("document", {
             editedItem: (state) => state.editedItem,
             collectDate: (state) => state.collectDate,
+            collectTime: (state) => state.collectTime,
         }),
         formTitle() {
             return this.editedIndex === -1
@@ -245,4 +179,14 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+    .row {
+        margin: 0;
+    }
+    .row + .row{
+        margin-top: 0;
+    }
+    .col-md-5, .col-12{
+        padding: 0;
+    }
+</style>

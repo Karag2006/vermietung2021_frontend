@@ -6,6 +6,7 @@ export default {
     namespaced: true,
     state: {
         collectDate: "",
+        collectTime: "",
         listHeaders: [
             {
                 text: "ID",
@@ -60,10 +61,10 @@ export default {
         parseDate(state, object) {
             if (object.date) {
                 const [day, month, year] = object.date.split(".");
-                state[object.dateVariable] = `${year}-${month.padStart(2, "0")}-${day.padStart(
+                state[object.dateVariable] = `${year}-${month.padStart(
                     2,
                     "0"
-                )}`;
+                )}-${day.padStart(2, "0")}`;
             } else {
                 state[object.dateVariable] = new Date()
                     .toISOString()
@@ -73,7 +74,9 @@ export default {
         formatDate(state, object) {
             if (object.date) {
                 const [year, month, day] = object.date.split("-");
-                state.editedItem[object.dateVariable] = `${day}.${month}.${year}`;
+                state.editedItem[
+                    object.dateVariable
+                ] = `${day}.${month}.${year}`;
             }
         },
 
