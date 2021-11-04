@@ -5,7 +5,8 @@ import Vue from "vue";
 export default {
     namespaced: true,
     state: {
-        date: "",
+        collectDate: "",
+        collectTime: "",
         listHeaders: [
             {
                 text: "ID",
@@ -57,21 +58,25 @@ export default {
             });
             state.items.splice(index, 1);
         },
-        parseDate(state, date) {
-            if (date) {
-                const [day, month, year] = date.split(".");
-                state.date = `${year}-${month.padStart(2, "0")}-${day.padStart(
+        parseDate(state, object) {
+            if (object.date) {
+                const [day, month, year] = object.date.split(".");
+                state[object.dateVariable] = `${year}-${month.padStart(
                     2,
                     "0"
-                )}`;
+                )}-${day.padStart(2, "0")}`;
             } else {
-                state.date = new Date().toISOString().substr(0, 10);
+                state[object.dateVariable] = new Date()
+                    .toISOString()
+                    .substr(0, 10);
             }
         },
-        formatDate(state, date) {
-            if (date) {
-                const [year, month, day] = date.split("-");
-                state.editedItem.tuev = `${day}.${month}.${year}`;
+        formatDate(state, object) {
+            if (object.date) {
+                const [year, month, day] = object.date.split("-");
+                state.editedItem[
+                    object.dateVariable
+                ] = `${day}.${month}.${year}`;
             }
         },
 
@@ -80,6 +85,6 @@ export default {
                 const elementName = data.itemIdentifier + "_" + element;
                 Vue.set(state.editedItem, elementName, data.object[element]);
             });
-        }
+        },
     },
 };
