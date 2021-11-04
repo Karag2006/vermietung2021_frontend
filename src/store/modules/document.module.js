@@ -9,6 +9,7 @@ export default {
         collectTime: "",
         returnDate: "",
         returnTime: "",
+        reservationDepositDate: "",
         listHeaders: [
             {
                 text: "ID",

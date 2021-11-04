@@ -1,8 +1,9 @@
 export default {
-    getFloatValue(kommaString) {
-        return parseFloat(kommaString.replace(",", "."))
+    paymentTypes: ["Bar", "EC-Karte", "Überweisung"],
+    getFloatValue(commaString) {
+        return parseFloat(commaString.replace(",", "."))
     },
-    writeFloatWithKomma(value) {
+    writeFloatWithComma(value) {
         return String(value).replace(".", ",")
     }
 }
