@@ -7,6 +7,8 @@ export default {
     state: {
         collectDate: "",
         collectTime: "",
+        returnDate: "",
+        returnTime: "",
         listHeaders: [
             {
                 text: "ID",
