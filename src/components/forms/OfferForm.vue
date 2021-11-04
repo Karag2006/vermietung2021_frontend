@@ -44,7 +44,7 @@
                 </v-tab-item>
                 <v-tab-item>
                     <!-- Tab4 -->
-                    
+                    <DocumentForm/>
                 </v-tab-item>
             </v-tabs>
         </v-card-text>
@@ -64,12 +64,14 @@
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
 import validationRules from "../../services/validationRules";
+import DocumentForm from './DocumentForm.vue';
 
 export default {
     components: {
         DocumentTrailerForm: require("@/components/forms/DocumentTrailerForm.vue").default,
         DocumentCustomerForm: require("@/components/forms/DocumentCustomerForm.vue").default,
-        DocumentDriverForm: require("@/components/forms/DocumentCustomerForm.vue").default,
+        DocumentDriverForm: require("@/components/forms/DocumentDriverForm.vue").default,
+        DocumentForm: require("@/components/forms/DocumentForm.vue").default
     },
     props: ["trigger", "editedIndex"],
     data() {
