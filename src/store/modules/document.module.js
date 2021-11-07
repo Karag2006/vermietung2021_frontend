@@ -10,6 +10,8 @@ export default {
         returnDate: "",
         returnTime: "",
         reservationDepositDate: "",
+        finalPaymentDate: "",
+        contractBailDate: "",
         listHeaders: [
             {
                 text: "ID",

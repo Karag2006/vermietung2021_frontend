@@ -289,9 +289,169 @@
             </v-col>
             <v-col cols="12" md="3" class="d-flex align-center  px-3">
                 <v-checkbox
+                    class="inverseCheckbox"
                     v-model="editedItem.reservationDepositRecieved"
                     label="Anzahlung eingegangen"
                 ></v-checkbox>
+            </v-col>
+        </v-row>
+        <v-row justify="start" class="mb-5">
+            <v-col cols="12" md="3" class="d-flex align-center  px-3">
+                <v-text-field
+                    v-model="editedItem.finalPaymentValue"
+                    label="Restzahlung"
+                    dense
+                    prefix="€"
+                    :rules="[
+                    ]"
+                    validate-on-blur
+                    @change="calculatePaymentValues"
+                ></v-text-field>
+            </v-col>
+            <v-col cols="12" md="3" class="d-flex align-center  px-3">
+                <v-menu
+                    v-model="picker.finalPaymentDate"
+                    :close-on-content-click="false"
+                    :nudge-right="40"
+                    transition="scale-transition"
+                    offset-y
+                    min-width="auto"
+                >
+                    <template v-slot:activator="{on, attrs,}">
+                        <v-icon 
+                            class="mr-4 mb-3"
+                            v-bind="attrs" 
+                            v-on="on" 
+                            @click="parseDate({
+                                date: editedItem.finalPaymentDate, 
+                                dateVariable: 'finalPaymentDate'
+                            })"
+                        >
+                            far fa-calendar-alt
+                        </v-icon>
+                    </template>
+                    <v-date-picker
+                        :first-day-of-week="1"
+                        locale="de-de"
+                        :value="finalPaymentDate"
+                        @input="datePickerInput($event, 'finalPaymentDate')"
+                    ></v-date-picker>
+                </v-menu>
+                <v-text-field
+                    v-model="editedItem.finalPaymentDate"
+                    label="Restzahlung - Datum"
+                    dense
+                    class="mb-1"
+                    @blur="parseDate({
+                        date: editedItem.finalPaymentDate, 
+                        dateVariable: 'finalPaymentDate'
+                    })"
+                    :rules="[
+                        rules.required,
+                        rules.isDate(editedItem.finalPaymentDate),   
+                    ]"
+                    validate-on-blur
+                ></v-text-field>
+            </v-col>
+            <v-col cols="12" md="3" class="d-flex align-center  px-3">
+                <v-autocomplete
+                    v-model="editedItem.finalPaymentType"
+                    :items="vueHelpers.paymentTypes"
+                    label="Zahlart Restzahlung"
+                    dense
+                ></v-autocomplete>
+            </v-col>
+            <v-col cols="12" md="3" class="d-flex align-center  px-3">
+                <v-checkbox
+                    class="inverseCheckbox"
+                    v-model="editedItem.finalPaymentRecieved"
+                    label="Restzahlung eingegangen"
+                ></v-checkbox>
+            </v-col>
+        </v-row>
+        <v-row justify="start" class="mb-5">
+            <v-col cols="12" md="3" class="d-flex align-center  px-3">
+                <v-text-field
+                    v-model="editedItem.contractBail"
+                    label="Kaution"
+                    dense
+                    prefix="€"
+                    :rules="[
+                    ]"
+                    validate-on-blur
+                    @change="calculatePaymentValues"
+                ></v-text-field>
+            </v-col>
+            <v-col cols="12" md="3" class="d-flex align-center  px-3">
+                <v-menu
+                    v-model="picker.contractBailDate"
+                    :close-on-content-click="false"
+                    :nudge-right="40"
+                    transition="scale-transition"
+                    offset-y
+                    min-width="auto"
+                >
+                    <template v-slot:activator="{on, attrs,}">
+                        <v-icon 
+                            class="mr-4 mb-3"
+                            v-bind="attrs" 
+                            v-on="on" 
+                            @click="parseDate({
+                                date: editedItem.contractBailDate, 
+                                dateVariable: 'contractBailDate'
+                            })"
+                        >
+                            far fa-calendar-alt
+                        </v-icon>
+                    </template>
+                    <v-date-picker
+                        :first-day-of-week="1"
+                        locale="de-de"
+                        :value="contractBailDate"
+                        @input="datePickerInput($event, 'contractBailDate')"
+                    ></v-date-picker>
+                </v-menu>
+                <v-text-field
+                    v-model="editedItem.contractBailDate"
+                    label="Kaution - Datum"
+                    dense
+                    class="mb-1"
+                    @blur="parseDate({
+                        date: editedItem.contractBailDate, 
+                        dateVariable: 'contractBailDate'
+                    })"
+                    :rules="[
+                        rules.required,
+                        rules.isDate(editedItem.contractBailDate),   
+                    ]"
+                    validate-on-blur
+                ></v-text-field>
+            </v-col>
+            <v-col cols="12" md="3" class="px-3">
+                <v-checkbox
+                    class="inverseCheckbox"
+                    v-model="editedItem.contractBailRecieved"
+                    label="Kaution erhalten"
+                ></v-checkbox>
+                <v-autocomplete
+                    v-model="editedItem.contractBailType"
+                    :items="vueHelpers.paymentTypes"
+                    label="Zahlart Kaution"
+                    dense
+                ></v-autocomplete>
+            </v-col>
+            <v-col cols="12" md="3" class="px-3">
+                <v-checkbox
+                    class="inverseCheckbox"
+                    v-model="editedItem.contractBailReturned"
+                    label="Kaution erstattet"
+                ></v-checkbox>
+                <v-autocomplete
+                    v-model="editedItem.contractBailType"
+                    :items="vueHelpers.paymentTypes"
+                    label="Zahlart Kaution Erstattung"
+                    dense
+                ></v-autocomplete>
             </v-col>
         </v-row>
     </v-container>
@@ -313,6 +473,8 @@ export default {
                 returnDate: false,
                 returnTime: false,
                 reservationDepositDate: false,
+                finalPaymentDate: false,
+                contractBailDate: false,
             },
             rules: validationRules,
             vueHelpers: helpers,
@@ -330,6 +492,8 @@ export default {
             returnDate: (state) => state.returnDate,
             returnTime: (state) => state.returnTime,
             reservationDepositDate: (state) => state.reservationDepositDate,
+            finalPaymentDate: (state) => state.finalPaymentDate,
+            contractBailDate: (state) => state.contractBailDate,
         }),
 
         formTitle() {
@@ -409,6 +573,19 @@ export default {
 </script>
 
 <style>
+    .inverseCheckbox .v-input__slot{
+        flex-direction: row-reverse;
+        align-items: center;
+        justify-items: flex-end;
+
+    }
+    .inverseCheckbox .v-label{
+        flex: 0 0 auto !important; 
+        margin-right: 0.5rem;
+    }
+    .inverseCheckbox .v-input--selection-controls__input{
+        margin-right: auto;
+    }
     .row {
         margin: 0;
     }
