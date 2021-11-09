@@ -96,6 +96,18 @@
                 ></v-text-field>
             </v-col>
         </v-row>
+        <v-row justify="start" class="mb-5">
+            <v-col cols="12" md="3" class="d-flex align-center  px-3">
+                <v-autocomplete
+                    v-model="editedItem.collect_address_id"
+                    :items="collectAddresses"
+                    label="Abhol Anschrift"
+                    item-value="id"
+                    item-text="name"
+                    dense
+                ></v-autocomplete>
+            </v-col>
+        </v-row>
         <v-row justify="start">
             <v-col cols="12" md="4" class="mb-1 px-3">
                 <v-text-field
@@ -291,8 +303,8 @@ export default {
         };
     },
     computed: {
-        ...mapState("trailer", {
-            trailerList: (state) => state.items,
+        ...mapState("collectAddress", {
+            collectAddresses: (state) => state.items,
         }),
         ...mapState("document", {
             editedItem: (state) => state.editedItem,
