@@ -38,6 +38,10 @@ export default {
     },
     actions: {},
     mutations: {
+        setSingleValue(state, object) {
+            console.log(object)
+            Vue.set(state.editedItem, object.elementName, object.elementValue);  
+        },
         setItemsList(state, data) {
             state.items = data;
         },

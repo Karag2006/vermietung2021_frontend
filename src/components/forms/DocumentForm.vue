@@ -1,56 +1,14 @@
 <template>
     <v-container>
         <v-row justify="start" class="mb-5 mt-6">
-            <v-col cols="12" md="3" class="d-flex align-center px-3">
-                <v-menu
-                    v-model="picker.collectDate"
-                    :close-on-content-click="false"
-                    :nudge-right="40"
-                    transition="scale-transition"
-                    offset-y
-                    min-width="auto"
-                >
-                    <template
-                        v-slot:activator="{
-                            on,
-                            attrs,
-                        }"
-                    >
-                        <v-icon 
-                            class="mr-4 mb-3"
-                            v-bind="attrs" 
-                            v-on="on" 
-                            @click="parseDate({
-                                date: editedItem.collectDate, 
-                                dateVariable: 'collectDate'
-                            })"
-                        >
-                            far fa-calendar-alt
-                        </v-icon>
-                    </template>
-                    <v-date-picker
-                        :first-day-of-week="1"
-                        locale="de-de"
-                        :value="collectDate"
-                        @input="datePickerInput($event, 'collectDate')"
-                    ></v-date-picker>
-                </v-menu>
-                <v-text-field
-                    v-model="editedItem.collectDate"
-                    label="Abholung - Datum"
-                    dense
-                    class="mb-1"
-                    @blur="parseDate({
-                        date: editedItem.collectDate, 
-                        dateVariable: 'collectDate'
-                    })"
-                    :rules="[
-                        rules.required,
-                        rules.isDate(editedItem.collectDate),
-                    ]"
-                    validate-on-blur
-                ></v-text-field>
-            </v-col>
+            <date-component 
+                :cols="12"
+                :md="3"
+                :storeComponentName="'document'" 
+                :elementName="'collectDate'" 
+                :required="true" 
+                :label="'Abholung - Datum'"
+            />
             <v-col cols="12" md="3" class="d-flex align-center px-3">
                 <v-menu
                     v-model="picker.collectTime"
@@ -457,12 +415,20 @@
 </template>
 
 <script>
+import DateComponent from "@/components/forms/formParts/DateComponent.vue"
+
 import Vue from 'vue'
 import { mapState, mapActions, mapMutations } from "vuex";
 import validationRules from "../../services/validationRules"
 import helpers from "../../services/helpers"
 
 export default {
+    components: {
+        DateComponent,
+    },
+    // components: {
+    //     DateComponent: require("@/components/forms/formParts/DateComponent.vue").default,
+    // },
     data() {
         return {
             dialog: false,
