@@ -48,59 +48,14 @@
                     validate-on-blur
                 ></v-text-field>
             </v-col>
-
-            <v-col cols="12" md="3" class="d-flex align-center px-3">
-                <v-menu
-                    v-model="picker.returnDate"
-                    :close-on-content-click="false"
-                    :nudge-right="40"
-                    transition="scale-transition"
-                    offset-y
-                    min-width="auto"
-                >
-                    <template
-                        v-slot:activator="{
-                            on,
-                            attrs,
-                        }"
-                    >
-                        <v-icon 
-                            class="mr-4 mb-3"
-                            v-bind="attrs" 
-                            v-on="on" 
-                            @click="parseDate({
-                                date: editedItem.returnDate, 
-                                dateVariable: 'returnDate'
-                            })"
-                        >
-                            far fa-calendar-alt
-                        </v-icon>
-                    </template>
-                    <v-date-picker
-                        :first-day-of-week="1"
-                        locale="de-de"
-                        :value="returnDate"
-                        @input="datePickerInput($event, 'returnDate')"
-                    ></v-date-picker>
-                </v-menu>
-                <!-- TODO: create rule to make sure returnDate >= collectDate -->
-                <v-text-field
-                    v-model="editedItem.returnDate"
-                    label="Rückgabe - Datum"
-                    dense
-                    class="mb-1"
-                    @blur="parseDate({
-                        date: editedItem.returnDate, 
-                        dateVariable: 'returnDate'
-                    })"
-                    :rules="[
-                        rules.required,
-                        rules.isDate(editedItem.returnDate),
-                        
-                    ]"
-                    validate-on-blur
-                ></v-text-field>
-            </v-col>
+            <date-component 
+                :cols="12"
+                :md="3"
+                :storeComponentName="'document'" 
+                :elementName="'returnDate'" 
+                :required="true" 
+                :label="'Rückgabe - Datum'"
+            />
             <v-col cols="12" md="3" class="d-flex align-center  px-3">
                 <v-menu
                     v-model="picker.returnTime"
@@ -192,51 +147,14 @@
                     @change="calculatePaymentValues"
                 ></v-text-field>
             </v-col>
-            <v-col cols="12" md="3" class="d-flex align-center  px-3">
-                <v-menu
-                    v-model="picker.reservationDepositDate"
-                    :close-on-content-click="false"
-                    :nudge-right="40"
-                    transition="scale-transition"
-                    offset-y
-                    min-width="auto"
-                >
-                    <template v-slot:activator="{on, attrs,}">
-                        <v-icon 
-                            class="mr-4 mb-3"
-                            v-bind="attrs" 
-                            v-on="on" 
-                            @click="parseDate({
-                                date: editedItem.reservationDepositDate, 
-                                dateVariable: 'reservationDepositDate'
-                            })"
-                        >
-                            far fa-calendar-alt
-                        </v-icon>
-                    </template>
-                    <v-date-picker
-                        :first-day-of-week="1"
-                        locale="de-de"
-                        :value="reservationDepositDate"
-                        @input="datePickerInput($event, 'reservationDepositDate')"
-                    ></v-date-picker>
-                </v-menu>
-                <v-text-field
-                    v-model="editedItem.reservationDepositDate"
-                    label="Anzahlung - bis Datum"
-                    dense
-                    class="mb-1"
-                    @blur="parseDate({
-                        date: editedItem.reservationDepositDate, 
-                        dateVariable: 'reservationDepositDate'
-                    })"
-                    :rules="[
-                        rules.required,
-                        rules.isDate(editedItem.reservationDepositDate),   
-                    ]"
-                    validate-on-blur
-                ></v-text-field>
-            </v-col>
+            <date-component 
+                :cols="12"
+                :md="3"
+                :storeComponentName="'document'" 
+                :elementName="'reservationDepositDate'" 
+                :required="false" 
+                :label="'Anzahlung - bis Datum'"
+            />
             <v-col cols="12" md="3" class="d-flex align-center  px-3">
                 <v-autocomplete
                     v-model="editedItem.reservationDepositType"
@@ -266,51 +184,14 @@
                     @change="calculatePaymentValues"
                 ></v-text-field>
             </v-col>
-            <v-col cols="12" md="3" class="d-flex align-center  px-3">
-                <v-menu
-                    v-model="picker.finalPaymentDate"
-                    :close-on-content-click="false"
-                    :nudge-right="40"
-                    transition="scale-transition"
-                    offset-y
-                    min-width="auto"
-                >
-                    <template v-slot:activator="{on, attrs,}">
-                        <v-icon 
-                            class="mr-4 mb-3"
-                            v-bind="attrs" 
-                            v-on="on" 
-                            @click="parseDate({
-                                date: editedItem.finalPaymentDate, 
-                                dateVariable: 'finalPaymentDate'
-                            })"
-                        >
-                            far fa-calendar-alt
-                        </v-icon>
-                    </template>
-                    <v-date-picker
-                        :first-day-of-week="1"
-                        locale="de-de"
-                        :value="finalPaymentDate"
-                        @input="datePickerInput($event, 'finalPaymentDate')"
-                    ></v-date-picker>
-                </v-menu>
-                <v-text-field
-                    v-model="editedItem.finalPaymentDate"
-                    label="Restzahlung - Datum"
-                    dense
-                    class="mb-1"
-                    @blur="parseDate({
-                        date: editedItem.finalPaymentDate, 
-                        dateVariable: 'finalPaymentDate'
-                    })"
-                    :rules="[
-                        rules.required,
-                        rules.isDate(editedItem.finalPaymentDate),   
-                    ]"
-                    validate-on-blur
-                ></v-text-field>
-            </v-col>
+            <date-component 
+                :cols="12"
+                :md="3"
+                :storeComponentName="'document'" 
+                :elementName="'finalPaymentDate'" 
+                :required="false" 
+                :label="'Restzahlung - Datum'"
+            />
             <v-col cols="12" md="3" class="d-flex align-center  px-3">
                 <v-autocomplete
                     v-model="editedItem.finalPaymentType"
@@ -339,51 +220,14 @@
                     validate-on-blur
                 ></v-text-field>
             </v-col>
-            <v-col cols="12" md="3" class="d-flex align-center px-3">
-                <v-menu
-                    v-model="picker.contractBailDate"
-                    :close-on-content-click="false"
-                    :nudge-right="40"
-                    transition="scale-transition"
-                    offset-y
-                    min-width="auto"
-                >
-                    <template v-slot:activator="{on, attrs,}">
-                        <v-icon 
-                            class="mr-4 mb-3"
-                            v-bind="attrs" 
-                            v-on="on" 
-                            @click="parseDate({
-                                date: editedItem.contractBailDate, 
-                                dateVariable: 'contractBailDate'
-                            })"
-                        >
-                            far fa-calendar-alt
-                        </v-icon>
-                    </template>
-                    <v-date-picker
-                        :first-day-of-week="1"
-                        locale="de-de"
-                        :value="contractBailDate"
-                        @input="datePickerInput($event, 'contractBailDate')"
-                    ></v-date-picker>
-                </v-menu>
-                <v-text-field
-                    v-model="editedItem.contractBailDate"
-                    label="Kaution - Datum"
-                    dense
-                    class="mb-1"
-                    @blur="parseDate({
-                        date: editedItem.contractBailDate, 
-                        dateVariable: 'contractBailDate'
-                    })"
-                    :rules="[
-                        rules.isDate(editedItem.contractBailDate),   
-                    ]"
-                    validate-on-blur
-                ></v-text-field>
-            
-            </v-col>
+            <date-component 
+                :cols="12"
+                :md="3"
+                :storeComponentName="'document'" 
+                :elementName="'contractBailDate'" 
+                :required="false" 
+                :label="'Kaution - Datum'"
+            />
             <v-col cols="12" md="3" class="px-3">
                 <v-checkbox
                     class="inverseCheckbox"
