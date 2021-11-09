@@ -379,10 +379,9 @@
                     :rules="[
                     ]"
                     validate-on-blur
-                    @change="calculatePaymentValues"
                 ></v-text-field>
             </v-col>
-            <v-col cols="12" md="3" class="d-flex align-center  px-3">
+            <v-col cols="12" md="3" class="d-flex align-center px-3">
                 <v-menu
                     v-model="picker.contractBailDate"
                     :close-on-content-click="false"
@@ -421,11 +420,11 @@
                         dateVariable: 'contractBailDate'
                     })"
                     :rules="[
-                        rules.required,
                         rules.isDate(editedItem.contractBailDate),   
                     ]"
                     validate-on-blur
                 ></v-text-field>
+            
             </v-col>
             <v-col cols="12" md="3" class="px-3">
                 <v-checkbox
