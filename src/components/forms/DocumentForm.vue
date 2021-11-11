@@ -267,11 +267,12 @@
                 ></v-autocomplete>
             </v-col>
         </v-row>
+        <EquipmentComponent />
     </v-container>
 </template>
 
 <script>
-import DateComponent from "@/components/forms/formParts/DateComponent.vue"
+
 
 import Vue from 'vue'
 import { mapState, mapActions, mapMutations } from "vuex";
@@ -280,11 +281,10 @@ import helpers from "../../services/helpers"
 
 export default {
     components: {
-        DateComponent,
+        DateComponent: require("@/components/forms/formParts/DateComponent.vue").default,
+        EquipmentComponent: require("@/components/forms/formParts/EquipmentComponent.vue").default,
     },
-    // components: {
-    //     DateComponent: require("@/components/forms/formParts/DateComponent.vue").default,
-    // },
+    
     data() {
         return {
             dialog: false,
@@ -308,13 +308,6 @@ export default {
         }),
         ...mapState("document", {
             editedItem: (state) => state.editedItem,
-            collectDate: (state) => state.collectDate,
-            collectTime: (state) => state.collectTime,
-            returnDate: (state) => state.returnDate,
-            returnTime: (state) => state.returnTime,
-            reservationDepositDate: (state) => state.reservationDepositDate,
-            finalPaymentDate: (state) => state.finalPaymentDate,
-            contractBailDate: (state) => state.contractBailDate,
         }),
 
         formTitle() {
@@ -389,6 +382,7 @@ export default {
             itemId: 1
         }),
         this.getItemsList('collectAddress/')
+        this.getItemsList("equipment/");
     },
 };
 </script>

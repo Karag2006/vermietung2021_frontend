@@ -1,5 +1,5 @@
 <template>
-    <v-col class="d-flex align-center px-3">
+    <v-col :cols="cols" :md="md" class="d-flex align-center px-3">
         <v-menu
             v-model="menuDisplay"
             :close-on-content-click="false"
@@ -62,7 +62,7 @@
 import validationRules from "@/services/validationRules"
 
 export default {
-    props: ['storeComponentName', 'elementName', 'required', 'label'],
+    props: ['storeComponentName', 'elementName', 'required', 'label', 'cols', 'md'],
     data() {
         return {
             localDate: "",
