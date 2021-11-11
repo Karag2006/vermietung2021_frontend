@@ -39,7 +39,6 @@ export default {
         return {
             currentSelectedEquipment: {},
             selectedEquipmentList: [],
-            
         }
     },
     computed: {
@@ -57,6 +56,7 @@ export default {
     },
     methods:{
         addToSelectedEquipmentList(){
+            this.currentSelectedEquipment.number = this.currentSelectedEquipment.defaultNumber
             this.selectedEquipmentList.push(this.currentSelectedEquipment)
         },
     }, 
