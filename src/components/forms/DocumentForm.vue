@@ -9,45 +9,14 @@
                 :required="true" 
                 :label="'Abholung - Datum'"
             />
-            <v-col cols="12" md="3" class="d-flex align-center px-3">
-                <v-menu
-                    v-model="picker.collectTime"
-                    :close-on-content-click="false"
-                    :nudge-right="40"
-                    transition="scale-transition"
-                    offset-y
-                    min-width="auto"
-                >
-                    <template
-                        v-slot:activator="{
-                            on,
-                            attrs,
-                        }"
-                    >
-                        <v-icon 
-                            class="mr-4 mb-5"
-                            v-bind="attrs" 
-                            v-on="on"
-                        >
-                            far fa-clock
-                        </v-icon>
-                    </template>
-                    <v-time-picker
-                        format="24hr"
-                        v-model="editedItem.collectTime"
-                        @click:minute="picker.collectTime = false"
-                    ></v-time-picker>
-                </v-menu>
-                <v-text-field
-                    v-model="editedItem.collectTime"
-                    label="Abholung - Uhrzeit"
-                    dense
-                    class="mb-1"
-                    :rules="[
-                    ]"
-                    validate-on-blur
-                ></v-text-field>
-            </v-col>
+            <TimeComponent 
+                :cols="12"
+                :md="3"
+                :storeComponentName="'document'" 
+                :elementName="'collectTime'" 
+                :required="true" 
+                :label="'Abholung - Uhrzeit'"
+            />
             <date-component 
                 :cols="12"
                 :md="3"
@@ -56,45 +25,14 @@
                 :required="true" 
                 :label="'Rückgabe - Datum'"
             />
-            <v-col cols="12" md="3" class="d-flex align-center  px-3">
-                <v-menu
-                    v-model="picker.returnTime"
-                    :close-on-content-click="false"
-                    :nudge-right="40"
-                    transition="scale-transition"
-                    offset-y
-                    min-width="auto"
-                >
-                    <template
-                        v-slot:activator="{
-                            on,
-                            attrs,
-                        }"
-                    >
-                        <v-icon 
-                            class="mr-4 mb-5"
-                            v-bind="attrs" 
-                            v-on="on"
-                        >
-                            far fa-clock
-                        </v-icon>
-                    </template>
-                    <v-time-picker
-                        format="24hr"
-                        v-model="editedItem.returnTime"
-                        @click:minute="picker.returnTime = false"
-                    ></v-time-picker>
-                </v-menu>
-                <v-text-field
-                    v-model="editedItem.returnTime"
-                    label="Rückgabe - Uhrzeit"
-                    dense
-                    class="mb-1"
-                    :rules="[
-                    ]"
-                    validate-on-blur
-                ></v-text-field>
-            </v-col>
+            <TimeComponent 
+                :cols="12"
+                :md="3"
+                :storeComponentName="'document'" 
+                :elementName="'returnTime'" 
+                :required="true" 
+                :label="'Rückgabe - Uhrzeit'"
+            />
         </v-row>
         <v-row justify="start" class="mb-5">
             <v-col cols="12" md="3" class="d-flex align-center  px-3">
@@ -282,6 +220,7 @@ import helpers from "../../services/helpers"
 export default {
     components: {
         DateComponent: require("@/components/forms/formParts/DateComponent.vue").default,
+        TimeComponent: require("@/components/forms/formParts/TimeComponent.vue").default,
         EquipmentComponent: require("@/components/forms/formParts/EquipmentComponent.vue").default,
     },
     
