@@ -1,17 +1,11 @@
 import { now } from "core-js";
 import Vue from "vue";
+import documentObject from "@/services/documentObject.js";
 
 
 export default {
     namespaced: true,
     state: {
-        collectDate: "",
-        collectTime: "",
-        returnDate: "",
-        returnTime: "",
-        reservationDepositDate: "",
-        finalPaymentDate: "",
-        contractBailDate: "",
         listHeaders: [
             {
                 text: "ID",
@@ -33,8 +27,8 @@ export default {
             },
         ],
         items: [],
-        editedItem: {},
-        defaultItem: {},
+        editedItem: documentObject,
+        defaultItem: documentObject,
     },
     actions: {},
     mutations: {
@@ -50,7 +44,6 @@ export default {
         },
         resetForm(state) {
             state.editedItem = Object.assign({}, state.defaultItem);
-            state.date = "";
         },
         pushItemToList(state, data) {
             state.items.push(data);

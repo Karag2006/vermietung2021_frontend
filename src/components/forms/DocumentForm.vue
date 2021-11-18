@@ -37,14 +37,16 @@
         <v-row justify="start" class="mb-5">
             <v-col cols="12" md="3" class="d-flex align-center  px-3">
                 <v-autocomplete
-                    v-model="editedItem.collect_address_id"
+                    :value="editedItem.collect_address_id"
                     :items="collectAddresses"
                     label="Abhol Anschrift"
                     item-value="id"
                     item-text="name"
                     dense
+                    @change="(event) => setSingleValue({elementName: 'collect_address_id', elementValue: event})"
                 ></v-autocomplete>
             </v-col>
+            
         </v-row>
         <v-row justify="start">
             <v-col cols="12" md="4" class="mb-1 px-3">
@@ -198,7 +200,7 @@
                     label="Kaution erstattet"
                 ></v-checkbox>
                 <v-autocomplete
-                    v-model="editedItem.contractBailType"
+                    v-model="editedItem.contractBailReturnType"
                     :items="vueHelpers.paymentTypes"
                     label="Zahlart Kaution Erstattung"
                     dense
@@ -257,7 +259,7 @@ export default {
     },
     methods: {
         ...mapActions(["updateItem","storeNewItem", "getItemsList", "getDocumentValues", "getItemById"]),
-        ...mapMutations("document", ["resetForm", "parseDate", "formatDate"]),
+        ...mapMutations("document", ["resetForm", "parseDate", "formatDate", "setSingleValue"]),
         save() {
             if (this.editedIndex > -1) {
                 this.updateItem({
