@@ -30,11 +30,14 @@ export default {
         editedItem: documentObject,
         defaultItem: documentObject,
     },
-    actions: {},
+    
     mutations: {
+        UpdateEditedItem(state, value) {
+            state.editedItem = value
+        },
         setSingleValue(state, object) {
-            console.log(object)
-            Vue.set(state.editedItem, object.elementName, object.elementValue);  
+            console.log(object);
+            Vue.set(state.editedItem, object.elementName, object.elementValue);
         },
         setItemsList(state, data) {
             state.items = data;

@@ -58,7 +58,7 @@
                     :rules="[
                     ]"
                     validate-on-blur
-                    @change="calculateVatValues"
+                    @change="calculateValues"
                 ></v-text-field>
             </v-col>
             <v-col cols="12" md="4" class="mb-1 px-3">
@@ -96,7 +96,7 @@
                     :rules="[
                     ]"
                     validate-on-blur
-                    @change="calculatePaymentValues"
+                    @change="calculateFinalPayment"
                 ></v-text-field>
             </v-col>
             <date-component 
@@ -133,7 +133,6 @@
                     :rules="[
                     ]"
                     validate-on-blur
-                    @change="calculatePaymentValues"
                 ></v-text-field>
             </v-col>
             <date-component 
@@ -198,6 +197,7 @@
                     class="inverseCheckbox"
                     v-model="editedItem.contractBailReturned"
                     label="Kaution erstattet"
+                    @click="addToTotalPrice(2, 5)"
                 ></v-checkbox>
                 <v-autocomplete
                     v-model="editedItem.contractBailReturnType"
@@ -247,9 +247,19 @@ export default {
         ...mapState("collectAddress", {
             collectAddresses: (state) => state.items,
         }),
-        ...mapState("document", {
-            editedItem: (state) => state.editedItem,
-        }),
+        // ...mapState("document", {
+        //     editedItem: (state) => state.editedItem,
+        // }),
+
+        editedItem: {
+            get() {
+                return this.$store.state.document.editedItem
+            },
+            set (value) {
+                console.log("test")
+                this.$store.commit('document/UpdateEditedItem', value)
+            }
+        },
 
         formTitle() {
             return this.editedIndex === -1
@@ -292,19 +302,55 @@ export default {
                 dateVariable: dateVariable
             });
         },
+        calculateValues(){
+            this.calculateVatValues()
+            this.calculateDeposit()
+            this.calculateFinalPayment()
+        },
         calculateVatValues(){
             const totalValue = (helpers.getFloatValue(this.editedItem.totalPrice)).toFixed(2)
             if (totalValue > 0) {
                 const vatPercentage = this.$store.state.options.editedItem.vat
                 const netValue = (totalValue / (1 + vatPercentage / 100)).toFixed(2)
                 const vatValue = (totalValue - netValue).toFixed(2)
-                Vue.set(this.editedItem, "taxValue", helpers.writeFloatWithComma(vatValue));
-                Vue.set(this.editedItem, "nettoPrice", helpers.writeFloatWithComma(netValue));
-                Vue.set(this.editedItem, "totalPrice", helpers.writeFloatWithComma(totalValue));
+                this.editedItem.taxValue = helpers.writeFloatWithComma(vatValue);
+                this.editedItem.nettoPrice = helpers.writeFloatWithComma(netValue);
+                this.editedItem.totalPrice = helpers.writeFloatWithComma(totalValue);
             }
         },
-        calculatePaymentValues(){
-
+        calculateDeposit(){
+            const totalValue = (helpers.getFloatValue(this.editedItem.totalPrice)).toFixed(2)
+            if (totalValue > 0) {
+                const depositValue = (totalValue * (1/3)).toFixed(2);
+                this.editedItem.reservationDepositValue = helpers.writeFloatWithComma(depositValue)
+            }
+        },
+        calculateFinalPayment(){
+            const totalValue = (helpers.getFloatValue(this.editedItem.totalPrice))
+            let deposit = (helpers.getFloatValue(this.editedItem.reservationDepositValue))
+            let finalPayment = 0.0
+            if (totalValue > 0) {
+                if (!deposit || deposit == 0) {
+                    finalPayment = totalValue.toFixed(2)
+                    deposit = (0.0).toFixed(2)
+                }
+                else
+                {
+                    finalPayment = (totalValue - deposit).toFixed(2)
+                    deposit = deposit.toFixed(2)
+                }
+                this.editedItem.finalPaymentValue = helpers.writeFloatWithComma(finalPayment)
+                this.editedItem.reservationDepositValue = helpers.writeFloatWithComma(deposit)
+            }
+        },
+        addToTotalPrice(amount, times){
+            let totalValue = (helpers.getFloatValue(this.editedItem.totalPrice))
+            if (totalValue > 0) {
+                totalValue = totalValue + (times * amount)
+                this.editedItem.totalPrice = helpers.writeFloatWithComma(totalValue.toFixed(2));
+                this.calculateVatValues()
+                this.calculateFinalPayment()
+            }
         }
     },
     watch: {
