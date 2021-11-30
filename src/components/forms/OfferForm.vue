@@ -83,9 +83,8 @@ export default {
         };
     },
     computed: {
-        ...mapState("equipment", {
+        ...mapState("document", {
             editedItem: (state) => state.editedItem,
-            date: (state) => state.date,
         }),
         formTitle() {
             return this.editedIndex === -1
@@ -108,7 +107,6 @@ export default {
                 });
             } else {
                 this.storeNewItem({
-                    data: this.editedItem,
                     documentType: "offer",
                     successMsg: "Angebot erfolgreich angelegt!",
                     errorMsg: "Fehler beim Anlegen des Angebot",
