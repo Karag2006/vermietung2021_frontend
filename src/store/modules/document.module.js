@@ -30,10 +30,27 @@ export default {
         editedItem: documentObject,
         defaultItem: documentObject,
     },
-    
+    actions: {
+        storeNewItem({ commit, state, rootState }, object) {
+            // Documents need special handling on save.
+
+            // This action should not be called if this document already existed before
+            // check for an id beeing set and return error its there.
+            
+            // Check what Type of Document needs to be stored
+
+                // Add current Date as Date for the Document Type
+            
+                // Get the highest Document Type Number so far and add 1
+            
+            // Call API to store the Document
+
+            // Use the returned Object from the API to add this item directly to the Itemlist.
+        },
+    },
     mutations: {
         UpdateEditedItem(state, value) {
-            state.editedItem = value
+            state.editedItem = value;
         },
         setSingleValue(state, object) {
             console.log(object);

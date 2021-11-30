@@ -77,5 +77,7 @@ export default {
     document_footer: "",
     contactdata: "",
 
-    collect_address_id: ""
+    collect_address_id: "",
+
+    selectedEquipmentList: []
 }

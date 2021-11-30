@@ -44,7 +44,9 @@
                 </v-tab-item>
                 <v-tab-item>
                     <!-- Tab4 -->
-                    <DocumentForm/>
+                    <DocumentForm
+                        :editedIndex="editedIndex"
+                    />
                 </v-tab-item>
             </v-tabs>
         </v-card-text>
@@ -64,7 +66,6 @@
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
 import validationRules from "../../services/validationRules";
-import DocumentForm from './DocumentForm.vue';
 
 export default {
     components: {
@@ -93,7 +94,9 @@ export default {
         },
     },
     methods: {
-        ...mapActions(["updateItem", "storeNewItem"]),
+        ...mapActions(["updateItem"]),
+        // use the special handling action "StoreNewItem" from the document Module
+        ...mapActions('document', ['storeNewItem']),
         ...mapMutations("document", ["resetForm", "parseDate", "formatDate"]),
         save() {
             if (this.editedIndex > -1) {
@@ -105,8 +108,8 @@ export default {
                 });
             } else {
                 this.storeNewItem({
-                    item: this.editedItem,
-                    module: "document/",
+                    data: this.editedItem,
+                    documentType: "offer",
                     successMsg: "Angebot erfolgreich angelegt!",
                     errorMsg: "Fehler beim Anlegen des Angebot",
                 });

@@ -213,8 +213,6 @@
 
 <script>
 
-
-import Vue from 'vue'
 import { mapState, mapActions, mapMutations } from "vuex";
 import validationRules from "../../services/validationRules"
 import helpers from "../../services/helpers"
@@ -225,6 +223,8 @@ export default {
         TimeComponent: require("@/components/forms/formParts/TimeComponent.vue").default,
         EquipmentComponent: require("@/components/forms/formParts/EquipmentComponent.vue").default,
     },
+
+    props: ['editedIndex'],
     
     data() {
         return {
@@ -247,9 +247,6 @@ export default {
         ...mapState("collectAddress", {
             collectAddresses: (state) => state.items,
         }),
-        // ...mapState("document", {
-        //     editedItem: (state) => state.editedItem,
-        // }),
 
         editedItem: {
             get() {
@@ -260,41 +257,11 @@ export default {
                 this.$store.commit('document/UpdateEditedItem', value)
             }
         },
-
-        formTitle() {
-            return this.editedIndex === -1
-                ? "Neuer Anhänger"
-                : this.editedItem.plateNumber + " bearbeiten";
-        },
     },
     methods: {
-        ...mapActions(["updateItem","storeNewItem", "getItemsList", "getDocumentValues", "getItemById"]),
+        ...mapActions(["updateItem", "getItemsList", "getDocumentValues", "getItemById"]),
         ...mapMutations("document", ["resetForm", "parseDate", "formatDate", "setSingleValue"]),
-        save() {
-            if (this.editedIndex > -1) {
-                this.updateItem({
-                    item: this.editedItem,
-                    module: 'trailer/',
-                    successMsg: "Anhänger erfolgreich geändert!",
-                    errorMsg: "Fehler beim Ändern des Anhänger"
-                });
-            } else {
-                this.storeNewItem({
-                    item: this.editedItem,
-                    module: 'trailer/',
-                    successMsg: "Anhänger erfolgreich angelegt!",
-                    errorMsg: "Fehler beim Anlegen des Anhänger"
-                });
-            }
-            this.close();
-        },
-        close() {
-            this.dialog = false
-            this.$emit("close");
-            this.$nextTick(() => {
-                this.$emit("resetIndex")
-            });
-        },
+        
         datePickerInput(date, dateVariable) {
             this.picker[dateVariable] = false;
             this.formatDate({
@@ -351,7 +318,7 @@ export default {
                 this.calculateVatValues()
                 this.calculateFinalPayment()
             }
-        }
+        },
     },
     watch: {
         trigger(val) {
@@ -371,7 +338,7 @@ export default {
         this.getItemsList('collectAddress/')
         this.getItemsList("equipment/");
     },
-};
+}
 </script>
 
 <style>
