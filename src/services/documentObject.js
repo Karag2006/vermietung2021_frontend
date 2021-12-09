@@ -26,7 +26,7 @@ export default {
     contractBailType: "", 
     contractBailRecieved: false,
     contractBailReturnType: "",
-    contractBailReturned: false,
+    contractBailReturned: "",
     comment: "",
 
     customer_id: "",
@@ -70,7 +70,7 @@ export default {
     vehicle_loadingSize: "",
     vehicle_comment: "",
 
-    vat: 19,
+    vat: "",
     offer_note: "",
     reservation_note: "",
     contract_note: "",

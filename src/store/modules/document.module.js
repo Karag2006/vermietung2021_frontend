@@ -1,9 +1,6 @@
 import { now } from "core-js";
 import Vue from "vue";
-import authHeader from "@/services/auth-header";
-import axios from "axios";
 import documentObject from "@/services/documentObject.js";
-import helpers from "../../services/helpers";
 
 
 export default {
@@ -34,77 +31,29 @@ export default {
         defaultItem: documentObject,
     },
     actions: {
-        async storeNewItem({ dispatch, commit, state, rootState }, object) {
-
+        storeNewItem({ commit, state, rootState }, object) {
             // Documents need special handling on save.
 
-            if (state.editedItem.id) {
-                return
-            }
+            // This action should not be called if this document already existed before
+            // check for an id beeing set and return error its there.
             
-            if (!object.documentType) {
-                return
-            }
-            commit("setSingleValue", {
-                elementName: "currentState",
-                elementValue: object.documentType,
-            });
+            // Check what Type of Document needs to be stored
 
-            const date = new Date().toISOString().substr(0, 10);
-            state.editedItem[state.editedItem.currentState + "Date"] = helpers.isoToGermanDate(date)
-
-            await dispatch("getHighestDocumentNumber")
-            console.log(state.editedItem["offerNumber"])
+                // Add current Date as Date for the Document Type
             
-            axios
-                .post(rootState.baseApiUrl + state.editedItem.currentState, state.editedItem, {
-                    headers: authHeader(),
-                })
-                .then((response) => {
-                    commit("pushItemToList", response.data);
-                    commit(
-                        "showSnackbar",
-                        {
-                            text: object.successMsg,
-                            color: "success darken-3",
-                        },
-                        { root: true }
-                    );
-                })
-                .catch((error) => {
-                    commit(
-                        "showSnackbar",
-                        {
-                            text: object.errorMsg,
-                            color: "error darken-2",
-                        },
-                        { root: true }
-                    );
-                });
+                // Get the highest Document Type Number so far and add 1
+            
+            // Call API to store the Document
+
+            // Use the returned Object from the API to add this item directly to the Itemlist.
         },
-        async getHighestDocumentNumber({ dispatch, commit, state, rootState }) {
-            // Ask the API for the answer
-            await axios
-                .get(
-                    rootState.baseApiUrl + state.editedItem.currentState + "/highestNumber",
-                    {
-                        headers: authHeader(),
-                    }
-                )
-                .then((response) => {
-                    commit("setDocumentNumber", response.data);
-                });
-
-        }
     },
     mutations: {
-        setDocumentNumber(state, number) {
-            state.editedItem[state.editedItem.currentState + "Number"] = number + 1
-        },
         UpdateEditedItem(state, value) {
             state.editedItem = value;
         },
         setSingleValue(state, object) {
+            console.log(object);
             Vue.set(state.editedItem, object.elementName, object.elementValue);
         },
         setItemsList(state, data) {
