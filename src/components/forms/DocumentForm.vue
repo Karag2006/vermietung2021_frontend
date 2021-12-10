@@ -229,15 +229,6 @@ export default {
     data() {
         return {
             dialog: false,
-            picker: {
-                collectDate: false,
-                collectTime: false,
-                returnDate: false,
-                returnTime: false,
-                reservationDepositDate: false,
-                finalPaymentDate: false,
-                contractBailDate: false,
-            },
             rules: validationRules,
             vueHelpers: helpers,
             pickedTrailer: {},
@@ -253,7 +244,6 @@ export default {
                 return this.$store.state.document.editedItem
             },
             set (value) {
-                console.log("test")
                 this.$store.commit('document/UpdateEditedItem', value)
             }
         },
@@ -262,13 +252,7 @@ export default {
         ...mapActions(["updateItem", "getItemsList", "getDocumentValues", "getItemById"]),
         ...mapMutations("document", ["resetForm", "parseDate", "formatDate", "setSingleValue"]),
         
-        datePickerInput(date, dateVariable) {
-            this.picker[dateVariable] = false;
-            this.formatDate({
-                date: date, 
-                dateVariable: dateVariable
-            });
-        },
+        
         calculateValues(){
             this.calculateVatValues()
             this.calculateDeposit()

@@ -129,7 +129,7 @@ export default {
     },
 
     created() {
-        this.getItemsList("document/");
+        this.getItemsList({moduleName:"document/", type:"offer/"});
     },
 
     methods: {

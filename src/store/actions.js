@@ -2,32 +2,37 @@ import authHeader from "@/services/auth-header";
 import axios from "axios";
 
 const actions = {
-    storeNewItem({ commit, state, rootState }, object) {
-        axios
-            .post(rootState.baseApiUrl + object.module, object.item, {
-                headers: authHeader(),
-            })
-            .then((response) => {
-                commit(object.module + "pushItemToList", response.data);
-                commit("showSnackbar", {
-                    text: object.successMsg,
-                    color: "success darken-3",
+    storeNewItem({ dispatch, commit, state, rootState }, object) {
+        if (object.module == "document/") {
+            dispatch(object.module + "storeNewItem", object);
+        }
+        else {
+            axios
+                .post(rootState.baseApiUrl + object.module, object.item, {
+                    headers: authHeader(),
+                })
+                .then((response) => {
+                    commit(object.module + "pushItemToList", response.data);
+                    commit("showSnackbar", {
+                        text: object.successMsg,
+                        color: "success darken-3",
+                    });
+                })
+                .catch((error) => {
+                    commit("showSnackbar", {
+                        text: object.errorMsg,
+                        color: "error darken-2",
+                    });
                 });
-            })
-            .catch((error) => {
-                commit("showSnackbar", {
-                    text: object.errorMsg,
-                    color: "error darken-2",
-                });
-            });
+        }
     },
-    getItemsList({ commit, state, rootState }, moduleName) {
+    getItemsList({ commit, state, rootState }, object) {
         axios
-            .get(rootState.baseApiUrl + moduleName, {
+            .get(rootState.baseApiUrl + object.type, {
                 headers: authHeader(),
             })
             .then((response) => {
-                commit(moduleName + "setItemsList", response.data);
+                commit(object.moduleName + "setItemsList", response.data);
             });
     },
 

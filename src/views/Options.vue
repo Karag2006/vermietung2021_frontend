@@ -361,7 +361,7 @@ export default {
             module: "options/",
             itemId: 1
         }),
-        this.getItemsList('collectAddress/')
+        this.getItemsList({moduleName:"collectAddress/", type:"collectAddress/"});
     },
 
 };

@@ -83,10 +83,14 @@ export default {
         };
     },
     computed: {
-        ...mapState("equipment", {
-            editedItem: (state) => state.editedItem,
-            date: (state) => state.date,
-        }),
+        editedItem: {
+            get() {
+                return this.$store.state.document.editedItem
+            },
+            set (value) {
+                this.$store.commit('document/UpdateEditedItem', value)
+            }
+        },
         formTitle() {
             return this.editedIndex === -1
                 ? "Neues Angebot"
@@ -94,9 +98,7 @@ export default {
         },
     },
     methods: {
-        ...mapActions(["updateItem"]),
-        // use the special handling action "StoreNewItem" from the document Module
-        ...mapActions('document', ['storeNewItem']),
+        ...mapActions(["updateItem", "storeNewItem"]),
         ...mapMutations("document", ["resetForm", "parseDate", "formatDate"]),
         save() {
             if (this.editedIndex > -1) {
@@ -108,8 +110,9 @@ export default {
                 });
             } else {
                 this.storeNewItem({
-                    data: this.editedItem,
+                    // data: this.editedItem,
                     documentType: "offer",
+                    module: "document/",
                     successMsg: "Angebot erfolgreich angelegt!",
                     errorMsg: "Fehler beim Anlegen des Angebot",
                 });

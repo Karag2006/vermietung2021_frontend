@@ -1,6 +1,8 @@
-import { now } from "core-js";
 import Vue from "vue";
 import documentObject from "@/services/documentObject.js";
+import helpers from "@/services/helpers.js";
+import authHeader from "@/services/auth-header";
+import axios from "axios";
 
 
 export default {
@@ -31,24 +33,65 @@ export default {
         defaultItem: documentObject,
     },
     actions: {
-        storeNewItem({ commit, state, rootState }, object) {
+        async storeNewItem({ dispatch, commit, state, rootState }, object) {
             // Documents need special handling on save.
 
-            // This action should not be called if this document already existed before
-            // check for an id beeing set and return error its there.
-            
-            // Check what Type of Document needs to be stored
+            // Add current Date as creation date for the Document Type
+            const currentDate = new Date().toISOString().substr(0, 10);
+            const currentDateDE = helpers.ISOToDE(currentDate);
+            state.editedItem[object.documentType + "Date"] = currentDateDE;
 
-                // Add current Date as Date for the Document Type
-            
-                // Get the highest Document Type Number so far and add 1
-            
+            // Get the highest Document Type Number so far and add 1
+            await dispatch("getHighestDocumentNumber", object.documentType);
+
+            // set the transmitted documentType as the Documents currentState
+            state.editedItem.currentState = object.documentType;
+
+            console.log(state.editedItem);
+
             // Call API to store the Document
-
-            // Use the returned Object from the API to add this item directly to the Itemlist.
+            axios
+                .post(rootState.baseApiUrl + object.documentType, state.editedItem, {
+                    headers: authHeader(),
+                })
+                .then((response) => {
+                    // Use the returned Object from the API to add this item directly to the Itemlist.
+                    commit("pushItemToList", response.data);
+                    commit(
+                        "showSnackbar",
+                        {
+                            text: object.successMsg,
+                            color: "success darken-3",
+                        },
+                        { root: true }
+                    );
+                })
+                .catch((error) => {
+                    commit(
+                        "showSnackbar",
+                        {
+                            text: object.errorMsg,
+                            color: "error darken-2",
+                        },
+                        { root: true }
+                    );
+                });
+        },
+        async getHighestDocumentNumber({ dispatch, commit, state, rootState }, type){
+            await axios
+                .get(rootState.baseApiUrl + type + "/highestNumber", {
+                    headers: authHeader(),
+                })
+                .then((response) => {
+                    // console.log(response.data)
+                    commit("setDocumentNumber", { value:response.data, type:type });
+                });
         },
     },
     mutations: {
+        setDocumentNumber(state, object) {
+            state.editedItem[object.type + "Number"] = object.value
+        },
         UpdateEditedItem(state, value) {
             state.editedItem = value;
         },

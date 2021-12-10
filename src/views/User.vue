@@ -126,7 +126,7 @@ export default {
     },
 
     created() {
-        this.getItemsList("user/");
+        this.getItemsList({moduleName:"user/", type:"user/"});
     },
 
     methods: {
