@@ -98,7 +98,7 @@ export default {
         },
     },
     methods: {
-        ...mapActions(["updateItem", "storeNewItem"]),
+        ...mapActions(["updateItem", "storeNewItem", "getItemById"]),
         ...mapMutations("document", ["resetForm", "parseDate", "formatDate"]),
         save() {
             if (this.editedIndex > -1) {
@@ -109,6 +109,7 @@ export default {
                     errorMsg: "Fehler beim Ändern des Angebot",
                 });
             } else {
+                this.editedItem.vat = this.$store.state.options.editedItem.vat
                 this.storeNewItem({
                     // data: this.editedItem,
                     documentType: "offer",
@@ -136,6 +137,12 @@ export default {
                 this.close();
             }
         },
+    },
+    mounted() {
+        this.getItemById({
+            module: "options/",
+            itemId: 1
+        })
     },
 };
 </script>

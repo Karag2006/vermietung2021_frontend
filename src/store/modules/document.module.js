@@ -90,7 +90,7 @@ export default {
     },
     mutations: {
         setDocumentNumber(state, object) {
-            state.editedItem[object.type + "Number"] = object.value
+            state.editedItem[object.type + "Number"] = object.value + 1
         },
         UpdateEditedItem(state, value) {
             state.editedItem = value;

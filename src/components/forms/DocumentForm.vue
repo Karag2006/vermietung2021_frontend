@@ -261,8 +261,8 @@ export default {
         calculateVatValues(){
             const totalValue = (helpers.getFloatValue(this.editedItem.totalPrice)).toFixed(2)
             if (totalValue > 0) {
-                const vatPercentage = this.$store.state.options.editedItem.vat
-                const netValue = (totalValue / (1 + vatPercentage / 100)).toFixed(2)
+                this.editedItem.vat = this.$store.state.options.editedItem.vat
+                const netValue = (totalValue / (1 + this.editedItem.vat / 100)).toFixed(2)
                 const vatValue = (totalValue - netValue).toFixed(2)
                 this.editedItem.taxValue = helpers.writeFloatWithComma(vatValue);
                 this.editedItem.nettoPrice = helpers.writeFloatWithComma(netValue);
@@ -319,8 +319,8 @@ export default {
             module: "options/",
             itemId: 1
         }),
-        this.getItemsList('collectAddress/')
-        this.getItemsList("equipment/");
+        this.getItemsList({moduleName:"collectAddress/", type:"collectAddress/"});
+        this.getItemsList({moduleName:"equipment/", type:"equipment/"});
     },
 }
 </script>

@@ -168,7 +168,7 @@ export default {
         }
     },
     mounted() {
-        this.getItemsList("trailer/");
+        this.getItemsList({moduleName:"trailer/", type:"trailer/"});
     },
 };
 </script>

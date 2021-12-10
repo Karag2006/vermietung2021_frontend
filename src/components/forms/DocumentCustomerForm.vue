@@ -305,7 +305,7 @@ export default {
         }
     },
     mounted() {
-        this.getItemsList("customer/");
+        this.getItemsList({moduleName:"customer/", type:"customer/"});
     },
 };
 </script>
