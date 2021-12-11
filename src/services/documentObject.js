@@ -26,7 +26,7 @@ export default {
     contractBailType: "", 
     contractBailRecieved: false,
     contractBailReturnType: "",
-    contractBailReturned: "",
+    contractBailReturned: false,
     comment: "",
 
     customer_id: "",

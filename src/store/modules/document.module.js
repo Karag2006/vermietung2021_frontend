@@ -42,7 +42,10 @@ export default {
             state.editedItem[object.documentType + "Date"] = currentDateDE;
 
             // Get the highest Document Type Number so far and add 1
-            await dispatch("getHighestDocumentNumber", object.documentType);
+            await dispatch("getNextDocumentNumber", object.documentType);
+            
+            // Check prices and make them float values before saving them into the Database
+            await commit("setDocumentPrices");
 
             // set the transmitted documentType as the Documents currentState
             state.editedItem.currentState = object.documentType;
@@ -51,9 +54,13 @@ export default {
 
             // Call API to store the Document
             axios
-                .post(rootState.baseApiUrl + object.documentType, state.editedItem, {
-                    headers: authHeader(),
-                })
+                .post(
+                    rootState.baseApiUrl + object.documentType,
+                    state.editedItem,
+                    {
+                        headers: authHeader(),
+                    }
+                )
                 .then((response) => {
                     // Use the returned Object from the API to add this item directly to the Itemlist.
                     commit("pushItemToList", response.data);
@@ -77,20 +84,31 @@ export default {
                     );
                 });
         },
-        async getHighestDocumentNumber({ dispatch, commit, state, rootState }, type){
+        async getNextDocumentNumber(
+            { dispatch, commit, state, rootState },
+            type
+        ) {
             await axios
                 .get(rootState.baseApiUrl + type + "/highestNumber", {
                     headers: authHeader(),
                 })
                 .then((response) => {
                     // console.log(response.data)
-                    commit("setDocumentNumber", { value:response.data, type:type });
+                    commit("setDocumentNumber", {
+                        value: response.data,
+                        type: type,
+                    });
                 });
         },
     },
     mutations: {
+        setDocumentPrices(state) {
+            helpers.priceValues.forEach(element => {
+                state.editedItem[element] = helpers.getFloatValue(state.editedItem[element])
+            });
+        },
         setDocumentNumber(state, object) {
-            state.editedItem[object.type + "Number"] = object.value + 1
+            state.editedItem[object.type + "Number"] = object.value + 1;
         },
         UpdateEditedItem(state, value) {
             state.editedItem = value;
