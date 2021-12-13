@@ -124,22 +124,27 @@ export default {
         setItemsList(state, data) {
             state.items = data;
         },
-        setEditedItem(state, item) {
-            
+        setEditedItem(state, item) {      
             helpers.dates.forEach((date) => {
                 item[date] = helpers.ISOToDE(item[date]);
             });
-            console.log(item);
+            helpers.times.forEach(time => {
+                item[time] = helpers.trimTime(item[time])
+            })
+            helpers.priceValues.forEach(price => {
+                item[price] = item[price] ? parseFloat(item[price]).toFixed(2) : 0.00; 
+                item[price] = helpers.writeFloatWithComma(item[price]);
+            })
             state.editedItem = item;
         },
         resetForm(state) {
             state.editedItem = Object.assign({}, state.defaultItem);
         },
-        pushItemToList(state, data) {
+        pushItemToList(state, item) {
             helpers.listDates.forEach(date => {
-                data[date] = helpers.ISOToDE(data[date]);
+                item[date] = helpers.ISOToDE(item[date]);
             });
-            state.items.push(data);
+            state.items.push(item);
         },
         updateItemInList(state, data) {
             const index = state.items.findIndex((item) => {
@@ -149,7 +154,7 @@ export default {
         },
         deleteItemFromList(state, id) {
             const index = state.items.findIndex((item) => {
-                return item.id === id;
+                return item.id === parseInt(id);
             });
             state.items.splice(index, 1);
         },

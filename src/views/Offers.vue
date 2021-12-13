@@ -130,6 +130,7 @@ export default {
 
     created() {
         this.getItemsList({moduleName:"document/", type:"offer/"});
+        this.getItemById({itemId: 1, moduleName: "options/",type: "options/",});
     },
 
     methods: {

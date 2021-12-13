@@ -23,6 +23,8 @@ export default {
         "driver_birth_date",
     ],
 
+    times: ["collectTime", "returnTime"],
+
     listDates: ["collectDate", "returnDate"],
 
     getFloatValue(commaString) {
@@ -35,7 +37,7 @@ export default {
 
     ISOToDE(date) {
         if (date) {
-            date = this.trimISO(date)
+            date = this.trimISO(date);
             const [year, month, day] = date.split("-");
             return `${day}.${month}.${year}`;
         }
@@ -49,6 +51,12 @@ export default {
     trimISO(dateString) {
         if (dateString) {
             return dateString.substr(0, 10);
+        }
+    },
+
+    trimTime(timeString) {
+        if (timeString) {
+            return timeString.substr(0,5)
         }
     }
 };
