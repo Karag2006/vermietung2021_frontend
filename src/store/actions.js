@@ -64,11 +64,11 @@ const actions = {
     },
     getItemById({ commit, state, rootState }, object) {
         axios
-            .get(rootState.baseApiUrl + object.module + object.itemId, {
+            .get(rootState.baseApiUrl + object.type + object.itemId, {
                 headers: authHeader(),
             })
             .then((response) => {
-                commit(object.module + "setEditedItem", response.data);
+                commit(object.moduleName + "setEditedItem", response.data);
             });
     },
     getDocumentValues({ commit, state, rootState }, object) {

@@ -139,7 +139,8 @@ export default {
             this.editedIndex = item.id;
             this.getItemById({
                 itemId: this.editedIndex,
-                module: "document/",
+                moduleName: "document/",
+                type: "offer/",
             });
             this.dialog = true;
         },

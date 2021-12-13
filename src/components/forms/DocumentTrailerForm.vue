@@ -3,18 +3,17 @@
         <v-row justify="space-around" class="my-5">
             <v-col cols="12" md="5">
                 <v-autocomplete
-                    v-model="pickedTrailer"
+                    v-model="editedItem.vehicle_id"
                     :items="trailerList"
                     label="Anhänger auswählen"
                     item-text="selector"
-                    item-value="plateNumber"
-                    return-object
-                    clearable
+                    item-value="id"
                     dense
+                    clearable
                     @change="getDocumentValues({
                         module: 'trailer/',
-                        itemId: pickedTrailer.id,
-                        itemIdentifier: 'vehicle'
+                        itemId: editedItem.vehicle_id,
+                        itemIdentifier: 'vehicle',
                     })"
                 ></v-autocomplete>
             </v-col>

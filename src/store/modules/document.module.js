@@ -124,8 +124,13 @@ export default {
         setItemsList(state, data) {
             state.items = data;
         },
-        setEditedItem(state, data) {
-            state.editedItem = data;
+        setEditedItem(state, item) {
+            
+            helpers.dates.forEach((date) => {
+                item[date] = helpers.ISOToDE(item[date]);
+            });
+            console.log(item);
+            state.editedItem = item;
         },
         resetForm(state) {
             state.editedItem = Object.assign({}, state.defaultItem);

@@ -3,17 +3,16 @@
         <v-row justify="space-around" class="my-5">
             <v-col cols="12" md="5">
                 <v-autocomplete
-                    v-model="customer"
+                    v-model="editedItem.driver_id"
                     :items="list"
-                    label="Kunden auswählen"
+                    label="Fahrer auswählen"
                     item-text="selector"
                     item-value="id"
-                    return-object
                     dense
                     clearable
                     @change="getDocumentValues({
                         module: 'customer/',
-                        itemId: customer.id,
+                        itemId: editedItem.driver_id,
                         itemIdentifier: 'driver',
                     })"
                 ></v-autocomplete>
@@ -57,49 +56,14 @@
                     validate-on-blur
                 ></v-text-field>
                 <v-row>
-                    <v-col cols="1">
-                        <v-menu
-                            v-model="datePicker"
-                            :close-on-content-click="false"
-                            :nudge-right="40"
-                            transition="scale-transition"
-                            offset-y
-                            min-width="auto"
-                        >
-                            <template
-                                v-slot:activator="{
-                                    on,
-                                    attrs,
-                                }"
-                            >
-                                <v-icon v-bind="attrs" v-on="on" @click="parseDate(editedItem.driver_birth_date)">
-                                    far fa-calendar-alt
-                                </v-icon>
-                            </template>
-                            <v-date-picker
-                                :first-day-of-week="1"
-                                locale="de-de"
-                                :picker-date="date"
-                                :value="date"
-                                @input="datePickerInput($event)"
-                            ></v-date-picker>
-                        </v-menu>
-                    </v-col>
-                    <v-col cols="11">
-                        <v-text-field
-                            v-model="editedItem.driver_birth_date"
-                            label="Geburtsdatum"
-                            dense
-                            class="mb-4"
-                            @blur="
-                                parseDate(editedItem.driver_birth_date)
-                            "
-                            :rules="[
-                                rules.isDate(editedItem.driver_birth_date),
-                            ]"
-                            validate-on-blur
-                        ></v-text-field>
-                    </v-col>
+                    <date-component 
+                        :cols="12"
+                        :storeComponentName="'document'" 
+                        :elementName="'driver_birth_date'" 
+                        :required="false" 
+                        :label="'Geburtsdatum'"
+                        class="mb-3"
+                    />
                 </v-row>
 
                 <v-text-field
@@ -238,6 +202,9 @@ import validationRules from "../../services/validationRules"
 
 export default {
     props: ['trigger', 'editedIndex', 'type'],
+    components: {
+        DateComponent: require("@/components/forms/formParts/DateComponent.vue").default,
+    },
     data() {
         return {
             dialog: false,
@@ -249,7 +216,7 @@ export default {
     computed: {
         ...mapState("customer", {
             list: (state) => state.items,
-            date: (state) => state.date,
+            // date: (state) => state.date,
         }),
         ...mapState("document", {
             editedItem: (state) => state.editedItem,
