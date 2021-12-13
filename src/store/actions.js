@@ -89,11 +89,11 @@ const actions = {
     },
     deleteItemById({ commit, state, rootState }, object) {
         axios
-            .delete(rootState.baseApiUrl + object.module + object.id, {
+            .delete(rootState.baseApiUrl + object.type + object.id, {
                 headers: authHeader(),
             })
             .then((response) => {
-                commit(object.module + "deleteItemFromList", response.data);
+                commit(object.moduleName + "deleteItemFromList", response.data);
                 commit("showSnackbar", {
                     text: object.successMsg,
                     color: "success darken-3",

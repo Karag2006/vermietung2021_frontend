@@ -150,7 +150,8 @@ export default {
         deleteItemConfirm() {
             this.deleteItemById({
                 id: this.editedIndex,
-                module: "document/",
+                moduleName: "document/",
+                type:"offer/",
                 successMsg: "Angebot erfolgreich gelöscht!",
                 errorMsg: "Fehler beim Löschen des Angebot",
             });

@@ -84,10 +84,7 @@ export default {
                     );
                 });
         },
-        async getNextDocumentNumber(
-            { dispatch, commit, state, rootState },
-            type
-        ) {
+        async getNextDocumentNumber({ dispatch, commit, state, rootState },type) {
             await axios
                 .get(rootState.baseApiUrl + type + "/highestNumber", {
                     headers: authHeader(),
