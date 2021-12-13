@@ -26,13 +26,16 @@ const actions = {
                 });
         }
     },
-    getItemsList({ commit, state, rootState }, object) {
+    async getItemsList({ commit, state, rootState }, object) {
         axios
             .get(rootState.baseApiUrl + object.type, {
                 headers: authHeader(),
             })
             .then((response) => {
                 commit(object.moduleName + "setItemsList", response.data);
+                if (object.moduleName == "document/") {
+                    commit(object.moduleName + "setDates");
+                } 
             });
     },
 

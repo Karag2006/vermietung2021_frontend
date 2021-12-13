@@ -10,6 +10,21 @@ export default {
         "contractBail",
     ],
 
+    dates: [
+        "offerDate",
+        "reservationDate",
+        "contractDate",
+        "collectDate",
+        "returnDate",
+        "reservationDepositDate",
+        "finalPaymentDate",
+        "contractBailDate",
+        "customer_birth_date",
+        "driver_birth_date",
+    ],
+
+    listDates: ["collectDate", "returnDate"],
+
     getFloatValue(commaString) {
         return parseFloat(commaString.replace(",", "."));
     },
@@ -20,6 +35,7 @@ export default {
 
     ISOToDE(date) {
         if (date) {
+            date = this.trimISO(date)
             const [year, month, day] = date.split("-");
             return `${day}.${month}.${year}`;
         }
@@ -30,4 +46,9 @@ export default {
             return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
         }
     },
+    trimISO(dateString) {
+        if (dateString) {
+            return dateString.substr(0, 10);
+        }
+    }
 };

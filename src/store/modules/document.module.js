@@ -107,6 +107,13 @@ export default {
                 state.editedItem[element] = helpers.getFloatValue(state.editedItem[element])
             });
         },
+        setDates(state) {
+            state.items.forEach(item => {
+                helpers.listDates.forEach(date => {
+                    item[date] = helpers.ISOToDE(item[date])
+                });
+            }); 
+        },
         setDocumentNumber(state, object) {
             state.editedItem[object.type + "Number"] = object.value + 1;
         },
@@ -127,6 +134,9 @@ export default {
             state.editedItem = Object.assign({}, state.defaultItem);
         },
         pushItemToList(state, data) {
+            helpers.listDates.forEach(date => {
+                data[date] = helpers.ISOToDE(data[date]);
+            });
             state.items.push(data);
         },
         updateItemInList(state, data) {
@@ -140,27 +150,6 @@ export default {
                 return item.id === id;
             });
             state.items.splice(index, 1);
-        },
-        parseDate(state, object) {
-            if (object.date) {
-                const [day, month, year] = object.date.split(".");
-                state[object.dateVariable] = `${year}-${month.padStart(
-                    2,
-                    "0"
-                )}-${day.padStart(2, "0")}`;
-            } else {
-                state[object.dateVariable] = new Date()
-                    .toISOString()
-                    .substr(0, 10);
-            }
-        },
-        formatDate(state, object) {
-            if (object.date) {
-                const [year, month, day] = object.date.split("-");
-                state.editedItem[
-                    object.dateVariable
-                ] = `${day}.${month}.${year}`;
-            }
         },
 
         setItemInDocument(state, data) {
