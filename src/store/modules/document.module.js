@@ -33,6 +33,43 @@ export default {
         defaultItem: documentObject,
     },
     actions: {
+        async updateItem({dispatch, commit, state, rootState }, object) {
+            
+            // Check prices and make them float values before saving them into the Database
+            await commit("setDocumentPrices")
+
+            // Call API to update the Document
+            axios
+                .patch(
+                    rootState.baseApiUrl + object.documentType + "/" + object.item.id,
+                    object.item,
+                    {
+                        headers: authHeader(),
+                    }
+                )
+                .then((response) => {
+                    commit("updateItemInList", response.data);
+                    commit(
+                        "showSnackbar",
+                        {
+                            text: object.successMsg,
+                            color: "success darken-3",
+                        },
+                        { root: true }
+                    );
+                })
+                .catch((error) => {
+                    commit(
+                        "showSnackbar",
+                        {
+                            text: object.errorMsg,
+                            color: "error darken-2",
+                        },
+                        { root: true }
+                    );
+                });
+
+        },
         async storeNewItem({ dispatch, commit, state, rootState }, object) {
             // Documents need special handling on save.
 
@@ -49,8 +86,6 @@ export default {
 
             // set the transmitted documentType as the Documents currentState
             state.editedItem.currentState = object.documentType;
-
-            console.log(state.editedItem);
 
             // Call API to store the Document
             axios
@@ -147,6 +182,9 @@ export default {
             state.items.push(item);
         },
         updateItemInList(state, data) {
+            helpers.listDates.forEach((date) => {
+                data[date] = helpers.ISOToDE(data[date]);
+            });
             const index = state.items.findIndex((item) => {
                 return item.id === data.id;
             });

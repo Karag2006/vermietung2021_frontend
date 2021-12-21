@@ -2,7 +2,7 @@ export default {
         required: (value) => !!value || "Darf nicht leer sein",
         min(minNum, value) {
             if (!value) return true;
-            // Database saves some integer values as int.
+            // Database saves some integer values as int, some as string.
             // so to have only one function regardless if its a string or an int, we are
             // Converting to string in order to find out the number of Digits.
             value = String(value);
@@ -11,7 +11,7 @@ export default {
         },
         max(maxNum, value) {
             if (!value) return true;
-            // Database saves some integer values as int.
+            // Database saves some integer values as int, some as string.
             // so to have only one function regardless if its a string or an int, we are
             // Converting to string in order to find out the number of Digits.
             value = String(value);

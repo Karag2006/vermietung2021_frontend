@@ -104,6 +104,7 @@ export default {
             if (this.editedIndex > -1) {
                 this.updateItem({
                     item: this.editedItem,
+                    documentType: "offer",
                     module: "document/",
                     successMsg: "Angebot erfolgreich geändert!",
                     errorMsg: "Fehler beim Ändern des Angebot",

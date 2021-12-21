@@ -39,28 +39,33 @@ const actions = {
             });
     },
 
-    updateItem({ commit, state, rootState }, object) {
-        axios
-            .patch(
-                rootState.baseApiUrl + object.module + object.item.id,
-                object.item,
-                {
-                    headers: authHeader(),
-                }
-            )
-            .then((response) => {
-                commit(object.module + "updateItemInList", response.data);
-                commit("showSnackbar", {
-                    text: object.successMsg,
-                    color: "success darken-3",
+    updateItem({dispatch, commit, state, rootState }, object) {
+        if (object.module == "document/") {
+            dispatch(object.module + "updateItem", object);
+        }
+        else {
+            axios
+                .patch(
+                    rootState.baseApiUrl + object.module + object.item.id,
+                    object.item,
+                    {
+                        headers: authHeader(),
+                    }
+                )
+                .then((response) => {
+                    commit(object.module + "updateItemInList", response.data);
+                    commit("showSnackbar", {
+                        text: object.successMsg,
+                        color: "success darken-3",
+                    });
+                })
+                .catch((error) => {
+                    commit("showSnackbar", {
+                        text: object.errorMsg,
+                        color: "error darken-2",
+                    });
                 });
-            })
-            .catch((error) => {
-                commit("showSnackbar", {
-                    text: object.errorMsg,
-                    color: "error darken-2",
-                });
-            });
+        }
     },
     getItemById({ commit, state, rootState }, object) {
         axios
