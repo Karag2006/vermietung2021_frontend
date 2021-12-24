@@ -233,6 +233,7 @@
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
 import validationRules from "../../services/validationRules"
+// TODO : use Date Component
 
 export default {
     props: ['trigger', 'editedIndex'],

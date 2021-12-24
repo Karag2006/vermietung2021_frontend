@@ -132,6 +132,28 @@ export default {
                     });
                 });
         },
+
+        async downloadPDF({ dispatch, commit, state, rootState }, item)
+        {
+            await axios({
+                url: rootState.baseApiUrl + "document/" + item.id,
+                method: 'GET',
+                responseType: 'blob',
+                headers: authHeader()
+            })
+                .then((response) => {
+                    console.log(response.data)
+                    let fileURL = window.URL.createObjectURL(new Blob([response.data]));
+                    let link = document.createElement('a');
+
+                    link.href = fileURL
+                    link.target = "_blank"
+                    link.setAttribute('donload', 'file.pdf')
+                    document.body.appendChild(link)
+
+                    link.click()
+                })
+        },
     },
     mutations: {
         setDocumentPrices(state) {

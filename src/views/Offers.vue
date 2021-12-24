@@ -76,6 +76,14 @@
                 </template>
                 <template v-slot:item.actions="{ item }">
                     <v-icon
+                        color="red"
+                        small
+                        class="mr-4"
+                        @click="downloadPDF(item)"
+                    >
+                        far fa-file-pdf
+                    </v-icon>
+                    <v-icon
                         color="success"
                         small
                         class="mr-4"
@@ -135,7 +143,9 @@ export default {
 
     methods: {
         ...mapActions(["getItemsList", "getItemById", "deleteItemById"]),
+        ...mapActions("document/", ["downloadPDF"]),
         ...mapMutations("document/", ["resetForm"]),
+        
         editItem(item) {
             this.editedIndex = item.id;
             this.getItemById({

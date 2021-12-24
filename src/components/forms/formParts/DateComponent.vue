@@ -73,7 +73,7 @@ export default {
     computed: {
     },
     methods: {
-        
+        // TODO : use helper functions
         parseDate(date) {
             if (date) {
                 const [day, month, year] = date.split(".");
