@@ -30,7 +30,7 @@
                                     elevation="2"
                                     v-bind="attrs"
                                     v-on="on"
-                                    @click="resetForm"
+                                    @click="newForm"
                                 >
                                     <v-icon dark class="mr-2">
                                         fas fa-plus
@@ -145,7 +145,9 @@ export default {
         ...mapActions(["getItemsList", "getItemById", "deleteItemById"]),
         ...mapActions("document/", ["downloadPDF"]),
         ...mapMutations("document/", ["resetForm"]),
-        
+        newForm(){
+            this.$store.dispatch("document/setDocumentDefaults")
+        },
         editItem(item) {
             this.editedIndex = item.id;
             this.getItemById({

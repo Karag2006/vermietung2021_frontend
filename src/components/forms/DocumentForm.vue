@@ -261,7 +261,6 @@ export default {
         calculateVatValues(){
             const totalValue = (helpers.getFloatValue(this.editedItem.totalPrice)).toFixed(2)
             if (totalValue > 0) {
-                this.editedItem.vat = this.$store.state.options.editedItem.vat
                 const netValue = (totalValue / (1 + this.editedItem.vat / 100)).toFixed(2)
                 const vatValue = (totalValue - netValue).toFixed(2)
                 this.editedItem.taxValue = helpers.writeFloatWithComma(vatValue);

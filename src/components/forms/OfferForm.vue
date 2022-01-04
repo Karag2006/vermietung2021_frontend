@@ -20,7 +20,10 @@
                     Anhänger
                 </v-tab>
                 <v-tab>
-                    Angebot
+                    Vertragsdaten
+                </v-tab>
+                <v-tab>
+                    Einstellungen
                 </v-tab>
 
                 <!-- Tab Content  -->
@@ -48,6 +51,12 @@
                         :editedIndex="editedIndex"
                     />
                 </v-tab-item>
+                <v-tab-item>
+                    <!-- Tab4 -->
+                    <SettingsForm
+                        :type="'offer'"
+                    />
+                </v-tab-item>
             </v-tabs>
         </v-card-text>
 
@@ -72,7 +81,8 @@ export default {
         DocumentTrailerForm: require("@/components/forms/DocumentTrailerForm.vue").default,
         DocumentCustomerForm: require("@/components/forms/DocumentCustomerForm.vue").default,
         DocumentDriverForm: require("@/components/forms/DocumentDriverForm.vue").default,
-        DocumentForm: require("@/components/forms/DocumentForm.vue").default
+        DocumentForm: require("@/components/forms/DocumentForm.vue").default,
+        SettingsForm: require("@/components/forms/DocumentSettingsForm.vue").default
     },
     props: ["trigger", "editedIndex"],
     data() {
@@ -100,6 +110,7 @@ export default {
     methods: {
         ...mapActions(["updateItem", "storeNewItem", "getItemById"]),
         ...mapMutations("document", ["resetForm", "parseDate", "formatDate"]),
+        
         save() {
             if (this.editedIndex > -1) {
                 this.updateItem({
@@ -110,9 +121,8 @@ export default {
                     errorMsg: "Fehler beim Ändern des Angebot",
                 });
             } else {
-                this.editedItem.vat = this.$store.state.options.editedItem.vat
+                
                 this.storeNewItem({
-                    // data: this.editedItem,
                     documentType: "offer",
                     module: "document/",
                     successMsg: "Angebot erfolgreich angelegt!",
@@ -141,9 +151,18 @@ export default {
     },
     mounted() {
         this.getItemById({
-            module: "options/",
+            moduleName: "options/",
+            type: "options/",
             itemId: 1
         })
+    },
+    updated() {
+        this.getItemById({
+            moduleName: "options/",
+            type: "options/",
+            itemId: 1
+        })
+        this.$store.dispatch('document/setDocumentDefaults')
     },
 };
 </script>

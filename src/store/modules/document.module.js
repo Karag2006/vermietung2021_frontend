@@ -33,6 +33,19 @@ export default {
         defaultItem: documentObject,
     },
     actions: {
+        async setDocumentDefaults({ commit, state, rootState }) {
+            await commit("resetForm");
+            const data = {
+                "vat": rootState.options.editedItem.vat,
+                "offer_note" : rootState.options.editedItem.offer_note,
+                "document_footer" : rootState.options.editedItem.document_footer,
+                "contactdata" : rootState.options.editedItem.contactdata,
+
+                "contractBail" : rootState.options.editedItem.defaultContractBail,
+            }
+            console.log(data)
+            await commit("setDocumentDefaults", data)
+        },
         async updateItem({dispatch, commit, state, rootState }, object) {
             
             // Check prices and make them float values before saving them into the Database
@@ -155,6 +168,11 @@ export default {
         },
     },
     mutations: {
+        setDocumentDefaults(state, data) {
+            Object.keys(data).forEach(element => {
+                state.editedItem[element] = data[element]
+            })
+        },
         setDocumentPrices(state) {
             helpers.priceValues.forEach(element => {
                 state.editedItem[element] = helpers.getFloatValue(state.editedItem[element])
