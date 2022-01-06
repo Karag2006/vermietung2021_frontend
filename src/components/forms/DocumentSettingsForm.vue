@@ -123,11 +123,7 @@ export default {
         }
     },
     mounted() {
-        this.$store.dispatch("getItemById",{
-            moduleName: "options/",
-            type: "options/",
-            itemId: 1
-        })
+        
     },
 }
 </script>

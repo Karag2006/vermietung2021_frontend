@@ -25,6 +25,7 @@ export default new Vuex.Store({
             text: "",
             color: "",
         },
+        dialog: false,
         // baseApiUrl: "http://10.40.28.21/api/",
         baseApiUrl: process.env.VUE_APP_BASE_API_URL,
     },

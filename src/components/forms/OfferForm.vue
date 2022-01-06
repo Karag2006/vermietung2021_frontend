@@ -87,7 +87,7 @@ export default {
     props: ["trigger", "editedIndex"],
     data() {
         return {
-            dialog: false,
+            // dialog: false,
             datePicker: false,
             rules: validationRules,
         };
@@ -105,6 +105,14 @@ export default {
             return this.editedIndex === -1
                 ? "Neues Angebot"
                 : "Angebot " + this.editedItem.offerNumber + " bearbeiten";
+        },
+        dialog: {
+            get() {
+                return this.$store.state.dialog
+            },
+            set (value) {
+                this.$store.commit('UpdateDialog', value)
+            }
         },
     },
     methods: {
@@ -155,14 +163,6 @@ export default {
             type: "options/",
             itemId: 1
         })
-    },
-    updated() {
-        this.getItemById({
-            moduleName: "options/",
-            type: "options/",
-            itemId: 1
-        })
-        this.$store.dispatch('document/setDocumentDefaults')
     },
 };
 </script>

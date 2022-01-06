@@ -33,18 +33,19 @@ export default {
         defaultItem: documentObject,
     },
     actions: {
-        async setDocumentDefaults({ commit, state, rootState }) {
-            await commit("resetForm");
+        NewForm({ dispatch, commit, state, rootState }) {
+            
             const data = {
-                "vat": rootState.options.editedItem.vat,
-                "offer_note" : rootState.options.editedItem.offer_note,
-                "document_footer" : rootState.options.editedItem.document_footer,
-                "contactdata" : rootState.options.editedItem.contactdata,
+                vat: rootState.options.editedItem.vat,
+                offer_note: rootState.options.editedItem.offer_note,
+                document_footer: rootState.options.editedItem.document_footer,
+                contactdata: rootState.options.editedItem.contactdata,
 
-                "contractBail" : rootState.options.editedItem.defaultContractBail,
-            }
-            console.log(data)
-            await commit("setDocumentDefaults", data)
+                contractBail: rootState.options.editedItem.defaultContractBail,
+            };
+            commit("resetForm");
+            commit("setDocumentDefaults", data);
+            commit("UpdateDialog", true, {root: true})
         },
         async updateItem({dispatch, commit, state, rootState }, object) {
             

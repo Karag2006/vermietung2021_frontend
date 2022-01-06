@@ -21,15 +21,11 @@
                         </v-toolbar-title>
 
                         <v-spacer></v-spacer>
-                        <v-dialog v-model="dialog" max-width="1200px">
-                            <template v-slot:activator="{ on, attrs }">
                                 <v-btn
                                     class="pa-5"
                                     color="success"
                                     dark
                                     elevation="2"
-                                    v-bind="attrs"
-                                    v-on="on"
                                     @click="newForm"
                                 >
                                     <v-icon dark class="mr-2">
@@ -37,7 +33,9 @@
                                     </v-icon>
                                     Angebot hinzufügen
                                 </v-btn>
-                            </template>
+                        <v-dialog v-model="dialog" max-width="1200px">
+                            <!-- <template v-slot:activator="{ on, attrs }">
+                            </template> -->
                             <OfferForm
                                 :trigger="dialog"
                                 :editedIndex="editedIndex"
@@ -113,7 +111,7 @@ export default {
             .default,
     },
     data: () => ({
-        dialog: false,
+        // dialog: false,
         dialogDelete: false,
         editedIndex: -1,
         search: "",
@@ -127,6 +125,14 @@ export default {
             defaultItem: (state) => state.defaultItem,
             date: (state) => state.date,
         }),
+        dialog: {
+            get() {
+                return this.$store.state.dialog
+            },
+            set (value) {
+                this.$store.commit('UpdateDialog', value)
+            }
+        },
         
     },
 
@@ -145,8 +151,8 @@ export default {
         ...mapActions(["getItemsList", "getItemById", "deleteItemById"]),
         ...mapActions("document/", ["downloadPDF"]),
         ...mapMutations("document/", ["resetForm"]),
-        newForm(){
-            this.$store.dispatch("document/setDocumentDefaults")
+        async newForm(){
+            await this.$store.dispatch("document/NewForm")
         },
         editItem(item) {
             this.editedIndex = item.id;

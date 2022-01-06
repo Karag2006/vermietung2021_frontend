@@ -7,6 +7,9 @@ const mutations = {
     closeSnackbar(state) {
         state.snackbar.show = false;
     },
+    UpdateDialog(state, value) {
+        state.dialog = value
+    }
 }
 
 export default mutations;
