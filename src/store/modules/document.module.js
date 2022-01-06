@@ -8,26 +8,6 @@ import axios from "axios";
 export default {
     namespaced: true,
     state: {
-        listHeaders: [
-            {
-                text: "ID",
-                align: "start",
-                sortable: true,
-                value: "offerNumber",
-            },
-            { text: "Kunde", value: "customer_name1" },
-            { text: "Anhänger", value: "vehicle_title" },
-            { text: "Kennzeichen", value: "vehicle_plateNumber" },
-            { text: "Abholdatum", value: "collectDate" },
-            { text: "Rückgabedatum", value: "returnDate" },
-            {
-                text: "",
-                value: "actions",
-                sortable: false,
-                filterable: false,
-                align: "end",
-            },
-        ],
         items: [],
         editedItem: documentObject,
         defaultItem: documentObject,

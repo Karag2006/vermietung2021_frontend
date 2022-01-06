@@ -111,7 +111,26 @@ export default {
             .default,
     },
     data: () => ({
-        // dialog: false,
+        headers: [
+            {
+                text: "Nummer",
+                align: "start",
+                sortable: true,
+                value: "offerNumber",
+            },
+            { text: "Kunde", value: "customer_name1" },
+            { text: "Anhänger", value: "vehicle_title" },
+            { text: "Kennzeichen", value: "vehicle_plateNumber" },
+            { text: "Abholdatum", value: "collectDate" },
+            { text: "Rückgabedatum", value: "returnDate" },
+            {
+                text: "Aktionen",
+                value: "actions",
+                sortable: false,
+                filterable: false,
+                align: "end",
+            },
+        ],
         dialogDelete: false,
         editedIndex: -1,
         search: "",
@@ -120,11 +139,12 @@ export default {
     computed: {
         ...mapState("document", {
             items: (state) => state.items,
-            headers: (state) => state.listHeaders,
+            
             editedItem: (state) => state.editedItem,
             defaultItem: (state) => state.defaultItem,
             date: (state) => state.date,
         }),
+        
         dialog: {
             get() {
                 return this.$store.state.dialog
