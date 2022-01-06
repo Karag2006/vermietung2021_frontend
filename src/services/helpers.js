@@ -28,7 +28,9 @@ export default {
     listDates: ["collectDate", "returnDate"],
 
     getFloatValue(commaString) {
-        return parseFloat(commaString.replace(",", "."));
+        if (commaString) {
+            return parseFloat(commaString.replace(",", "."));
+        }
     },
 
     writeFloatWithComma(value) {

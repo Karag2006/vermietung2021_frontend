@@ -71,7 +71,7 @@ export default {
             const currentDate = new Date().toISOString().substr(0, 10);
             const currentDateDE = helpers.ISOToDE(currentDate);
             state.editedItem[object.documentType + "Date"] = currentDateDE;
-
+            
             // Get the highest Document Type Number so far and add 1
             await dispatch("getNextDocumentNumber", object.documentType);
             
@@ -80,7 +80,6 @@ export default {
 
             // set the transmitted documentType as the Documents currentState
             state.editedItem.currentState = object.documentType;
-
             // Call API to store the Document
             axios
                 .post(
@@ -157,6 +156,7 @@ export default {
         setDocumentPrices(state) {
             helpers.priceValues.forEach(element => {
                 state.editedItem[element] = helpers.getFloatValue(state.editedItem[element])
+                console.log(element);
             });
         },
         setDates(state) {

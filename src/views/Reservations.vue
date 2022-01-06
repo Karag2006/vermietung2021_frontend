@@ -6,7 +6,7 @@
                     <v-toolbar flat>
                         <v-toolbar-title>
                             <h4 class="component-title mb-4">
-                                Angebote
+                                Reservierungen
                             </h4>
                             <div>
                                 <v-text-field
@@ -31,12 +31,12 @@
                                     <v-icon dark class="mr-2">
                                         fas fa-plus
                                     </v-icon>
-                                    Neues Angebot
+                                    Neue Reservierung
                                 </v-btn>
                         <v-dialog v-model="dialog" max-width="1200px">
                             <!-- <template v-slot:activator="{ on, attrs }">
                             </template> -->
-                            <OfferForm
+                            <ReservationForm
                                 :trigger="dialog"
                                 :editedIndex="editedIndex"
                                 v-on:close="dialog = false"
@@ -107,7 +107,7 @@ import { mapState, mapActions, mapMutations } from "vuex";
 
 export default {
     components: {
-        OfferForm: require("@/components/forms/OfferForm.vue")
+        ReservationForm: require("@/components/forms/ReservationForm.vue")
             .default,
     },
     data: () => ({
@@ -116,7 +116,7 @@ export default {
                 text: "Nummer",
                 align: "start",
                 sortable: true,
-                value: "offerNumber",
+                value: "reservationNumber",
             },
             { text: "Kunde", value: "customer_name1" },
             { text: "Anhänger", value: "vehicle_title" },
@@ -162,15 +162,9 @@ export default {
         },
     },
 
-    created() {
-        this.getItemsList({moduleName:"document/", type:"offer/"});
-        this.getItemById({itemId: 1, moduleName: "options/",type: "options/",});
-    },
-
     methods: {
         ...mapActions(["getItemsList", "getItemById", "deleteItemById"]),
         ...mapActions("document/", ["downloadPDF"]),
-        ...mapMutations("document/", ["resetForm"]),
         async newForm(){
             await this.$store.dispatch("document/NewForm")
         },
@@ -179,7 +173,7 @@ export default {
             this.getItemById({
                 itemId: this.editedIndex,
                 moduleName: "document/",
-                type: "offer/",
+                type: "reservation/",
             });
             this.dialog = true;
         },
@@ -191,9 +185,9 @@ export default {
             this.deleteItemById({
                 id: this.editedIndex,
                 moduleName: "document/",
-                type:"offer/",
-                successMsg: "Angebot erfolgreich gelöscht!",
-                errorMsg: "Fehler beim Löschen des Angebot",
+                type:"reservation/",
+                successMsg: "Reservierung erfolgreich gelöscht!",
+                errorMsg: "Fehler beim Löschen des Reservierung",
             });
             this.closeDelete();
         },
@@ -205,6 +199,11 @@ export default {
             });
         },
         
+    },
+
+    created() {
+        this.getItemsList({moduleName:"document/", type:"reservation/"});
+        this.getItemById({itemId: 1, moduleName: "options/",type: "options/",});
     },
 };
 </script>
