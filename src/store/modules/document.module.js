@@ -18,6 +18,8 @@ export default {
             const data = {
                 vat: rootState.options.editedItem.vat,
                 offer_note: rootState.options.editedItem.offer_note,
+                reservation_note: rootState.options.editedItem.reservation_note,
+                contract_note: rootState.options.editedItem.contract_note,
                 document_footer: rootState.options.editedItem.document_footer,
                 contactdata: rootState.options.editedItem.contactdata,
 
