@@ -43,7 +43,17 @@ const routes = [
         path: "/reservations",
         name: "Reservations",
         component: () =>
-            import(/* webpackChunkName: "Reservations" */ "../views/Reservations.vue"),
+            import(
+                /* webpackChunkName: "Reservations" */ "../views/Reservations.vue"
+            ),
+    },
+    {
+        path: "/contracts",
+        name: "Contracts",
+        component: () =>
+            import(
+                /* webpackChunkName: "Contracts" */ "../views/Contracts.vue"
+            ),
     },
     {
         path: "/users",
