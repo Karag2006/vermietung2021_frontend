@@ -54,7 +54,7 @@
                 <v-tab-item>
                     <!-- Tab4 -->
                     <SettingsForm
-                        :type="'reservation'"
+                        :type="'contract'"
                     />
                 </v-tab-item>
             </v-tabs>

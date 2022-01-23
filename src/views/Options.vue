@@ -302,7 +302,8 @@ export default {
             this.$store.state.collectAddress.editedIndex = address.id;
             this.getItemById({
                 itemId: this.$store.state.collectAddress.editedIndex,
-                module: "collectAddress/",
+                moduleName: "collectAddress/",
+                type: "collectAddress/",
             });
             this.editMode = address.id;
         },
@@ -358,10 +359,11 @@ export default {
     },
     mounted() {
         this.getItemById({
-            module: "options/",
+            moduleName: "options/",
+            type: "options/",
             itemId: 1
         }),
-        this.getItemsList({moduleName:"collectAddress/", type:"collectAddress/"});
+        this.getItemsList({moduleName:"collectAddress/", type:"collectAddress"});
     },
 
 };
