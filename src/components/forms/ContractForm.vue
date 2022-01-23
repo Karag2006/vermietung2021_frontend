@@ -123,7 +123,7 @@ export default {
                 this.updateItem({
                     item: this.editedItem,
                     documentType: "contract",
-                    module: "document/",
+                    module: "document",
                     successMsg: "Mietvertrag erfolgreich geändert!",
                     errorMsg: "Fehler beim Ändern des Mietvertrag",
                 });
@@ -131,7 +131,7 @@ export default {
                 
                 this.storeNewItem({
                     documentType: "contract",
-                    module: "document/",
+                    module: "document",
                     successMsg: "Mietvertrag erfolgreich angelegt!",
                     errorMsg: "Fehler beim Anlegen des Mietvertrag",
                 });
@@ -158,8 +158,8 @@ export default {
     },
     mounted() {
         this.getItemById({
-            moduleName: "options/",
-            type: "options/",
+            moduleName: "options",
+            type: "options",
             itemId: 1
         })
     },

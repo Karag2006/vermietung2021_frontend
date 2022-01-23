@@ -315,11 +315,11 @@ export default {
     },
     mounted() {
         this.getItemById({
-            module: "options/",
+            module: "options",
             itemId: 1
         }),
-        this.getItemsList({moduleName:"collectAddress/", type:"collectAddress/"});
-        this.getItemsList({moduleName:"equipment/", type:"equipment/"});
+        this.getItemsList({moduleName:"collectAddress", type:"collectAddress"});
+        this.getItemsList({moduleName:"equipment", type:"equipment"});
     },
 }
 </script>

@@ -126,7 +126,7 @@ export default {
     },
 
     created() {
-        this.getItemsList({moduleName:"user/", type:"user/"});
+        this.getItemsList({moduleName:"user", type:"user"});
     },
 
     methods: {
@@ -137,7 +137,7 @@ export default {
             this.editedIndex = item.id;
             this.getItemById({
                 itemId: this.editedIndex,
-                module: "user/",
+                module: "user",
             });
             this.dialog = true;
         },
@@ -148,7 +148,7 @@ export default {
         deleteItemConfirm() {
             this.deleteItemById({
                 id: this.editedIndex,
-                module: "user/",
+                module: "user",
                 successMsg: "Benutzer erfolgreich gelöscht!",
                 errorMsg: "Fehler beim Löschen des Benutzers",
             });

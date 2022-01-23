@@ -163,8 +163,8 @@ export default {
     },
 
     created() {
-        this.getItemsList({moduleName:"document/", type:"offer/"});
-        this.getItemById({itemId: 1, moduleName: "options/",type: "options/",});
+        this.getItemsList({moduleName:"document", type:"offer"});
+        this.getItemById({itemId: 1, moduleName: "options",type: "options",});
     },
 
     methods: {
@@ -178,8 +178,8 @@ export default {
             this.editedIndex = item.id;
             this.getItemById({
                 itemId: this.editedIndex,
-                moduleName: "document/",
-                type: "offer/",
+                moduleName: "document",
+                type: "offer",
             });
             this.dialog = true;
         },
@@ -190,8 +190,8 @@ export default {
         deleteItemConfirm() {
             this.deleteItemById({
                 id: this.editedIndex,
-                moduleName: "document/",
-                type:"offer/",
+                moduleName: "document",
+                type:"offer",
                 successMsg: "Angebot erfolgreich gelöscht!",
                 errorMsg: "Fehler beim Löschen des Angebot",
             });

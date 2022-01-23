@@ -129,7 +129,7 @@ export default {
     },
 
     created() {
-        this.getItemsList({moduleName:"customer/", type:"customer/"});
+        this.getItemsList({moduleName:"customer", type:"customer"});
     },
 
     methods: {
@@ -139,7 +139,7 @@ export default {
             this.editedIndex = item.id;
             this.getItemById({
                 itemId: this.editedIndex,
-                module: "customer/",
+                module: "customer",
             });
             this.dialog = true;
         },
@@ -150,7 +150,7 @@ export default {
         deleteItemConfirm() {
             this.deleteItemById({
                 id: this.editedIndex,
-                module: "customer/",
+                module: "customer",
                 successMsg: "Kunden erfolgreich gelöscht!",
                 errorMsg: "Fehler beim Löschen des Kunden",
             });

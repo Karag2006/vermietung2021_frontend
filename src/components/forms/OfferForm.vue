@@ -124,7 +124,7 @@ export default {
                 this.updateItem({
                     item: this.editedItem,
                     documentType: "offer",
-                    module: "document/",
+                    module: "document",
                     successMsg: "Angebot erfolgreich geändert!",
                     errorMsg: "Fehler beim Ändern des Angebot",
                 });
@@ -132,7 +132,7 @@ export default {
                 
                 this.storeNewItem({
                     documentType: "offer",
-                    module: "document/",
+                    module: "document",
                     successMsg: "Angebot erfolgreich angelegt!",
                     errorMsg: "Fehler beim Anlegen des Angebot",
                 });
@@ -159,8 +159,8 @@ export default {
     },
     mounted() {
         this.getItemById({
-            moduleName: "options/",
-            type: "options/",
+            moduleName: "options",
+            type: "options",
             itemId: 1
         })
     },

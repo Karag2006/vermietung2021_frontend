@@ -3,8 +3,8 @@ import axios from "axios";
 
 const actions = {
     storeNewItem({ dispatch, commit, state, rootState }, object) {
-        if (object.module == "document/") {
-            dispatch(object.module + "storeNewItem", object);
+        if (object.module == "document") {
+            dispatch(object.module + "/storeNewItem", object);
         }
         else {
             axios
@@ -12,7 +12,7 @@ const actions = {
                     headers: authHeader(),
                 })
                 .then((response) => {
-                    commit(object.module + "pushItemToList", response.data);
+                    commit(object.module + "/pushItemToList", response.data);
                     commit("showSnackbar", {
                         text: object.successMsg,
                         color: "success darken-3",
@@ -32,28 +32,28 @@ const actions = {
                 headers: authHeader(),
             })
             .then((response) => {
-                commit(object.moduleName + "setItemsList", response.data);
-                if (object.moduleName == "document/") {
-                    commit(object.moduleName + "setDates");
+                commit(object.moduleName + "/setItemsList", response.data);
+                if (object.moduleName == "document") {
+                    commit(object.moduleName + "/setDates");
                 } 
             });
     },
 
     updateItem({dispatch, commit, state, rootState }, object) {
-        if (object.module == "document/") {
-            dispatch(object.module + "updateItem", object);
+        if (object.module == "document") {
+            dispatch(object.module + "/updateItem", object);
         }
         else {
             axios
                 .patch(
-                    rootState.baseApiUrl + object.module + object.item.id,
+                    rootState.baseApiUrl + object.module + "/" + object.item.id,
                     object.item,
                     {
                         headers: authHeader(),
                     }
                 )
                 .then((response) => {
-                    commit(object.module + "updateItemInList", response.data);
+                    commit(object.module + "/updateItemInList", response.data);
                     commit("showSnackbar", {
                         text: object.successMsg,
                         color: "success darken-3",
@@ -69,20 +69,20 @@ const actions = {
     },
     getItemById({ commit, state, rootState }, object) {
         axios
-            .get(rootState.baseApiUrl + object.type + object.itemId, {
+            .get(rootState.baseApiUrl + object.type + "/" + object.itemId, {
                 headers: authHeader(),
             })
             .then((response) => {
-                commit(object.moduleName + "setEditedItem", response.data);
+                commit(object.moduleName + "/setEditedItem", response.data);
             });
     },
     getDocumentValues({ commit, state, rootState }, object) {
         axios
-            .get(rootState.baseApiUrl + object.module + object.itemId, {
+            .get(rootState.baseApiUrl + object.module + "/" + object.itemId, {
                 headers: authHeader(),
             })
             .then((response) => {
-                commit(object.module + "setEditedItem", response.data);
+                commit(object.module + "/setEditedItem", response.data);
                 commit(
                     "document/setItemInDocument",
                     {
@@ -94,11 +94,11 @@ const actions = {
     },
     deleteItemById({ commit, state, rootState }, object) {
         axios
-            .delete(rootState.baseApiUrl + object.type + object.id, {
+            .delete(rootState.baseApiUrl + object.type + "/" + object.id, {
                 headers: authHeader(),
             })
             .then((response) => {
-                commit(object.moduleName + "deleteItemFromList", response.data);
+                commit(object.moduleName + "/deleteItemFromList", response.data);
                 commit("showSnackbar", {
                     text: object.successMsg,
                     color: "success darken-3",

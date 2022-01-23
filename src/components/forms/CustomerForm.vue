@@ -262,14 +262,14 @@ export default {
             if (this.editedIndex > -1) {
                 this.updateItem({
                     item: this.editedItem,
-                    module: 'customer/',
+                    module: 'customer',
                     successMsg: "Kunden erfolgreich geändert!",
                     errorMsg: "Fehler beim Ändern des Kunden"
                 });
             } else {
                 this.storeNewItem({
                     item: this.editedItem,
-                    module: 'customer/',
+                    module: 'customer',
                     successMsg: "Kunden erfolgreich angelegt!",
                     errorMsg: "Fehler beim Anlegen des Kunden"
                 });

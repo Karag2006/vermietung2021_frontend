@@ -129,7 +129,7 @@ export default {
     },
 
     created() {
-        this.getItemsList({moduleName:"equipment/", type:"equipment/"});
+        this.getItemsList({moduleName:"equipment", type:"equipment"});
     },
 
     methods: {
@@ -139,7 +139,7 @@ export default {
             this.editedIndex = item.id;
             this.getItemById({
                 itemId: this.editedIndex,
-                module: "equipment/",
+                module: "equipment",
             });
             this.dialog = true;
         },
@@ -150,7 +150,7 @@ export default {
         deleteItemConfirm() {
             this.deleteItemById({
                 id: this.editedIndex,
-                module: "equipment/",
+                module: "equipment",
                 successMsg: "Zubehör erfolgreich gelöscht!",
                 errorMsg: "Fehler beim Löschen des Zubehör",
             });

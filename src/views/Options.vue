@@ -291,7 +291,7 @@ export default {
         save() {
             this.updateItem({
                 item: this.editedItem,
-                module: 'options/',
+                module: 'options',
                 successMsg: "Einstellungen erfolgreich geändert!",
                 errorMsg: "Fehler beim Ändern der Einstellungen"
             });
@@ -302,8 +302,8 @@ export default {
             this.$store.state.collectAddress.editedIndex = address.id;
             this.getItemById({
                 itemId: this.$store.state.collectAddress.editedIndex,
-                moduleName: "collectAddress/",
-                type: "collectAddress/",
+                moduleName: "collectAddress",
+                type: "collectAddress",
             });
             this.editMode = address.id;
         },
@@ -314,7 +314,7 @@ export default {
         saveAddress(){
             this.updateItem({
                 item: this.$store.state.collectAddress.editedItem,
-                module: 'collectAddress/',
+                module: 'collectAddress',
                 successMsg: "Abholadresse erfolgreich geändert!",
                 errorMsg: "Fehler beim Ändern der Adresse"
             });
@@ -323,7 +323,7 @@ export default {
         saveNewAddress(){
             this.storeNewItem({
                 item: this.newAddress,
-                module: 'collectAddress/',
+                module: 'collectAddress',
                 successMsg: "Abholadresse erfolgreich hinzugefügt!",
                 errorMsg: "Fehler beim Hinzufügen der Adresse"
             });
@@ -337,7 +337,7 @@ export default {
         deleteItemConfirm() {
             this.deleteItemById({
                 id: this.$store.state.collectAddress.editedIndex,
-                module: "collectAddress/",
+                module: "collectAddress",
                 successMsg: "Abholadresse erfolgreich gelöscht!",
                 errorMsg: "Fehler beim Löschen der Abholadresse",
             });
@@ -359,11 +359,11 @@ export default {
     },
     mounted() {
         this.getItemById({
-            moduleName: "options/",
-            type: "options/",
+            moduleName: "options",
+            type: "options",
             itemId: 1
         }),
-        this.getItemsList({moduleName:"collectAddress/", type:"collectAddress"});
+        this.getItemsList({moduleName:"collectAddress", type:"collectAddress"});
     },
 
 };

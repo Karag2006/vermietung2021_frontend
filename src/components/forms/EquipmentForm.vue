@@ -91,14 +91,14 @@ export default {
             if (this.editedIndex > -1) {
                 this.updateItem({
                     item: this.editedItem,
-                    module: "equipment/",
+                    module: "equipment",
                     successMsg: "Zubehör erfolgreich geändert!",
                     errorMsg: "Fehler beim Ändern des Zubehör",
                 });
             } else {
                 this.storeNewItem({
                     item: this.editedItem,
-                    module: "equipment/",
+                    module: "equipment",
                     successMsg: "Zubehör erfolgreich angelegt!",
                     errorMsg: "Fehler beim Anlegen des Zubehör",
                 });

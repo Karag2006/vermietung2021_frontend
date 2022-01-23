@@ -116,14 +116,14 @@ export default {
             if (this.editedIndex > -1) {
                 this.updateItem({
                     item: this.editedItem,
-                    module: 'user/',
+                    module: 'user',
                     successMsg: "Benutzer erfolgreich geändert!",
                     errorMsg: "Fehler beim Ändern des Benutzers"
                 });
             } else {
                 this.storeNewItem({
                     item: this.editedItem,
-                    module: 'user/',
+                    module: 'user',
                     successMsg: "Benutzer erfolgreich angelegt!",
                     errorMsg: "Fehler beim Anlegen des Benutzers"
                 });

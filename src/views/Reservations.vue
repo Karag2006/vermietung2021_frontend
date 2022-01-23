@@ -172,8 +172,8 @@ export default {
             this.editedIndex = item.id;
             this.getItemById({
                 itemId: this.editedIndex,
-                moduleName: "document/",
-                type: "reservation/",
+                moduleName: "document",
+                type: "reservation",
             });
             this.dialog = true;
         },
@@ -184,8 +184,8 @@ export default {
         deleteItemConfirm() {
             this.deleteItemById({
                 id: this.editedIndex,
-                moduleName: "document/",
-                type:"reservation/",
+                moduleName: "document",
+                type:"reservation",
                 successMsg: "Reservierung erfolgreich gelöscht!",
                 errorMsg: "Fehler beim Löschen des Reservierung",
             });
@@ -202,8 +202,8 @@ export default {
     },
 
     created() {
-        this.getItemsList({moduleName:"document/", type:"reservation/"});
-        this.getItemById({itemId: 1, moduleName: "options/",type: "options/",});
+        this.getItemsList({moduleName:"document", type:"reservation"});
+        this.getItemById({itemId: 1, moduleName: "options",type: "options",});
     },
 };
 </script>

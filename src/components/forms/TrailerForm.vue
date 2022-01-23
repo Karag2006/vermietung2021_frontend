@@ -189,14 +189,14 @@ export default {
             if (this.editedIndex > -1) {
                 this.updateItem({
                     item: this.editedItem,
-                    module: 'trailer/',
+                    module: 'trailer',
                     successMsg: "Anhänger erfolgreich geändert!",
                     errorMsg: "Fehler beim Ändern des Anhänger"
                 });
             } else {
                 this.storeNewItem({
                     item: this.editedItem,
-                    module: 'trailer/',
+                    module: 'trailer',
                     successMsg: "Anhänger erfolgreich angelegt!",
                     errorMsg: "Fehler beim Anlegen des Anhänger"
                 });

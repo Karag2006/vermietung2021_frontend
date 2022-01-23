@@ -129,7 +129,7 @@ export default {
     },
 
     created() {
-        this.getItemsList({moduleName:"trailer/", type:"trailer/"});
+        this.getItemsList({moduleName:"trailer", type:"trailer"});
     },
 
     methods: {
@@ -139,7 +139,7 @@ export default {
             this.editedIndex = item.id;
             this.getItemById({
                 itemId: this.editedIndex,
-                module: "trailer/",
+                module: "trailer",
             });
             this.dialog = true;
         },
@@ -150,7 +150,7 @@ export default {
         deleteItemConfirm() {
             this.deleteItemById({
                 id: this.editedIndex,
-                module: "trailer/",
+                module: "trailer",
                 successMsg: "Anhänger erfolgreich gelöscht!",
                 errorMsg: "Fehler beim Löschen des Anhänger",
             });

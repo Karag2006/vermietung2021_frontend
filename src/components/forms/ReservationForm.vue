@@ -123,7 +123,7 @@ export default {
                 this.updateItem({
                     item: this.editedItem,
                     documentType: "reservation",
-                    module: "document/",
+                    module: "document",
                     successMsg: "Reservierung erfolgreich geändert!",
                     errorMsg: "Fehler beim Ändern der Reservierung",
                 });
@@ -131,7 +131,7 @@ export default {
                 
                 this.storeNewItem({
                     documentType: "reservation",
-                    module: "document/",
+                    module: "document",
                     successMsg: "Reservierung erfolgreich angelegt!",
                     errorMsg: "Fehler beim Anlegen der Reservierung",
                 });
@@ -158,8 +158,8 @@ export default {
     },
     mounted() {
         this.getItemById({
-            moduleName: "options/",
-            type: "options/",
+            moduleName: "options",
+            type: "options",
             itemId: 1
         })
     },

@@ -11,7 +11,7 @@
                     dense
                     clearable
                     @change="getDocumentValues({
-                        module: 'trailer/',
+                        module: 'trailer',
                         itemId: editedItem.vehicle_id,
                         itemIdentifier: 'vehicle',
                     })"
@@ -134,14 +134,14 @@ export default {
             if (this.editedIndex > -1) {
                 this.updateItem({
                     item: this.editedItem,
-                    module: 'trailer/',
+                    module: 'trailer',
                     successMsg: "Anhänger erfolgreich geändert!",
                     errorMsg: "Fehler beim Ändern des Anhänger"
                 });
             } else {
                 this.storeNewItem({
                     item: this.editedItem,
-                    module: 'trailer/',
+                    module: 'trailer',
                     successMsg: "Anhänger erfolgreich angelegt!",
                     errorMsg: "Fehler beim Anlegen des Anhänger"
                 });
@@ -167,7 +167,7 @@ export default {
         }
     },
     mounted() {
-        this.getItemsList({moduleName:"trailer/", type:"trailer/"});
+        this.getItemsList({moduleName:"trailer", type:"trailer"});
     },
 };
 </script>
