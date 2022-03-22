@@ -1,7 +1,16 @@
 <template>
     <v-card>
         <v-card-title class="mb-4">
-            <span class="text-h5">{{ formTitle }}</span>
+            <span class="text-h5 mb-5">{{ formTitle }}</span>
+            <v-spacer></v-spacer>
+            <div v-if="editedIndex > -1">
+                <v-btn class="" color="blue" @click="toReservation">
+                    -> Reservierung
+                </v-btn>
+                <!-- <v-btn class="ml-5" color="blue" @click="close">
+                    -> Mietvertrag
+                </v-btn> -->
+            </div>
         </v-card-title>
 
         <v-card-text>
@@ -145,6 +154,17 @@ export default {
             this.$nextTick(() => {
                 this.$emit("resetIndex");
             });
+        },
+        toReservation(){
+            if (this.editedIndex > -1) {
+                this.updateItem({
+                    item: this.editedItem,
+                    documentType: "document",
+                    module: "document",
+                    successMsg: "Angebot erfolgreich geändert!",
+                    errorMsg: "Fehler beim Ändern des Angebot",
+                });
+            }
         },
     },
     watch: {
