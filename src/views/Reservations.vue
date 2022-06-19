@@ -83,6 +83,14 @@
                         far fa-file-pdf
                     </v-icon>
                     <v-icon
+                        color="primary"
+                        small
+                        class="mr-4"
+                        @click="toContract(item)"
+                    >
+                        fas fa-arrow-circle-up
+                    </v-icon>
+                    <v-icon
                         color="success"
                         small
                         class="mr-4"
@@ -201,7 +209,24 @@ export default {
         },
         forward(){
             this.$router.push({name: 'Contracts'})
-        }
+        },
+
+        async toContract(item){
+            this.editedIndex = item.id;
+            await this.$store.dispatch("getItemById", {
+                itemId: this.editedIndex,
+                moduleName: "document",
+                type: "reservation",
+            })
+            await this.$store.dispatch("updateItem", {
+                item: this.editedItem,
+                documentType: "document",
+                module: "document",
+                successMsg: "Reservierung erfolgreich umgewandelt!",
+                errorMsg: "Fehler beim Umwandeln der Reservierung",
+            })
+            this.forward();
+        },
         
     },
 

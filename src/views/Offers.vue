@@ -83,6 +83,14 @@
                         far fa-file-pdf
                     </v-icon>
                     <v-icon
+                        color="primary"
+                        small
+                        class="mr-4"
+                        @click="toReservation(item)"
+                    >
+                        fas fa-arrow-circle-up
+                    </v-icon>
+                    <v-icon
                         color="success"
                         small
                         class="mr-4"
@@ -169,7 +177,7 @@ export default {
     },
 
     methods: {
-        ...mapActions(["getItemsList", "getItemById", "deleteItemById"]),
+        ...mapActions(["getItemsList", "getItemById", "deleteItemById", "updateItem"]),
         ...mapActions("document/", ["downloadPDF"]),
         ...mapMutations("document/", ["resetForm"]),
         async newForm(){
@@ -208,7 +216,24 @@ export default {
 
         forward(){
             this.$router.push({name: 'Reservations'})
-        }
+        },
+
+        async toReservation(item){
+            this.editedIndex = item.id;
+            await this.$store.dispatch("getItemById", {
+                itemId: this.editedIndex,
+                moduleName: "document",
+                type: "offer",
+            })
+            await this.$store.dispatch("updateItem", {
+                item: this.editedItem,
+                documentType: "document",
+                module: "document",
+                successMsg: "Angebot erfolgreich umgewandelt!",
+                errorMsg: "Fehler beim Umwandeln des Angebot",
+            })
+            this.forward();
+        },
         
     },
 };

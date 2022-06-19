@@ -14,7 +14,6 @@ export default {
     },
     actions: {
         NewForm({ dispatch, commit, state, rootState }) {
-            
             const data = {
                 vat: rootState.options.editedItem.vat,
                 offer_note: rootState.options.editedItem.offer_note,
@@ -27,17 +26,19 @@ export default {
             };
             commit("resetForm");
             commit("setDocumentDefaults", data);
-            commit("UpdateDialog", true, {root: true})
+            commit("UpdateDialog", true, { root: true });
         },
-        async updateItem({dispatch, commit, state, rootState }, object) {
-            
+        async updateItem({ dispatch, commit, state, rootState }, object) {
             // Check prices and make them float values before saving them into the Database
-            await commit("setDocumentPrices")
+            await commit("setDocumentPrices");
 
             // Call API to update the Document
-            axios
+            await axios
                 .patch(
-                    rootState.baseApiUrl + object.documentType + "/" + object.item.id,
+                    rootState.baseApiUrl +
+                        object.documentType +
+                        "/" +
+                        object.item.id,
                     object.item,
                     {
                         headers: authHeader(),
@@ -64,8 +65,8 @@ export default {
                         { root: true }
                     );
                 });
-
         },
+
         async storeNewItem({ dispatch, commit, state, rootState }, object) {
             // Documents need special handling on save.
 
@@ -73,10 +74,10 @@ export default {
             const currentDate = new Date().toISOString().substr(0, 10);
             const currentDateDE = helpers.ISOToDE(currentDate);
             state.editedItem[object.documentType + "Date"] = currentDateDE;
-            
+
             // Get the highest Document Type Number so far and add 1
             await dispatch("getNextDocumentNumber", object.documentType);
-            
+
             // Check prices and make them float values before saving them into the Database
             await commit("setDocumentPrices");
 
@@ -114,7 +115,10 @@ export default {
                     );
                 });
         },
-        async getNextDocumentNumber({ dispatch, commit, state, rootState },type) {
+        async getNextDocumentNumber(
+            { dispatch, commit, state, rootState },
+            type
+        ) {
             await axios
                 .get(rootState.baseApiUrl + type + "/highestNumber", {
                     headers: authHeader(),
@@ -128,45 +132,45 @@ export default {
                 });
         },
 
-        async downloadPDF({ dispatch, commit, state, rootState }, item)
-        {
+        async downloadPDF({ dispatch, commit, state, rootState }, item) {
             await axios({
                 url: rootState.baseApiUrl + "document/" + item.id,
-                method: 'GET',
-                headers: authHeader()
-            })
-                .then((response) => {
-                    console.log(response.data)
-                    let fileURL = response.data;
-                    let link = document.createElement('a');
+                method: "GET",
+                headers: authHeader(),
+            }).then((response) => {
+                console.log(response.data);
+                let fileURL = response.data;
+                let link = document.createElement("a");
 
-                    link.href = fileURL
-                    link.target = "_blank"
-                    link.setAttribute('donload', 'file.pdf')
-                    document.body.appendChild(link)
+                link.href = fileURL;
+                link.target = "_blank";
+                link.setAttribute("donload", "file.pdf");
+                document.body.appendChild(link);
 
-                    link.click()
-                })
+                link.click();
+            });
         },
     },
     mutations: {
         setDocumentDefaults(state, data) {
-            Object.keys(data).forEach(element => {
-                state.editedItem[element] = data[element]
-            })
+            Object.keys(data).forEach((element) => {
+                state.editedItem[element] = data[element];
+            });
         },
         setDocumentPrices(state) {
-            helpers.priceValues.forEach(element => {
-                state.editedItem[element] = helpers.getFloatValue(state.editedItem[element])
+            helpers.priceValues.forEach((element) => {
+                state.editedItem[element] = helpers.getFloatValue(
+                    state.editedItem[element]
+                );
                 console.log(element);
             });
         },
         setDates(state) {
-            state.items.forEach(item => {
-                helpers.listDates.forEach(date => {
-                    item[date] = helpers.ISOToDE(item[date])
+            state.items.forEach((item) => {
+                helpers.listDates.forEach((date) => {
+                    item[date] = helpers.ISOToDE(item[date]);
                 });
-            }); 
+            });
         },
         setDocumentNumber(state, object) {
             state.editedItem[object.type + "Number"] = object.value + 1;
@@ -181,24 +185,26 @@ export default {
         setItemsList(state, data) {
             state.items = data;
         },
-        setEditedItem(state, item) {      
+        setEditedItem(state, item) {
             helpers.dates.forEach((date) => {
                 item[date] = helpers.ISOToDE(item[date]);
             });
-            helpers.times.forEach(time => {
-                item[time] = helpers.trimTime(item[time])
-            })
-            helpers.priceValues.forEach(price => {
-                item[price] = item[price] ? parseFloat(item[price]).toFixed(2) : 0.00; 
+            helpers.times.forEach((time) => {
+                item[time] = helpers.trimTime(item[time]);
+            });
+            helpers.priceValues.forEach((price) => {
+                item[price] = item[price]
+                    ? parseFloat(item[price]).toFixed(2)
+                    : 0.0;
                 item[price] = helpers.writeFloatWithComma(item[price]);
-            })
+            });
             state.editedItem = item;
         },
         resetForm(state) {
             state.editedItem = Object.assign({}, state.defaultItem);
         },
         pushItemToList(state, item) {
-            helpers.listDates.forEach(date => {
+            helpers.listDates.forEach((date) => {
                 item[date] = helpers.ISOToDE(item[date]);
             });
             state.items.push(item);

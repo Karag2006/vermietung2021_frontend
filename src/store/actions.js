@@ -67,8 +67,8 @@ const actions = {
                 });
         }
     },
-    getItemById({ commit, state, rootState }, object) {
-        axios
+    async getItemById({ commit, state, rootState }, object) {
+        await axios
             .get(rootState.baseApiUrl + object.type + "/" + object.itemId, {
                 headers: authHeader(),
             })
