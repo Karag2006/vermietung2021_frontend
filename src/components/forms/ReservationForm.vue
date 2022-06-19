@@ -2,6 +2,14 @@
     <v-card>
         <v-card-title class="mb-4">
             <span class="text-h5">{{ formTitle }}</span>
+            <v-spacer></v-spacer>
+            <div v-if="editedIndex > -1">
+                <v-btn class="white--text font-weight-bold" color="blue" @click="toContract">
+                    <v-icon class="mr-3">
+                        fas fa-arrow-right
+                    </v-icon> Mietvertrag
+                </v-btn>
+            </div>
         </v-card-title>
 
         <v-card-text>
@@ -144,6 +152,19 @@ export default {
             this.$nextTick(() => {
                 this.$emit("resetIndex");
             });
+        },
+        toContract(){
+            if (this.editedIndex > -1) {
+                this.updateItem({
+                    item: this.editedItem,
+                    documentType: "document",
+                    module: "document",
+                    successMsg: "Angebot erfolgreich geändert!",
+                    errorMsg: "Fehler beim Ändern des Angebot",
+                });
+            }
+            this.close();
+            this.$emit('forward');
         },
     },
     watch: {

@@ -139,7 +139,8 @@ export default {
             this.editedIndex = item.id;
             this.getItemById({
                 itemId: this.editedIndex,
-                module: "trailer",
+                moduleName: "trailer",
+                type: "trailer",
             });
             this.dialog = true;
         },
@@ -150,7 +151,8 @@ export default {
         deleteItemConfirm() {
             this.deleteItemById({
                 id: this.editedIndex,
-                module: "trailer",
+                moduleName: "trailer",
+                type: "trailer",
                 successMsg: "Anhänger erfolgreich gelöscht!",
                 errorMsg: "Fehler beim Löschen des Anhänger",
             });

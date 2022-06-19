@@ -4,8 +4,11 @@
             <span class="text-h5 mb-5">{{ formTitle }}</span>
             <v-spacer></v-spacer>
             <div v-if="editedIndex > -1">
-                <v-btn class="" color="blue" @click="toReservation">
-                    -> Reservierung
+                <v-btn class="white--text font-weight-bold" color="blue" @click="toReservation">
+                    <v-icon class="mr-3">
+                        fas fa-arrow-right
+                    </v-icon>
+                        Reservierung
                 </v-btn>
                 <!-- <v-btn class="ml-5" color="blue" @click="close">
                     -> Mietvertrag
@@ -161,10 +164,12 @@ export default {
                     item: this.editedItem,
                     documentType: "document",
                     module: "document",
-                    successMsg: "Angebot erfolgreich geändert!",
-                    errorMsg: "Fehler beim Ändern des Angebot",
+                    successMsg: "Angebot erfolgreich umgewandelt!",
+                    errorMsg: "Fehler beim Umwandeln des Angebot",
                 });
             }
+            this.close();
+            this.$emit('forward');
         },
     },
     watch: {

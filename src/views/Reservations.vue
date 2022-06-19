@@ -41,6 +41,7 @@
                                 :editedIndex="editedIndex"
                                 v-on:close="dialog = false"
                                 v-on:resetIndex="editedIndex = -1"
+                                v-on:forward="forward"
                             />
                         </v-dialog>
                         <v-dialog v-model="dialogDelete" max-width="500px">
@@ -198,6 +199,9 @@ export default {
                 this.editedIndex = -1;
             });
         },
+        forward(){
+            this.$router.push({name: 'Contracts'})
+        }
         
     },
 
